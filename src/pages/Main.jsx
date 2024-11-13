@@ -1,11 +1,25 @@
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
+import { images } from '../utils/images';
 
 const Main = ()=>{
+    //헤더 사이즈 조정
+    const header = document.querySelector('#main #header');
+
+    if (window.scrollY == 0) {
+        header.classList.add('short');
+    }
+    document.addEventListener('scroll', () => {
+        if (window.scrollY == 0) {
+            header.classList.add('short');
+        } else {
+            header.classList.remove('short');
+        }
+    });
+
     return (
         <div id="main">
-            <div id="header" class="short flex">
-                <Header></Header>
-            </div>
+            <Header></Header>
             
             <section>
                 {/* 메인화면(응급실 안내) */}
@@ -24,11 +38,11 @@ const Main = ()=>{
                                             <p>현재 위치에서 <b>1.4km</b></p>
                                             <table>
                                                 <tr>
-                                                    <th><img src={require('../assets/images/main_icon_place.png')} alt=""/></th>
+                                                    <th><img src={images['main_icon_place.png']} alt=""/></th>
                                                     <td>서울 강남구 언주로 211</td>
                                                 </tr>
                                                 <tr>
-                                                    <th><img src={require('../assets/images/main_icon_tel.png')} alt=""/></th>
+                                                    <th><img src={images['main_icon_tel.png']} alt=""/></th>
                                                     <td>02-2019-3333</td>
                                                 </tr>
                                             </table>
@@ -54,11 +68,11 @@ const Main = ()=>{
                                             <p>현재 위치에서 <b>5.2km</b></p>
                                             <table>
                                                 <tr>
-                                                    <th><img src={require('../assets/main_icon_place.png')} alt=""/></th>
+                                                    <th><img src={images['main_icon_place.png']} alt=""/></th>
                                                     <td>서울 강남구 언주로 211</td>
                                                 </tr>
                                                 <tr>
-                                                    <th><img src={require('../assets/main_icon_tel.png')} alt=""/></th>
+                                                    <th><img src={images['main_icon_tel.png']} alt=""/></th>
                                                     <td>02-2019-3333</td>
                                                 </tr>
                                             </table>
@@ -84,11 +98,11 @@ const Main = ()=>{
                                             <p>현재 위치에서 <b>12.6km</b></p>
                                             <table>
                                                 <tr>
-                                                    <th><img src={require('../assets/main_icon_place.png')} alt=""/></th>
+                                                    <th><img src={images['main_icon_place.png']} alt=""/></th>
                                                     <td>서울 강남구 언주로 211</td>
                                                 </tr>
                                                 <tr>
-                                                    <th><img src={require('../assets/main_icon_tel.png')} alt=""/></th>
+                                                    <th><img src={images['main_icon_tel.png']} alt=""/></th>
                                                     <td>02-2019-3333</td>
                                                 </tr>
                                             </table>
@@ -116,7 +130,7 @@ const Main = ()=>{
                 <div class="con1">
                     <div class="inner">
                         <div class="flex">
-                            <img src={require('../assets/main_con1_1.png')} alt=""/>
+                            <img src={images['main_con1_1.png']} alt=""/>
                             <div>
                                     어디서 찾아야 할지 모르시겠나요?
                                 <p><span>병원명/약국명/의약품명</span>을 찾아보세요.</p>
@@ -126,7 +140,7 @@ const Main = ()=>{
                             <form name="searchForm" id="searchForm" action="/plan/list">
                                 <input type="search" id="keyword" name="keyword" placeholder="예 ) 대학교병원, 내과, 골든타임약국, 타이레놀 "/>
                                 <a href="#" id="search-btn" class="btn">
-                                    <img src={require('../assets/search29_w.png')} alt=""/>
+                                    <img src={images['search29_w.png']} alt=""/>
                                 </a>
                             </form>
                         </div>
@@ -138,43 +152,43 @@ const Main = ()=>{
                     <ul class="flex inner">
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>실시간응급실</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>병원 조회</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>약국 조회</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>건강검진기관</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>의약품정보</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>FAQ</p>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <div><img src={require('../assets/main_con2_button1.png')} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>대처방법</p>
                             </a>
                         </li>
@@ -185,7 +199,7 @@ const Main = ()=>{
                 <div class="con3">
                     <div class="inner">
                         <div class="main-title">
-                            <img src={require('../assets/main_title_point.png')} alt=""/>
+                            <img src={images['main_title_point.png']} alt=""/>
                             <h2>상황별 대처 방법</h2>
                             <h3>다양한 응급상황 대처방법을 미리 확인해주세요.</h3>
                         </div>
@@ -193,21 +207,21 @@ const Main = ()=>{
                         <ul class="slider flex">
                             <li>
                                 <a href="#">
-                                    <img src={require('../assets/temp1.jpg')} alt=""/>
+                                    <img src={images['temp1.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src={require('../assets/temp2.jpg')} alt=""/>
+                                    <img src={images['temp2.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src={require('../assets/temp3.jpg')} alt=""/>
+                                    <img src={images['temp3.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
                                 </a>
@@ -216,8 +230,8 @@ const Main = ()=>{
                         </ul>
 
                         <div class="slide_btn">
-                            <a class="prev-btn"><img src={require('../assets/main_con3_prev.png')} alt="이전버튼"/></a>
-                            <a class="next-btn"><img src={require('../assets/main_con3_next.png')} alt="다음버튼"/></a>
+                            <a class="prev-btn"><img src={images['main_con3_prev.png']} alt="이전버튼"/></a>
+                            <a class="next-btn"><img src={images['main_con3_next.png']} alt="다음버튼"/></a>
                         </div>
 
                     </div>
@@ -227,7 +241,7 @@ const Main = ()=>{
                 <div class="con4">
                     <div class="inner">
                         <div class="main-title">
-                            <img src={require('../assets/main_title_point.png')} alt=""/>
+                            <img src={images['main_title_point.png']} alt=""/>
                             <h2>위치 및 정보 검색</h2>
                             <h3>다양한 의료기관의 정보를 만나보세요.</h3>
                         </div>
@@ -281,9 +295,7 @@ const Main = ()=>{
                 </div>
             </section>
 
-            <div id="footer">
-                {/* 푸터 불러오기 */}
-            </div>
+            <Footer></Footer>
             
         </div>
     );

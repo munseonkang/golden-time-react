@@ -1,6 +1,22 @@
 const Header = () => {
+    // 헤더 검색창
+    const searchHidden = document.getElementById('search-hidden');
+    const openBtn = document.getElementById('open-btn');
+    const closeBtn = document.getElementById('close-btn');
+
+    function openSearch() {
+        searchHidden.style.display = 'block';
+    }
+    function closeSearch() {
+        searchHidden.style.display = 'none';
+    }
+
+    openBtn.addEventListener('click', openSearch);
+    closeBtn.addEventListener('click', closeSearch);
+
+    
     return (
-        <>
+        <div id="header" class="short flex">
             <h1><a href="#"><img src={require('../assets/images/logo.png')} alt=""/></a></h1>
             <ul class="flex">
                 <li>
@@ -52,7 +68,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 export default Header;

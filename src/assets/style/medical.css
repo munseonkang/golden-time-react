@@ -1,0 +1,75 @@
+/* @@@@@@@@@ 병원조회 @@@@@@@@@ */
+/* 스크롤바(공통) */
+#hospital .scroll{overflow: auto;}
+#hospital .scroll::-webkit-scrollbar{width:5px; margin-left:5px; border-radius: 3px;}
+#hospital .scroll::-webkit-scrollbar-track{background: #ddd; border-radius: 3px;}
+#hospital .scroll::-webkit-scrollbar-thumb{background: #aaa; border-radius: 3px;}
+
+/* 검색창 */
+#hospital .info{position:relative; width:400px; min-width: 400px; height:100vh; padding:85px 15px 0; box-shadow: 4px 0 4px rgba(0, 0, 0, 0.1); background: #f7f7f7; z-index: 10;} 
+#hospital .info .search{}
+#hospital .info .search form{}
+#hospital .info .search form select{width:182px; height:40px; margin-bottom:10px; padding:0 10px; border: 1px solid #154757; border-radius: 5px; outline: none; line-height: 40px; }
+#hospital .info .search input{width:330px; height:40px; padding:0 10px; border:1px solid #154757; border-radius: 5px 0 0 5px; outline: none; }
+#hospital .info .search a{display: flex; justify-content: center; align-items: center; width:40px; height:40px; border-radius: 0 5px 5px 0; background: #154757; }
+
+
+/* 검색결과(리스트) */
+#hospital .info .list{margin-top:15px;}
+#hospital .info .list>div{}
+#hospital .info .list>div ul.sorting{justify-content: end;}
+#hospital .info .list>div ul.sorting li{margin-left: 5px; font-size: 13px;}
+#hospital .info .list>div ul.sorting li a{color:#555;}
+#hospital .info .list>ul{height: calc(100vh - 214px); margin-top:5px; padding-right:5px;}
+#hospital .info .list>ul li{margin-bottom:10px; padding:10px; border-radius: 10px; background: #fff; }
+#hospital .info .list>ul li .name{margin-bottom:7px; font-size: 18px; color:#154757;}
+#hospital .info .list>ul li .name span{font-size: 15px; color:#aaa;}
+#hospital .info .list>ul li .name a{float: right;}
+#hospital .info .list>ul li>span{}
+#hospital .info .list>ul li .open{margin:5px 0; line-height: 20px; font-size: 15px;}
+#hospital .info .list>ul li .open p{display: inline-block; margin-right:5px; padding:0 7px; border-radius: 10px; font-size: 13px;}
+#hospital .info .list>ul li .open p.green{background: #D6EBD9; color:#104918;}
+#hospital .info .list>ul li .open p.red{background: #F3DEDE; color:#991E1E;}
+#hospital .info .list>ul li .grade{justify-self: start; font-size: 15px;}
+#hospital .info .list>ul li .grade span{color:#FC7486;}
+#hospital .info .list>ul li .grade .img{margin:0 7px;}
+#hospital .info .list>ul li .grade .img img{transform: translateY(1px);}
+
+
+/* 펼쳐지는 상세정보 */
+#hospital .info .detail{position:absolute; top:85px; left:415px; width:390px; height: calc(100% - 100px); box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; background: #fff; overflow: hidden;}
+#hospital .info .detail .scroll{height:100%; padding:0 15px 10px 20px; }
+#hospital .info .detail .scroll>p{position:fixed; width:350px; margin-bottom:15px; padding-top:10px; border-bottom:1px solid #ddd; background: #fff; font-size: 20px; line-height: 45px; }
+#hospital .info .detail .scroll>p span{float: right;}
+#hospital .info .detail .scroll>p span img{}
+
+#hospital .info .detail .data{}
+#hospital .info .detail .data>p{margin-top:65px; margin-bottom:5px; font-family: 'Pretendard-Bold'; font-size: 25px; color:#154757;}
+#hospital .info .detail .data>p a{float:right;}
+#hospital .info .detail .data>p a img{vertical-align: -2px;}
+#hospital .info .detail .data span{font-size: 20px; color:#888;}
+#hospital .info .detail .data .open{margin:5px 0 10px; font-size: 20px; }
+#hospital .info .detail .data .open p{display: inline-block; margin-right:5px; font-family: 'Pretendard-Regular';  font-size: 20px; }
+#hospital .info .detail .data .open p.green{color:#43AC52;}
+#hospital .info .detail .data .open p.red{color:#FF3C3C;}
+#hospital .info .detail .data table tr th{padding:5px 8px 5px 0px;}
+#hospital .info .detail .data table tr td{line-height: 20px;}
+#hospital .info .detail .data table tr.emergency{color:#FF3C3C}
+
+#hospital .info .detail h4{margin:20px 0 7px; font-family: 'Pretendard-Bold'; font-size: 20px; }
+#hospital .info .detail .time{}
+#hospital .info .detail .time table{width:100%; border-collapse: collapse;}
+#hospital .info .detail .time table tr{line-height: 40px;}
+#hospital .info .detail .time table tr th{ border:1px solid #ddd; background: #f4f4f4; font-weight: 400;}
+#hospital .info .detail .time table tr td{padding-left:10px; border:1px solid #ddd;}
+#hospital .info .detail .time table tr.holiday{color:#FF3C3C}
+
+#hospital .info .detail .subject{}
+#hospital .info .detail .subject ul{}
+#hospital .info .detail .subject ul li{list-style: disc; margin-left:25px; line-height: 25px;}
+
+
+/* 지도 */
+#hospital .map{width:100%; height:100vh;}
+#hospital .map #daumRoughmapContainer1731309425170{ width:100%; height:100%;}
+
