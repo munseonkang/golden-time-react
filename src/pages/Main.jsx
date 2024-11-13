@@ -1,26 +1,34 @@
+import { useEffect, useRef, useState } from "react";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import { images } from '../utils/images';
 
 const Main = ()=>{
-    //헤더 사이즈 조정
-    const header = document.querySelector('#main #header');
+    const headerRef = useRef(null);
 
-    if (window.scrollY == 0) {
-        header.classList.add('short');
-    }
-    document.addEventListener('scroll', () => {
-        if (window.scrollY == 0) {
-            header.classList.add('short');
-        } else {
-            header.classList.remove('short');
+    useEffect(() => {
+        //헤더 사이즈 조정
+        const header = headerRef.current;
+    
+        if (header) {
+            const handleScroll = () => {
+                if (window.scrollY === 0) {
+                header.classList.add('short');
+                } else {
+                header.classList.remove('short');
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll);
         }
     });
 
     return (
         <div id="main">
-            <Header></Header>
-            
+            <div ref={headerRef} id="header" class="short flex">
+                <Header></Header>
+            </div>
+
             <section>
                 {/* 메인화면(응급실 안내) */}
                 <div class="main">

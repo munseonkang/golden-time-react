@@ -1,22 +1,37 @@
+import { useEffect, useRef, useState } from "react";
+
 const Header = () => {
-    // 헤더 검색창
-    const searchHidden = document.getElementById('search-hidden');
-    const openBtn = document.getElementById('open-btn');
-    const closeBtn = document.getElementById('close-btn');
+    //검색창 열기
+    const searchHiddenRef = useRef(null);
+    const openBtnRef = useRef(null);
+    const closeBtnRef = useRef(null);
 
-    function openSearch() {
-        searchHidden.style.display = 'block';
-    }
-    function closeSearch() {
-        searchHidden.style.display = 'none';
-    }
+    useEffect(() => {
+        const searchHidden = searchHiddenRef.current;
+        const openBtn = openBtnRef.current;
+        const closeBtn = closeBtnRef.current;
 
-    openBtn.addEventListener('click', openSearch);
-    closeBtn.addEventListener('click', closeSearch);
+        // 검색창 열기
+        const openSearch = () => {
+            if (searchHidden) {
+                searchHidden.style.display = 'block';
+            }
+        };
+
+        // 검색창 닫기
+        const closeSearch = () => {
+            if (searchHidden) {
+                searchHidden.style.display = 'none';
+            }
+        };
+
+        openBtn.addEventListener('click', openSearch);
+        closeBtn.addEventListener('click', closeSearch);
+    });
 
     
     return (
-        <div id="header" class="short flex">
+        <>
             <h1><a href="#"><img src={require('../assets/images/logo.png')} alt=""/></a></h1>
             <ul class="flex">
                 <li>
@@ -51,24 +66,24 @@ const Header = () => {
                     <li><a href="#">JOIN</a></li>
                 </ul>
                 <div class="search">
-                    <button id="open-btn">
+                    <button ref={openBtnRef} id="open-btn">
                         <img src={require('../assets/images/search20_w.png')} alt="Open search"/>
                     </button>
                     {/* 숨겨진 검색창 */}
-                    <div id="search-hidden">
+                    <div ref={searchHiddenRef} id="search-hidden">
                         <form name="searchForm" id="searchForm" action="/plan/list" class="flex">
                             <input type="search" id="keyword" name="keyword" placeholder="검색어를 입력하세요"/>
                             <a id="search_btn" class="btn" onclick="searchBtnHandler()">
                                 <img src={require('../assets/images/search16.png')} alt=""/>
                             </a>
-                            <button type="button" id="close-btn">
+                            <button ref={closeBtnRef} type="button" id="close-btn">
                                 <img src={require('../assets/images/close20_w.png')} alt="Close search"/>
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 export default Header;
