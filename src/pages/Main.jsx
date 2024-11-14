@@ -25,23 +25,23 @@ const Main = ()=>{
 
     return (
         <div id="main">
-            <div ref={headerRef} id="header" class="short flex">
+            <div ref={headerRef} id="header" className="short flex">
                 <Header></Header>
             </div>
 
             <section>
                 {/* 메인화면(응급실 안내) */}
-                <div class="main">
-                    <div class="inner">
-                        <p class="text">
-                            위급한 순간,<br class="mobile" /> 가까운 응급실 정보를<br/>
+                <div className="main">
+                    <div className="inner">
+                        <p className="text">
+                            위급한 순간,<br className="mobile" /> 가까운 응급실 정보를<br/>
                             실시간으로 제공합니다.
                         </p>
                         <div>
-                            <ul class="flex">
-                                <li class="block">
+                            <ul className="flex">
+                                <li className="block">
                                     <p>강남세브란스병원 응급진료센터</p>
-                                    <div class="info flex">
+                                    <div className="info flex">
                                         <div>
                                             <p>현재 위치에서 <b>1.4km</b></p>
                                             <table>
@@ -57,21 +57,21 @@ const Main = ()=>{
                                         </div>
                                         <p>1</p>
                                     </div>
-                                    <div class="bed">
+                                    <div className="bed">
                                         <p>(가용 병상 수 / 기준 병상 수)</p>
-                                        <ul class="flex color">
-                                            <li class="red">
+                                        <ul className="flex color">
+                                            <li className="red">
                                                 일반 <div><span>-7</span> / 15</div>
                                             </li>
-                                            <li class="yello">
+                                            <li className="yello">
                                                 소아 <div><span>1</span> / 2</div>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="block">
+                                <li className="block">
                                     <p>강남세브란스병원 응급진료센터</p>
-                                    <div class="info flex">
+                                    <div className="info flex">
                                         <div>
                                             <p>현재 위치에서 <b>5.2km</b></p>
                                             <table>
@@ -87,21 +87,21 @@ const Main = ()=>{
                                         </div>
                                         <p>2</p>
                                     </div>
-                                    <div class="bed">
+                                    <div className="bed">
                                         <p>(가용 병상 수 / 기준 병상 수)</p>
-                                        <ul class="flex color">
-                                            <li class="green">
+                                        <ul className="flex color">
+                                            <li className="green">
                                                 일반 <div><span>2</span> / 15</div>
                                             </li> 
-                                            <li class="yello">
+                                            <li className="yello">
                                                 소아 <div><span>1</span> / 2</div>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="block">
+                                <li className="block">
                                     <p>강남세브란스병원 응급진료센터</p>
-                                    <div class="info flex">
+                                    <div className="info flex">
                                         <div>
                                             <p>현재 위치에서 <b>12.6km</b></p>
                                             <table>
@@ -117,13 +117,13 @@ const Main = ()=>{
                                         </div>
                                         <p>3</p>
                                     </div>
-                                    <div class="bed">
+                                    <div className="bed">
                                         <p>(가용 병상 수 / 기준 병상 수)</p>
-                                        <ul class="flex color">
-                                            <li class="red">
+                                        <ul className="flex color">
+                                            <li className="red">
                                                 일반 <div><span>-7</span> / 15</div>
                                             </li>
-                                            <li class="green">
+                                            <li className="green">
                                                 소아 <div><span>0</span> / 2</div>
                                             </li>
                                         </ul>
@@ -135,9 +135,9 @@ const Main = ()=>{
                 </div>
 
                 {/* 검색창 */}
-                <div class="con1">
-                    <div class="inner">
-                        <div class="flex">
+                <div className="con1">
+                    <div className="inner">
+                        <div className="flex">
                             <img src={images['main_con1_1.png']} alt=""/>
                             <div>
                                     어디서 찾아야 할지 모르시겠나요?
@@ -147,7 +147,7 @@ const Main = ()=>{
                         <div>
                             <form name="searchForm" id="searchForm" action="/plan/list">
                                 <input type="search" id="keyword" name="keyword" placeholder="예 ) 대학교병원, 내과, 골든타임약국, 타이레놀 "/>
-                                <a href="#" id="search-btn" class="btn">
+                                <a href="#" id="search-btn" className="btn">
                                     <img src={images['search29_w.png']} alt=""/>
                                 </a>
                             </form>
@@ -156,46 +156,46 @@ const Main = ()=>{
                 </div>
 
                 {/* 메뉴 아이콘 버튼 */}
-                <div class="con2">
-                    <ul class="flex inner">
+                <div className="con2">
+                    <ul className="flex inner">
                         <li>
-                            <a href="#">
+                            <a href="/emergency">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>실시간응급실</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/hospital">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>병원 조회</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/pharmacy">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>약국 조회</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/check-up">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>건강검진기관</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/medicine">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>의약품정보</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/first-aid/faq">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>FAQ</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/first-aid/solution">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>대처방법</p>
                             </a>
@@ -204,15 +204,15 @@ const Main = ()=>{
                 </div>
 
                 {/* 상황별 대처 방법 */}
-                <div class="con3">
-                    <div class="inner">
-                        <div class="main-title">
+                <div className="con3">
+                    <div className="inner">
+                        <div className="main-title">
                             <img src={images['main_title_point.png']} alt=""/>
                             <h2>상황별 대처 방법</h2>
                             <h3>다양한 응급상황 대처방법을 미리 확인해주세요.</h3>
                         </div>
                         
-                        <ul class="slider flex">
+                        <ul className="slider flex">
                             <li>
                                 <a href="#">
                                     <img src={images['temp1.jpg']} alt=""/>
@@ -237,26 +237,26 @@ const Main = ()=>{
                             
                         </ul>
 
-                        <div class="slide_btn">
-                            <a class="prev-btn"><img src={images['main_con3_prev.png']} alt="이전버튼"/></a>
-                            <a class="next-btn"><img src={images['main_con3_next.png']} alt="다음버튼"/></a>
+                        <div className="slide_btn">
+                            <a className="prev-btn"><img src={images['main_con3_prev.png']} alt="이전버튼"/></a>
+                            <a className="next-btn"><img src={images['main_con3_next.png']} alt="다음버튼"/></a>
                         </div>
 
                     </div>
                 </div>
 
                 {/* 위치 및 정보 검색 */}
-                <div class="con4">
-                    <div class="inner">
-                        <div class="main-title">
+                <div className="con4">
+                    <div className="inner">
+                        <div className="main-title">
                             <img src={images['main_title_point.png']} alt=""/>
                             <h2>위치 및 정보 검색</h2>
                             <h3>다양한 의료기관의 정보를 만나보세요.</h3>
                         </div>
-                        <div class="box">
-                            <div class="box1">
-                                <a href="#">
-                                    <div class="text">
+                        <div className="box">
+                            <div className="box1">
+                                <a href="/hospital">
+                                    <div className="text">
                                         <span>병원 조회 </span>HOSPITAL
                                         <p>
                                             병원의 주소, 진료시간, 진료과목 등<br/>
@@ -265,9 +265,9 @@ const Main = ()=>{
                                     </div>
                                 </a>
                             </div>
-                            <div class="box2">
-                                <a href="#">
-                                    <div class="text">
+                            <div className="box2">
+                                <a href="/pharmacy">
+                                    <div className="text">
                                         <span>약국 조회 </span>PHARMACY
                                         <p>
                                             약국의 주소, 운영시간 등<br/>
@@ -276,9 +276,9 @@ const Main = ()=>{
                                     </div>
                                 </a>
                             </div>
-                            <div class="box3">
-                                <a href="#">
-                                    <div class="text">
+                            <div className="box3">
+                                <a href="/check-up">
+                                    <div className="text">
                                         <span>건강검진기관</span>
                                         <p>
                                             건강검진기관의 주소, 운영시간 등<br/>
@@ -287,9 +287,9 @@ const Main = ()=>{
                                     </div>
                                 </a>
                             </div>
-                            <div class="box4">
-                                <a href="#">
-                                    <div class="text">
+                            <div className="box4">
+                                <a href="/medicine">
+                                    <div className="text">
                                         <span>의약품 정보</span>
                                         <p>
                                             의약품의 생김새, 성분 등<br/>
