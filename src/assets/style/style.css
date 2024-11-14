@@ -14,7 +14,7 @@ a{color:#111;}
 .flex{display: flex; justify-content: space-between; align-items: center;}
 .flex.top{align-items: flex-start;}
 br.mobile{display: none;}
-.content{min-height: 500px;}
+
 
 /* Header 공통(서브) */
 #header{position: fixed; top:0; left:50%; transform: translateX(-50%); width:100%; height:70px; 

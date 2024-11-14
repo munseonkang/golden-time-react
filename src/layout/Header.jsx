@@ -32,38 +32,38 @@ const Header = () => {
     
     return (
         <>
-            <h1><a href="#"><img src={require('../assets/images/logo.png')} alt=""/></a></h1>
+            <h1><a href="/"><img src={require('../assets/images/logo.png')} alt=""/></a></h1>
             <ul class="flex">
                 <li>
-                    <a href="#">응급실</a>
+                    <a href="/emergency">응급실</a>
                 </li>
                 <li>
-                    <a href="#">의료·진료</a>
+                    <a href="/hospital">의료·진료</a>
                     <ul class="submenu">
-                        <li><a href="#">병원 조회</a></li>
-                        <li><a href="#">건강검진기관 조회</a></li>
+                        <li><a href="/hospital">병원 조회</a></li>
+                        <li><a href="/check-up">건강검진기관 조회</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">약국·의약</a>
+                    <a href="/pharmacy">약국·의약</a>
                     <ul class="submenu">
-                        <li><a href="#">약국 조회</a></li>
-                        <li><a href="#">의약품 정보 조회</a></li>
+                        <li><a href="/pharmacy">약국 조회</a></li>
+                        <li><a href="/medicine">의약품 정보 조회</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">응급처치</a>
+                    <a href="/first-aid/faq">응급처치</a>
                     <ul class="submenu">
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">상황별 대처방법</a></li>
-                        <li><a href="#">응급상황시 행동원칙</a></li>
+                        <li><a href="/first-aid/faq">FAQ</a></li>
+                        <li><a href="/first-aid/solution">상황별 대처방법</a></li>
+                        <li><a href="/first-aid/principle">응급상황시 행동원칙</a></li>
                     </ul>
                 </li>
             </ul>
             <div ul class="flex">
                 <ul class="flex">
-                    <li><a href="#">LOGIN</a></li>
-                    <li><a href="#">JOIN</a></li>
+                    <li><a href="/member/login">LOGIN</a></li>
+                    <li><a href="/member/join">JOIN</a></li>
                 </ul>
                 <div class="search">
                     <button ref={openBtnRef} id="open-btn">
