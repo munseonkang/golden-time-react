@@ -122,6 +122,12 @@ table{
 }
 
 #check-up .hidden{
+    display: none !important;
+}
+#check-up .scroll-y{
+    overflow-y: scroll;
+}
+#check-up .scroll-y::-webkit-scrollbar{
     display: none;
 }
 
@@ -148,6 +154,7 @@ table{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: end;
 }
 #check-up .search .top-box .item-box:first-of-type >div:first-of-type >.gps-box{
     width: 62px;
@@ -155,6 +162,7 @@ table{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    cursor: pointer;
 }
 #check-up .search .top-box .item-box .input-box{
     height: 50px;
@@ -163,9 +171,14 @@ table{
     justify-content: space-evenly;
     border: 1px solid #ddd;
     border-radius: 10px;
+    cursor: pointer;
 }
 #check-up .search .top-box .item-box .input-box input{
     text-align: left;
+    cursor: inherit;
+}
+#check-up .search .top-box .item-box:nth-of-type(1),:nth-of-type(2),:nth-of-type(3){
+    position: relative;
 }
 #check-up .search .top-box .item-box:nth-of-type(1) .input-box{
     width: 290px;
@@ -178,6 +191,9 @@ table{
 }
 #check-up .search .top-box .item-box:nth-of-type(4) .input-box{
     width: 355px;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 20px;
 }
 #check-up .search .top-box .item-box:nth-of-type(1) .input-box input{
     width: 216px;
@@ -194,6 +210,7 @@ table{
 #check-up .search .top-box .item-box:nth-of-type(4) .input-box input{
     width: 279px;
     height: 20px;
+    outline: none;
 }
 #check-up .search .top-box .item-box:nth-of-type(1) .input-box .icon-box{
     width: 14px;
@@ -224,7 +241,11 @@ table{
     flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 15px 20px 15px 20px;
+    padding: 10px 10px 10px 10px;
+    background-color: #fff;
+    position: absolute;
+    top: 90px;
+    z-index: 9999;
 }
 #check-up .search .top-box .item-box .select-box section{
     display: flex;
@@ -233,31 +254,47 @@ table{
 #check-up .search .top-box .item-box .select-box section ul{
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    max-height: 280px;
 }
 #check-up .search .top-box .item-box:nth-of-type(1) .select-box section ul:nth-of-type(1){
-    width: 136px;
-    padding-right: 20px;
+    width: 145px;
+    padding-right: 5px;
 }
 #check-up .search .top-box .item-box:nth-of-type(1) .select-box section ul:nth-of-type(2){
-    width: 111px;
-    padding-left: 20px;
+    width: 122px;
+    padding-left: 5px;
 }
 #check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(1){
-    width: 82px;
-    padding-right: 15px;
+    width: 94px;
+    padding-right: 5px;
 }
 #check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(2){
-    width: 84px;
-    padding-left: 15px;
+    width: 93px;
+    padding-left: 5px;
 }
 #check-up .search .top-box .item-box:nth-of-type(3) .select-box section ul:nth-of-type(1){
-    width: 170px;
+    width: 188px;
 }
 #check-up .search .top-box .item-box .select-box section ul li{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    cursor: pointer;
+}
+#check-up .search .top-box .item-box:nth-of-type(1) .select-box section ul:nth-of-type(1) li{
+    padding: 5px 15px 5px 10px;
+}
+#check-up .search .top-box .item-box:nth-of-type(1) .select-box section ul:nth-of-type(2) li{
+    padding: 4px 10px 4px 15px;
+}
+#check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(1) li{
+    padding: 4px 10px 4px 7px;
+}
+#check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(2) li{
+    padding: 4px 7px 4px 7px;
+}
+#check-up .search .top-box .item-box:nth-of-type(3) .select-box section ul li{
+    padding: 4px 10px 4px 7px;
 }
 #check-up .search .top-box .item-box .select-box section span{
     display: block;
@@ -292,6 +329,7 @@ table{
 #check-up .search .bottom-box .item-box .check-box .check-btn{
    padding: 13px 16px 13px 16px;
    border-radius: 9999px;
+   cursor: pointer;
 }
 #check-up .search .bottom-box .item-box .check-box .checked{
     background-color: #fc7486;
@@ -315,6 +353,7 @@ table{
     width: 124px;
     height: 46px;
     border-radius: 10px;
+    cursor: pointer;
 }
 #check-up .search .btn-box button:first-of-type{
     background-color: #fc7486;

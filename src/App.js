@@ -12,6 +12,7 @@ import Principle from './pages/first-aid/principle/Principle';
 import Join from './pages/member/Join';
 import Login from './pages/member/Login';
 import MyPage from './pages/member/mypage/MyPage';
+import Header from './layout/Header';
 
 function App() {
   return (
