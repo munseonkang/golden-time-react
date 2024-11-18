@@ -3,10 +3,6 @@ import Header from "../../layout/Header";
 const Login = ()=>{
     return (
         <>
-            <div id="header" className="short flex">
-                <Header></Header>
-            </div>
-
             <div id="login" className="member">
                 <div>
                     <div className="title">로그인</div>

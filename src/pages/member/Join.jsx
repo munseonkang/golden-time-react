@@ -3,10 +3,6 @@ import Header from "../../layout/Header";
 const Join = ()=>{
     return (
         <>
-            <div id="header" className="short flex">
-                <Header></Header>
-            </div>
-
             <div id="join" className="member">
                 <div>
                     <div className="title">회원가입</div>
