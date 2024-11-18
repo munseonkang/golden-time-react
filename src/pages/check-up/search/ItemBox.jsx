@@ -1,43 +1,51 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { images } from '../../../utils/images';
-import Input from './Input';
-import InputBox from './InputBox';
 
-const ItemBox = ({subject})=>{
-    const [searchTerm, setSearchTerm] = useState(0);
+export default function ItemBox({id, inputBox, selectBox}) {
 
-    const [isVisible, setIsVisible] = useState(false);
+    // const [region, setRegion] = useState("서울특별시 > 강남구");
+    // const [time, setTime] = useState("평일 > 09:00");
+    // const [specialty, setSpecialty] = useState("정형외과");
+    // const [center, setCenter] = useState("KH정형외과");
+    const [selected, setSelected] = useState("");
 
-    const inputBoxRef = useRef(null);
+    let label;
+    let select;
 
-    const showSelectBox = () => {
-        setIsVisible(true);
+    const changeInput = (e)=>{
+        setSelected(e.target.value);
     }
-    const hideSelectBox = (e) => {
-        if(inputBoxRef.current && !inputBoxRef.current.contains(e.target)) {
-            setIsVisible(false);
+
+    useEffect(()=>{
+        switch(id) {
+            case "region":
+                setSelected("서울특별시 > 강남구");
+                break;
+            case "time":
+                setSelected("평일 > 09:00");
+                break;
+            case "specialty":
+                setSelected("정형외과");
+                break;
         }
-    }
+    })
 
-    useEffect(() => {
-        document.addEventListener('mousedown', hideSelectBox);
-    }, [])
-
-    switch(subject) {
+    switch(id) {
         case "region":
-            return (
-                <div className="item-box">
+            {
+                label = (
                     <div>
                         <label className="b17mc" htmlFor="region">지역 선택</label>
                         <div className="gps-box">
-                            <img src={images['gps13.png']} alt="현재 위치를 검색 지역으로 선택합니다."/>
+                            <img src={images['gps13.png']} alt="현재 위치를 검색 지역으로 선택합니다." />
                             <span className="r12b">현재 위치</span>
                         </div>
                     </div>
-                    <InputBox img="arrow_below14_g.png" type="button" id="region" placeholder="지역을 선택해 주세요." value="서울특별시 > 서초구" readOnly/>
-                    <div className={`select-box ${isVisible ? '' : 'hidden'}`}>
+                );
+                select = (
+                    <div className="select-box hidden">
                         <section>
-                            <ul className="scroll-y">
+                            <ul>
                                 <li className="r17dp">서울특별시
                                     <div>
                                         <img src={images['check14_p.png']} alt="" />
@@ -47,7 +55,7 @@ const ItemBox = ({subject})=>{
                                 <li className="r17g">인천광역시</li>
                             </ul>
                             <span></span>
-                            <ul className="scroll-y">
+                            <ul>
                                 <li className="r17dp">강남구
                                     <div>
                                         <img src={images['check14_p.png']} alt="" />
@@ -58,16 +66,18 @@ const ItemBox = ({subject})=>{
                             </ul>
                         </section>
                     </div>
-                </div>
-            );
+                );
+            }
+            break;
         case "time":
-            return (
-                <div className="item-box">
+            {
+                label = (
                     <label className="b17mc" htmlFor="time">방문 예정 시간</label>
-                    <InputBox img="time15_g.png" type="button" id="time" placeholder="방문 예정 시간을 선택해 주세요." value="평일 > 12:00" readOnly/>
-                    <div className={`select-box ${isVisible ? '' : 'hidden'}`}>
+                );
+                select = (
+                    <div className="select-box hidden">
                         <section>
-                            <ul className="scroll-y">
+                            <ul>
                                 <li className="r17dp">평일
                                     <div>
                                         <img src={images['check14_p.png']} alt="" />
@@ -77,7 +87,7 @@ const ItemBox = ({subject})=>{
                                 <li className="r17g">공휴일</li>
                             </ul>
                             <span></span>
-                            <ul className="scroll-y">
+                            <ul>
                                 <li className="r17dp">11:00
                                     <div>
                                         <img src={images['check14_p.png']} alt="" />
@@ -88,21 +98,18 @@ const ItemBox = ({subject})=>{
                             </ul>
                         </section>
                     </div>
-                </div>
-            );
+                );  
+            }
+            break;
         case "specialty":
-            return (
-                <div className="item-box">
+            {
+                label = (
                     <label className="b17mc" htmlFor="specialty">진료과 구분</label>
-                    <div className="input-box" ref={inputBoxRef} onClick={showSelectBox}>
-                        <Input type="button" id="specialty" placeholder="운영 진료과목을 선택해주세요." value="정신건강의학과" readOnly/>
-                        <div className="icon-box">
-                            <img src={images['arrow_below14_g.png']} alt="" />
-                        </div>
-                    </div>
-                    <div className={`select-box ${isVisible ? '' : 'hidden'}`}>
+                );
+                select = (
+                    <div className="select-box hidden">
                         <section>
-                            <ul className="scroll-y">
+                            <ul>
                                 <li className="r17dp">정신건강의학과
                                     <div>
                                         <img src={images['check14_p.png']} alt="" />
@@ -113,92 +120,28 @@ const ItemBox = ({subject})=>{
                             </ul>
                         </section>
                     </div>
-                </div>
-            );
+                );  
+            }
+            break;
         case "center":
-            return (
-                <div className="item-box">
+            {
+                label = (
                     <label className="b17mc" htmlFor="center">검진기관명</label>
-                    <div className="input-box">
-                        <Input type="text" id="center" placeholder="검진기관명을 검색해 주세요."/>
-                        <div className="icon-box">
-                            <img src={images['search16_g.png']} alt="" />
-                        </div>
-                    </div>
-                </div>
-            );
-        case "regular":
-            return (
-                <div className="item-box">
-                    <span className="b16mc">일반 검진</span>
-                    <div className="check-box">
-                        <label className="check-btn checked r17b">
-                            <input className="hidden" type="checkbox" />
-                            전체
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            일반
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            구강
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            영유아
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            학생
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            학교 밖 청소년
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            장애친화 검진기관
-                        </label>
-                    </div>
-                </div>
-            );
-        case "cancer":
-            return (
-                <div className="item-box">
-                    <span className="b16mc">암 검진</span>
-                    <div className="check-box">
-                        <label className="check-btn checked r17b">
-                            <input className="hidden" type="checkbox" />
-                            전체
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            위암
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            대장암
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            자궁경부암
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            유방암
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            간암
-                        </label>
-                        <label className="check-btn unchecked r17b">
-                            <input className="hidden" type="checkbox" />
-                            폐암
-                        </label>
-                    </div>
-                </div>
-            );
+                );
+            }
+            break;
     }
+
+    return (
+        <div className="item-box">
+            { label }
+            <div className="input-box">
+                <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} onChange={(e)=>{changeInput(e)}} value={selected} readOnly={inputBox.readOnly} />
+                <div className="icon-box">
+                    <img src={images[`${inputBox.image}`]} alt="" />
+                </div>
+            </div>
+            { select }
+        </div>
+    )
 }
-export default ItemBox;
