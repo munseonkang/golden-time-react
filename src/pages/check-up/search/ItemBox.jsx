@@ -1,8 +1,27 @@
+import { useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import ButtonInput from './ButtonInput';
-import TextInput from './TextInput';
+import Input from './Input';
+import InputBox from './InputBox';
 
 const ItemBox = ({subject})=>{
+    const [searchTerm, setSearchTerm] = useState(0);
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const inputBoxRef = useRef(null);
+
+    const showSelectBox = () => {
+        setIsVisible(true);
+    }
+    const hideSelectBox = (e) => {
+        if(inputBoxRef.current && !inputBoxRef.current.contains(e.target)) {
+            setIsVisible(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', hideSelectBox);
+    }, [])
 
     switch(subject) {
         case "region":
@@ -15,13 +34,8 @@ const ItemBox = ({subject})=>{
                             <span className="r12b">현재 위치</span>
                         </div>
                     </div>
-                    <div className="input-box">
-                        <ButtonInput id={subject} placeholder="지역을 선택해 주세요." value="서울특별시 > 서초구"/>
-                        <div className="icon-box">
-                            <img src={images['arrow_below14_g.png']} alt="" />
-                        </div>
-                    </div>
-                    <div className="select-box hidden">
+                    <InputBox img="arrow_below14_g.png" type="button" id="region" placeholder="지역을 선택해 주세요." value="서울특별시 > 서초구" readOnly/>
+                    <div className={`select-box ${isVisible ? '' : 'hidden'}`}>
                         <section>
                             <ul className="scroll-y">
                                 <li className="r17dp">서울특별시
@@ -50,13 +64,8 @@ const ItemBox = ({subject})=>{
             return (
                 <div className="item-box">
                     <label className="b17mc" htmlFor="time">방문 예정 시간</label>
-                    <div className="input-box">
-                        <ButtonInput id={subject} placeholder="방문 예정 시간을 선택해 주세요." value="평일 > 12:00"/>
-                        <div className="icon-box">
-                            <img src={images['time15_g.png']} alt="" />
-                        </div>
-                    </div>
-                    <div className="select-box hidden">
+                    <InputBox img="time15_g.png" type="button" id="time" placeholder="방문 예정 시간을 선택해 주세요." value="평일 > 12:00" readOnly/>
+                    <div className={`select-box ${isVisible ? '' : 'hidden'}`}>
                         <section>
                             <ul className="scroll-y">
                                 <li className="r17dp">평일
@@ -85,13 +94,13 @@ const ItemBox = ({subject})=>{
             return (
                 <div className="item-box">
                     <label className="b17mc" htmlFor="specialty">진료과 구분</label>
-                    <div className="input-box">
-                        <ButtonInput id={subject} placeholder="운영 진료과목을 선택해주세요." value="정신건강의학과"/>
+                    <div className="input-box" ref={inputBoxRef} onClick={showSelectBox}>
+                        <Input type="button" id="specialty" placeholder="운영 진료과목을 선택해주세요." value="정신건강의학과" readOnly/>
                         <div className="icon-box">
                             <img src={images['arrow_below14_g.png']} alt="" />
                         </div>
                     </div>
-                    <div className="select-box hidden">
+                    <div className={`select-box ${isVisible ? '' : 'hidden'}`}>
                         <section>
                             <ul className="scroll-y">
                                 <li className="r17dp">정신건강의학과
@@ -111,7 +120,7 @@ const ItemBox = ({subject})=>{
                 <div className="item-box">
                     <label className="b17mc" htmlFor="center">검진기관명</label>
                     <div className="input-box">
-                        <TextInput id={subject} placeholder="검진기관명을 검색해 주세요." value="정신건강의학과"/>
+                        <Input type="text" id="center" placeholder="검진기관명을 검색해 주세요."/>
                         <div className="icon-box">
                             <img src={images['search16_g.png']} alt="" />
                         </div>
