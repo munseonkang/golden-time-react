@@ -1,7 +1,6 @@
 // 시/도
 export const sido = ["서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시", "세종특별자치시", "경기도", "강원특별자치도", "충청북도", "충청남도", "전북특별자치도", "전라남도", "경상북도", "경상남도", "제주특별자치도"];
 
-export const region = new Map();
 // 시/군/구
 export const gangwon = ["강릉시","동해시","삼척시","속초시","원주시","춘천시","태백시","고성군","양구군","양양군","영월군","인제군","정선군","철원군","평창군","홍천군","화천군","횡성군"];
 export const gyeonggi = ["고양시","과천시","광명시","광주시","구리시","군포시","김포시","남양주시","동두천시","부천시","성남시","수원시","시흥시","안산시","안성시","안양시","양주시","오산시","용인시","의왕시","의정부시","이천시","파주시","평택시","포천시","하남시","화성시","가평군","양평군","여주군","연천군"];
@@ -21,20 +20,21 @@ export const chungbuk = ["제천시","청주시","충주시","괴산군","단양
 export const chungnam = ["계룡시", "공주시", "논산시", "당진시", "보령시", "서산시", "아산시", "천안시", "홍성군","금산군", "부여군", "서천군", "예산군", "청양군", "태안군"];
 export const sejong = ["세종특별자치시"];
 
-region.set("서울특별시", seoul);
-region.set("부산광역시", busan);
-region.set("대구광역시", daegu);
-region.set("인천광역시", incheon);
-region.set("광주광역시", gwangju);
-region.set("대전광역시", daejeon);
-region.set("울산광역시", ulsan);
-region.set("세종특별자치시", sejong);
-region.set("경기도", gyeonggi);
-region.set("강원특별자치도", gangwon);
-region.set("충청북도", chungbuk);
-region.set("충청남도", chungnam);
-region.set("전북특별자치도", jeonbuk);
-region.set("전라남도", jeonnam);
-region.set("경상북도", gyeongsangbuk);
-region.set("경상남도", gyeongsangnam);
-region.set("제주특별자치도", jeju);
+export const regions = new Map();
+regions.set("서울특별시", seoul);
+regions.set("부산광역시", busan);
+regions.set("대구광역시", daegu);
+regions.set("인천광역시", incheon);
+regions.set("광주광역시", gwangju);
+regions.set("대전광역시", daejeon);
+regions.set("울산광역시", ulsan);
+regions.set("세종특별자치시", sejong);
+regions.set("경기도", gyeonggi);
+regions.set("강원특별자치도", gangwon);
+regions.set("충청북도", chungbuk);
+regions.set("충청남도", chungnam);
+regions.set("전북특별자치도", jeonbuk);
+regions.set("전라남도", jeonnam);
+regions.set("경상북도", gyeongsangbuk);
+regions.set("경상남도", gyeongsangnam);
+regions.set("제주특별자치도", jeju);
