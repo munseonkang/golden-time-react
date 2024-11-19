@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Header from "../../layout/Header";
 import { images } from '../../utils/images';
 
 const Hospital = ()=>{
@@ -41,10 +40,6 @@ const Hospital = ()=>{
 
     return (
         <>
-            <div id="header" className="short flex">
-                <Header></Header>
-            </div>
-
             <div id="hospital">
                 {/* ★★★작업위치-시작★★★ */}
                 <div className="flex top">
@@ -465,7 +460,7 @@ const Hospital = ()=>{
                                 </div>
                             </div>
                         </div>
-                        )};
+                        )}
                     </div>
 
                     {/* 오른쪽 지도 */}
@@ -503,7 +498,7 @@ const Hospital = ()=>{
                             </form>
                         </div>
                     </div>
-                )};
+                )}
                 {/* ★★★작업위치-끝★★★ */}
             </div>
         </>

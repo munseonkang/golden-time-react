@@ -38,16 +38,16 @@ box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); border-radius: 0 20px 20px 0; backgrou
 #header>div .search #search-hidden input{margin-right: 10px; border:none; outline: none; border-bottom:1px solid #ddd;}
 #header>div .search #search-hidden a{display: block; margin-right:10px;}
 /* 서브 상단 배너 */
-#sub-header{height:260px; padding-top:135px; background: url(../images/sub_banner.jpg) no-repeat center center/cover; }
-#sub-header .sub-title{font-family: 'GangwonExtraBoldA';  font-size: 50px; color:#154757;}
-#sub-header .sub-info{font-size: 20px; color:#555;}
+#subHeader{height:260px; padding-top:135px; background: url(../images/sub_banner.jpg) no-repeat center center/cover; }
+#subHeader .sub-title{font-family: 'GangwonExtraBoldA';  font-size: 50px; color:#154757;}
+#subHeader .sub-info{font-size: 20px; color:#555;}
 
 
 /* Header 메인 */
-#main #header.short{top:40px; width:1200px; border-radius: 10px 20px 20px 10px;}
-#main #header.short>div .search{border-radius: 0 10px 10px 0;}
-#main #header.short>div .search button{border-radius: 0 10px 10px 0;}
-#main #header.short>div .search #search-hidden{border-radius: 0 10px 10px 0;}
+#header.short{top:40px; width:1200px; border-radius: 10px 20px 20px 10px;}
+#header.short>div .search{border-radius: 0 10px 10px 0;}
+#header.short>div .search button{border-radius: 0 10px 10px 0;}
+#header.short>div .search #search-hidden{border-radius: 0 10px 10px 0;}
 
 
 /* 메인페이지 공통 타이틀 */
