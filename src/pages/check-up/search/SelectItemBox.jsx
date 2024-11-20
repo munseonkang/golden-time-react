@@ -3,12 +3,13 @@ import { images } from '../../../utils/images';
 import { sido as sidos ,regions } from '../../../constants/regions';
 import { specialties } from '../../../constants/specialties';
 import { days, times } from '../../../constants/times';
+import axios from 'axios';
 
 const SelectItemBox = forwardRef((props, ref) => {
     let item;
     const {id, inputBox, searchTerms} = props;
 
-    const [inputs, setInputs] = useState({ sido:"서울특별시", sigungu:"강남구", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
+    const [inputs, setInputs] = useState({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
     const {sido, sigungu, day, time, specialty, center} = inputs;
     const [isVisible, setIsVisible] = useState(false);
     
@@ -21,12 +22,13 @@ const SelectItemBox = forwardRef((props, ref) => {
         }
     }
 
-    useImperativeHandle(ref, ()=>{
+    useImperativeHandle(ref, ()=>({
         reset() {
-            setInputs({ sido:"서울특별시", sigungu:"강남구", day:"평일", ime:"09:00", specialty:"가정의학과", center:"" });
+            setInputs({ sido:"서울특별시", sigungu:"강남구", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
+            searchTerms.current = { sido:"서울특별시", sigungu:"강남구", day:"평일", time:"09:00", specialty:"가정의학과", center:"" };
             setIsVisible(false);
         }
-    });
+    }));
 
     const changeSidoSelect = (e)=>{
         const value = e.target.innerText;
@@ -56,12 +58,49 @@ const SelectItemBox = forwardRef((props, ref) => {
     const changeInputValue = (e)=>{
         const {id, value} = e.target;
         setInputs({...inputs, [id]:value});
-        searchTerms.current.keyword = value;
+        searchTerms.current.center = value;
     }
+
+    function getCurrentPosition(callback) {
+        let city_do = "";
+        let gu_gun = "";
+
+        function success(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            getCurrentAddress(latitude, longitude);
+        }
+      
+        function error() {
+            alert("현재 위치를 검색할 수 없습니다.")
+        }
+
+        function getCurrentAddress(lat, lon) {
+            axios.get(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${lat}&lon=${lon}&appKey=${process.env.REACT_APP_SK_OPENAPI_APP_KEY}`)
+                .then(function (response) {
+                    const addressInfo = response.data.addressInfo;
+                    city_do = addressInfo.city_do;
+                    gu_gun = addressInfo.gu_gun;
+
+                    callback({city_do, gu_gun});
+                    // setInputs({...inputs, sido:city_do, sigungu:gu_gun});
+                    
+                    // searchTerms.current.sido = city_do;
+                    // searchTerms.current.sigungu = gu_gun;
+                });
+        }
+      
+        if (!navigator.geolocation) {
+          alert("현재 브라우저는 위치 정보 제공을 지원하지 않습니다.")
+        } else {
+          navigator.geolocation.getCurrentPosition(success, error);
+        }
+      }
 
     const setSidoSelect = (
         sidos.map((item)=>{
-            if(item == sido) {
+            if(item === sido) {
                 return (
                     <li className="r17dp" key={item} onClick={changeSidoSelect}>
                         {item}
@@ -80,7 +119,7 @@ const SelectItemBox = forwardRef((props, ref) => {
     )
     const setSigunguSelect = (
         regions.get(sido).map((item)=>{
-            if(item == sigungu) {
+            if(item === sigungu) {
                 return (
                     <li className="r17dp" key={item} onClick={changeSigunguSelect}>
                         {item}
@@ -99,7 +138,7 @@ const SelectItemBox = forwardRef((props, ref) => {
     )
     const setDaySelect = (
         days.map((item)=>{
-            if(item == day) {
+            if(item === day) {
                 return (
                     <li className="r17dp" key={item} onClick={changeDaySelect}>
                         {item}
@@ -118,7 +157,7 @@ const SelectItemBox = forwardRef((props, ref) => {
     )
     const setTimeSelect = (
         times.map((item)=>{
-            if(item == time) {
+            if(item === time) {
                 return (
                     <li className="r17dp" key={item} onClick={changeTimeSelect}>
                         {item}
@@ -137,7 +176,7 @@ const SelectItemBox = forwardRef((props, ref) => {
     )
     const setSpecialtySelect = (
         specialties.map((item)=>{
-            if(item == specialty) {
+            if(item === specialty) {
                 return (
                     <li className="r17dp" key={item} onClick={changeSpecialtySelect}>
                         {item}
@@ -172,6 +211,10 @@ const SelectItemBox = forwardRef((props, ref) => {
         }
     }   
     useEffect(()=>{
+        // 검색어 init
+        searchTerms.current = inputs;
+
+        // SelectBox 외 이벤트 등록
         document.addEventListener("mousedown", hideSelectBox);
 
         return ()=>{
@@ -185,7 +228,7 @@ const SelectItemBox = forwardRef((props, ref) => {
                 <>
                     <div>
                         <label className="b17mc" htmlFor="region">지역 선택</label>
-                        <div className="gps-box">
+                        <div className="gps-box" onClick={getCurrentPosition}>
                             <img src={images['gps13.png']} alt="현재 위치를 검색 지역으로 선택합니다." />
                             <span className="r12b">현재 위치</span>
                         </div>

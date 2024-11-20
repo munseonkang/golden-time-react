@@ -3,7 +3,7 @@ import SelectItemBox from './SelectItemBox';
 import CheckInputBox from './CheckItemBox';
 
 const Search = () => {
-    const searchTerms = useRef({ sido:"", sigungu:"", day:"", time:"", specialty:"", keyword:"", regular:[], cancer:[]});
+    const searchTerms = useRef({ sido:"", sigungu:"", day:"", time:"", specialty:"", center:"", regular:[], cancer:[]});
 
     const childRef = useRef([]);
 
@@ -13,7 +13,7 @@ const Search = () => {
         })
     }
     const search = () => {
-        console.log("검색")
+        alert(JSON.stringify(searchTerms.current));
     }
 
     return (
