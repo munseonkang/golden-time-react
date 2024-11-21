@@ -24,8 +24,10 @@ const SelectItemBox = forwardRef((props, ref) => {
 
     useImperativeHandle(ref, ()=>({
         reset() {
-            setInputs({ sido:"서울특별시", sigungu:"강남구", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
-            searchTerms.current = { sido:"서울특별시", sigungu:"강남구", day:"평일", time:"09:00", specialty:"가정의학과", center:"" };
+            getCurrentPosition((city_do, gu_gun)=>{
+                setInputs({ sido:city_do, sigungu:gu_gun, day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
+                searchTerms.current = { ...searchTerms.current, sido:city_do, sigungu:gu_gun, day:"평일", time:"09:00", specialty:"가정의학과", center:"" };
+            });
             setIsVisible(false);
         }
     }));
@@ -61,7 +63,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         searchTerms.current.center = value;
     }
 
-    function getCurrentPosition(callback) {
+    async function getCurrentPosition(callback) {
         let city_do = "";
         let gu_gun = "";
 
@@ -76,19 +78,22 @@ const SelectItemBox = forwardRef((props, ref) => {
             alert("현재 위치를 검색할 수 없습니다.")
         }
 
-        function getCurrentAddress(lat, lon) {
-            axios.get(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${lat}&lon=${lon}&appKey=${process.env.REACT_APP_SK_OPENAPI_APP_KEY}`)
-                .then(function (response) {
-                    const addressInfo = response.data.addressInfo;
-                    city_do = addressInfo.city_do;
-                    gu_gun = addressInfo.gu_gun;
+        async function getCurrentAddress(lat, lon) {
+            try{
+                const response = await axios.get(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${lat}&lon=${lon}&appKey=${process.env.REACT_APP_SK_OPENAPI_APP_KEY}`);
+                city_do = response.data.addressInfo.city_do;
+                gu_gun = response.data.addressInfo.gu_gun;
 
-                    callback({city_do, gu_gun});
-                    // setInputs({...inputs, sido:city_do, sigungu:gu_gun});
+                // setInputs({...inputs, sido:city_do, sigungu:gu_gun});
                     
-                    // searchTerms.current.sido = city_do;
-                    // searchTerms.current.sigungu = gu_gun;
-                });
+                // searchTerms.current.sido = city_do;
+                // searchTerms.current.sigungu = gu_gun;
+
+                callback(city_do, gu_gun);
+            }
+            catch(error) {
+                console.log(error);
+            }
         }
       
         if (!navigator.geolocation) {
@@ -118,7 +123,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         })
     )
     const setSigunguSelect = (
-        regions.get(sido).map((item)=>{
+        (sido!=="")?regions.get(sido).map((item)=>{
             if(item === sigungu) {
                 return (
                     <li className="r17dp" key={item} onClick={changeSigunguSelect}>
@@ -134,7 +139,7 @@ const SelectItemBox = forwardRef((props, ref) => {
                     <li className="r17g" key={item} onClick={changeSigunguSelect}>{item}</li>
                 )
             }
-        })
+        }):[]
     )
     const setDaySelect = (
         days.map((item)=>{
@@ -212,7 +217,10 @@ const SelectItemBox = forwardRef((props, ref) => {
     }   
     useEffect(()=>{
         // 검색어 init
-        searchTerms.current = inputs;
+        getCurrentPosition((city_do, gu_gun)=>{
+            setInputs({...inputs, sido:city_do, sigungu:gu_gun});
+            searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
+        });
 
         // SelectBox 외 이벤트 등록
         document.addEventListener("mousedown", hideSelectBox);
@@ -228,13 +236,18 @@ const SelectItemBox = forwardRef((props, ref) => {
                 <>
                     <div>
                         <label className="b17mc" htmlFor="region">지역 선택</label>
-                        <div className="gps-box" onClick={getCurrentPosition}>
+                        <div className="gps-box" onClick={()=>{
+                            getCurrentPosition((city_do, gu_gun)=>{
+                                setInputs({...inputs, sido:city_do, sigungu:gu_gun});
+                                searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
+                            })
+                        }}>
                             <img src={images['gps13.png']} alt="현재 위치를 검색 지역으로 선택합니다." />
                             <span className="r12b">현재 위치</span>
                         </div>
                     </div>
                     <div className="input-box" onClick={toggleSelectBox}>
-                        <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} value={`${sido}  >  ${sigungu}`} readOnly={inputBox.readOnly} 
+                        <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} value={(sido!=="")?`${sido}  >  ${sigungu}`:""} readOnly={inputBox.readOnly} 
                         ref={inputRef} />
                         <div className="icon-box">
                             <img src={images[`${inputBox.image}`]} alt="" />

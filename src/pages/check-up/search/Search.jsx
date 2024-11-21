@@ -3,7 +3,7 @@ import SelectItemBox from './SelectItemBox';
 import CheckInputBox from './CheckItemBox';
 
 const Search = () => {
-    const searchTerms = useRef({ sido:"", sigungu:"", day:"", time:"", specialty:"", center:"", regular:[], cancer:[]});
+    const searchTerms = useRef({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"", regular:[], cancer:[]});
 
     const childRef = useRef([]);
 
