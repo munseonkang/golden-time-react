@@ -3,16 +3,19 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 const CheckInputBox = forwardRef((props, ref) => {
     const regularChecks = ["전체", "일반", "구강", "영유아", "학생", "학교 밖 청소년", "장애친화 검진기관"];
     const cancerChecks = ["전체", "위암", "대장암", "자궁경부암", "유방암", "간암", "폐암"];
+
     const {id, searchTerms} = props;
 
     const [checked, setChecked] = useState(["전체"]);
 
+    // Search.jsx에서 참조할 reset 기능
     useImperativeHandle(ref, ()=>({
         reset() {
             setChecked(["전체"]);
         }
     }));
 
+    // 체크 시 상태 변화
     const check = (item) => {
         if(!(checked.length===1 && checked[0]==='전체') && item!=="전체") {
             setChecked([...checked, item]);
@@ -21,6 +24,7 @@ const CheckInputBox = forwardRef((props, ref) => {
             setChecked([item]);
         }
     }
+    // 체크 해제 시 상태 변화
     const uncheck = (item) => {
         if(checked.length!==1 && checked[0]!=='전체' && item!=="전체") {
             const result = checked.filter((value)=>{

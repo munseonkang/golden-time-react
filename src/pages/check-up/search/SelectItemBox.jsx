@@ -6,7 +6,6 @@ import { days, times } from '../../../constants/times';
 import axios from 'axios';
 
 const SelectItemBox = forwardRef((props, ref) => {
-    let item;
     const {id, inputBox, searchTerms} = props;
 
     const [inputs, setInputs] = useState({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
@@ -22,6 +21,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         }
     }
 
+    // Search.jsx에서 참조할 reset 기능
     useImperativeHandle(ref, ()=>({
         reset() {
             getCurrentPosition((city_do, gu_gun)=>{
@@ -32,6 +32,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         }
     }));
 
+    // select시 상태, ref 변화
     const changeSidoSelect = (e)=>{
         const value = e.target.innerText;
         setInputs({...inputs, sido:value});
@@ -63,9 +64,9 @@ const SelectItemBox = forwardRef((props, ref) => {
         searchTerms.current.center = value;
     }
 
+    // HTML5 geolocation api를 이용해 현재 위치를 가져오고,
+    // reversegeocoding api를 이용해서 법정 주소로 변환
     async function getCurrentPosition(callback) {
-        let city_do = "";
-        let gu_gun = "";
 
         function success(position) {
             const latitude = position.coords.latitude;
@@ -81,8 +82,8 @@ const SelectItemBox = forwardRef((props, ref) => {
         async function getCurrentAddress(lat, lon) {
             try{
                 const response = await axios.get(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${lat}&lon=${lon}&appKey=${process.env.REACT_APP_SK_OPENAPI_APP_KEY}`);
-                city_do = response.data.addressInfo.city_do;
-                gu_gun = response.data.addressInfo.gu_gun;
+                const city_do = response.data.addressInfo.city_do;
+                const gu_gun = response.data.addressInfo.gu_gun;
 
                 // setInputs({...inputs, sido:city_do, sigungu:gu_gun});
                     
@@ -103,6 +104,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         }
       }
 
+    // 주소(시도) 목록 초기화
     const setSidoSelect = (
         sidos.map((item)=>{
             if(item === sido) {
@@ -122,6 +124,7 @@ const SelectItemBox = forwardRef((props, ref) => {
             }
         })
     )
+    // 주소(시군구) 목록 초기화
     const setSigunguSelect = (
         (sido!=="")?regions.get(sido).map((item)=>{
             if(item === sigungu) {
@@ -141,6 +144,7 @@ const SelectItemBox = forwardRef((props, ref) => {
             }
         }):[]
     )
+    // 평일/주말/공휴일 목록 초기화
     const setDaySelect = (
         days.map((item)=>{
             if(item === day) {
@@ -160,6 +164,7 @@ const SelectItemBox = forwardRef((props, ref) => {
             }
         })
     )
+    // 시간 목록 초기화
     const setTimeSelect = (
         times.map((item)=>{
             if(item === time) {
@@ -179,6 +184,7 @@ const SelectItemBox = forwardRef((props, ref) => {
             }
         })
     )
+    // 진료과목 목록 초기화
     const setSpecialtySelect = (
         specialties.map((item)=>{
             if(item === specialty) {
@@ -199,6 +205,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         })
     )
 
+    // select 토글
     const toggleSelectBox = () => {
         if(isVisible) {
             selectBoxRef.current.classList.add('hidden');
@@ -208,13 +215,15 @@ const SelectItemBox = forwardRef((props, ref) => {
             setIsVisible(true);
         }
     }
+    // select 숨기기
     const hideSelectBox = (e) => {
         if(selectBoxRef.current && !selectBoxRef.current.contains(e.target) &&
             inputRef.current && !inputRef.current.contains(e.target)) {
             selectBoxRef.current.classList.add('hidden');
             setIsVisible(false);
         }
-    }   
+    }
+    
     useEffect(()=>{
         // 검색어 init
         getCurrentPosition((city_do, gu_gun)=>{
@@ -230,10 +239,11 @@ const SelectItemBox = forwardRef((props, ref) => {
         }
     }, [])
 
+    // 각 박스 렌더링
     switch(id) {
         case "region":
-            item = (
-                <>
+            return (
+                <div className="item-box">
                     <div>
                         <label className="b17mc" htmlFor="region">지역 선택</label>
                         <div className="gps-box" onClick={()=>{
@@ -271,12 +281,11 @@ const SelectItemBox = forwardRef((props, ref) => {
                             </ul>
                         </section>
                     </div>
-                </>
+                </div>
             );
-            break;
         case "time":
-            item = (
-                <>
+            return (
+                <div className="item-box">
                     <label className="b17mc" htmlFor="time">방문 예정 시간</label>
                     <div className="input-box" onClick={toggleSelectBox}>
                         <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} value={`${day}  >  ${time}`} readOnly={inputBox.readOnly} 
@@ -296,12 +305,11 @@ const SelectItemBox = forwardRef((props, ref) => {
                             </ul>
                         </section>
                     </div>
-                </>
+                </div>
             );
-            break;
         case "specialty":
-            item = (
-                <>
+            return (
+                <div className="item-box">
                     <label className="b17mc" htmlFor="specialty">진료과 구분</label>
                     <div className="input-box" onClick={toggleSelectBox}>
                         <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} value={specialty} readOnly={inputBox.readOnly}
@@ -317,12 +325,11 @@ const SelectItemBox = forwardRef((props, ref) => {
                             </ul>
                         </section>
                     </div>
-                </>
+                </div>
             );  
-            break;
         case "center":
-            item = (
-                <>
+            return (
+                <div className="item-box">
                     <label className="b17mc" htmlFor="center">검진기관명</label>
                     <div className="input-box" onClick={clickInputRef}>
                         <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} onChange={(e)=>{changeInputValue(e)}} value={center} readOnly={inputBox.readOnly} ref={inputRef} />
@@ -330,15 +337,8 @@ const SelectItemBox = forwardRef((props, ref) => {
                             <img src={images[`${inputBox.image}`]} alt="" />
                         </div>
                     </div>
-                </>
+                </div>
             );
-            break;
-    }
-
-    return (
-        <div className="item-box">
-            { item }
-        </div>
-    )
+    };
 });
 export default SelectItemBox;
