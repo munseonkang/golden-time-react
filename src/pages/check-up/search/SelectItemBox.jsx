@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import { sido as sidos ,regions } from '../../../constants/regions';
+import { sido as sidos, regionMap } from '../../../constants/regions';
 import { specialties } from '../../../constants/specialties';
 import { days, times } from '../../../constants/times';
 import axios from 'axios';
@@ -35,8 +35,10 @@ const SelectItemBox = forwardRef((props, ref) => {
     // select시 상태, ref 변화
     const changeSidoSelect = (e)=>{
         const value = e.target.innerText;
-        setInputs({...inputs, sido:value});
+        const result = regionMap.get(value)[0];
+        setInputs({...inputs, sido:value, sigungu:result});
         searchTerms.current.sido = value;
+        searchTerms.current.sigungu = result;
     }
     const changeSigunguSelect = (e)=>{
         const value = e.target.innerText;
@@ -126,7 +128,7 @@ const SelectItemBox = forwardRef((props, ref) => {
     )
     // 주소(시군구) 목록 초기화
     const setSigunguSelect = (
-        (sido!=="")?regions.get(sido).map((item)=>{
+        (sido!=="")?regionMap.get(sido).map((item)=>{
             if(item === sigungu) {
                 return (
                     <li className="r17dp" key={item} onClick={changeSigunguSelect}>
