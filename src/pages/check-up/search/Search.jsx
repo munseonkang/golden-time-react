@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import SelectItemBox from './SelectItemBox';
 import CheckInputBox from './CheckItemBox';
-import axios from 'axios';
+import { searchHolidaysCenter, searchIntegrated } from '../../../apis/api/nhisAPI';
 
 const Search = () => {
     const searchTerms = useRef({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"", regular:[], cancer:[]});
@@ -14,12 +14,13 @@ const Search = () => {
         })
     }
     async function search() {
+        // 
         try{
-            const response = await axios.get(`http://openapi1.nhis.or.kr/openapi/service/rest/HmcSearchService/getHmcList?ServiceKey=${process.env.REACT_APP_DATA_API_KEY}&numOfRows=`);
+            const response = await searchIntegrated();
             console.log(JSON.stringify(response.data));
         }
         catch(error) {
-
+            console.log(error);
         }
     }
 

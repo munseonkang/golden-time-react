@@ -1,6 +1,10 @@
 import { images } from '../../../utils/images';
 
 const Result = () => {
+
+
+
+
     return (
         <div className="result">
             <h2>주변 검진기관</h2>
