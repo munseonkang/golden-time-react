@@ -403,24 +403,23 @@ table{
     padding-left: 15px;
 }
 #check-up .result table tr th:nth-of-type(2), td:nth-of-type(2){
-    width: 91px;
+    width: 110px;
 }
-#check-up .result table tr th:nth-of-type(3), td:nth-of-type(3){
+/* #check-up .result table tr th:nth-of-type(3), td:nth-of-type(3){
     width: 157px;
-}
-#check-up .result table tr th:nth-of-type(4) ,td:nth-of-type(4){
+} */
+#check-up .result table tr th:nth-of-type(3) ,td:nth-of-type(3){
     width: 401px;
 }
-#check-up .result table tr th:nth-of-type(5) ,td:nth-of-type(5){
+#check-up .result table tr th:nth-of-type(4) ,td:nth-of-type(4){
     width: 175px;
 }
-#check-up .result table tr th:nth-of-type(6) ,td:nth-of-type(6){
+#check-up .result table tr th:nth-of-type(5) ,td:nth-of-type(5){
     width: 62px;
-    padding-right: 30px;
 }
-#check-up .result table tr th:nth-of-type(7) ,td:nth-of-type(7){
+#check-up .result table tr th:nth-of-type(6) ,td:nth-of-type(6){
     width: 93px;
-    padding-right: 15px;
+    padding-right: 20px;
 }
 #check-up .result table tbody tr{
     height: 90px;
@@ -428,18 +427,18 @@ table{
 #check-up .result table tbody tr:first-of-type{
     height: 5px;
 }
-#check-up .result table tbody tr td:nth-of-type(4) ul{
+#check-up .result table tbody tr td:nth-of-type(3) ul{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 7px;
 }
-#check-up .result table tbody tr td:nth-of-type(4) ul li{
+#check-up .result table tbody tr td:nth-of-type(3) ul li{
     border-radius: 5px;
     padding: 4px 5px 4px 5px;
     background-color: #FFEAEC;
 }
-#check-up .result table tbody tr td:nth-of-type(7) .toggle-btn{
+#check-up .result table tbody tr td:nth-of-type(6) .toggle-btn{
     width: 78px;
     height: 33px;
     padding: 8px 7px 8px 7px;
@@ -449,8 +448,9 @@ table{
     flex-direction: row;
     position: relative;
     justify-content: space-between;
+    cursor: pointer;
 }
-#check-up .result table tbody tr td:nth-of-type(7) .toggle-btn::after{
+#check-up .result table tbody tr td:nth-of-type(6) .toggle-btn::after{
     content: "";
     display: block;
     width: 11px;

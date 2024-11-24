@@ -1,12 +1,14 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import { sido as sidos, regionMap } from '../../../constants/regions';
+import { sido as sidos, regionMap, siDoCodes, sigunguCodes } from '../../../constants/regions';
 import { specialties } from '../../../constants/specialties';
 import { days, times } from '../../../constants/times';
 import axios from 'axios';
+import { getAddressByPosition } from '../../../apis/api/tmapAPI';
+import { getCurrentPosition } from '../../../apis/services/geolocation';
 
 const SelectItemBox = forwardRef((props, ref) => {
-    const {id, inputBox, searchTerms} = props;
+    const {id, inputBox, searchTerms, search} = props;
 
     const [inputs, setInputs] = useState({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
     const {sido, sigungu, day, time, specialty, center} = inputs;
@@ -66,45 +68,7 @@ const SelectItemBox = forwardRef((props, ref) => {
         searchTerms.current.center = value;
     }
 
-    // HTML5 geolocation api를 이용해 현재 위치를 가져오고,
-    // reversegeocoding api를 이용해서 법정 주소로 변환
-    async function getCurrentPosition(callback) {
-
-        function success(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-
-            getCurrentAddress(latitude, longitude);
-        }
-      
-        function error() {
-            alert("현재 위치를 검색할 수 없습니다.")
-        }
-
-        async function getCurrentAddress(lat, lon) {
-            try{
-                const response = await axios.get(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${lat}&lon=${lon}&appKey=${process.env.REACT_APP_SK_OPENAPI_APP_KEY}`);
-                const city_do = response.data.addressInfo.city_do;
-                const gu_gun = response.data.addressInfo.gu_gun;
-
-                // setInputs({...inputs, sido:city_do, sigungu:gu_gun});
-                    
-                // searchTerms.current.sido = city_do;
-                // searchTerms.current.sigungu = gu_gun;
-
-                callback(city_do, gu_gun);
-            }
-            catch(error) {
-                console.log(error);
-            }
-        }
-      
-        if (!navigator.geolocation) {
-          alert("현재 브라우저는 위치 정보 제공을 지원하지 않습니다.")
-        } else {
-          navigator.geolocation.getCurrentPosition(success, error);
-        }
-      }
+    
 
     // 주소(시도) 목록 초기화
     const setSidoSelect = (
@@ -228,16 +192,19 @@ const SelectItemBox = forwardRef((props, ref) => {
     
     useEffect(()=>{
         // 검색어 init
-        getCurrentPosition((city_do, gu_gun)=>{
-            setInputs({...inputs, sido:city_do, sigungu:gu_gun});
-            searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
-        });
-
-        // SelectBox 외 이벤트 등록
-        document.addEventListener("mousedown", hideSelectBox);
-
-        return ()=>{
-            document.removeEventListener("mousedown", hideSelectBox);
+        if(id==="region") {
+            getCurrentPosition((city_do, gu_gun)=>{
+                setInputs({...inputs, sido:city_do, sigungu:gu_gun});
+                searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
+                search({sido: city_do, sigungu: gu_gun});
+            });
+    
+            // SelectBox 외 이벤트 등록
+            document.addEventListener("mousedown", hideSelectBox);
+    
+            return ()=>{
+                document.removeEventListener("mousedown", hideSelectBox);
+            }
         }
     }, [])
 
