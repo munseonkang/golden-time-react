@@ -91,6 +91,11 @@ table{
     font-size: 16px;
     color: #111;
 }
+#check-up .r16dp{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #F07F8E;
+}
 #check-up .r15mc{
     font-family: 'Pretendard-Regular';
     font-size: 15px;
@@ -106,6 +111,11 @@ table{
     font-size: 15px;
     color: #fff;
 }
+#check-up .r15dp{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #F07F8E;
+}
 #check-up .r14g{
     font-family: 'Pretendard-Regular';
     font-size: 14px;
@@ -115,6 +125,11 @@ table{
     font-family: 'Pretendard-Regular';
     font-size: 14px;
     color: #154757;
+}
+#check-up .r14dp{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #F07F8E;
 }
 #check-up .r12b{
     font-family: 'Pretendard-Regular';
@@ -508,6 +523,7 @@ table{
     height: 373px;
     border-radius: 5px;
     background: #000;
+    overflow: hidden;
 }
 #check-up .result .detail-box >div:nth-of-type(1) .parking-box{
     width: 468px;
@@ -530,6 +546,9 @@ table{
 #check-up .result .detail-box >div:nth-of-type(1) .parking-box >div:nth-of-type(2){
     width: 438px;
     height: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #check-up .result .detail-box >div:nth-of-type(1) .parking-box >div:nth-of-type(2) ul{
     display: flex;
@@ -541,12 +560,11 @@ table{
 #check-up .result .detail-box >div:nth-of-type(1) .parking-box >div:nth-of-type(2) ul li{
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 9px;
 }
 #check-up .result .detail-box >div:nth-of-type(1) .parking-box >div:nth-of-type(2) ul li span{
     display: inline-block;
 }
-
 #check-up .result .detail-box >div:nth-of-type(2) .info-box{
     display: flex;
     flex-direction: column;
@@ -638,8 +656,7 @@ table{
 #check-up .result .detail-box >div:nth-of-type(2) >div:nth-of-type(2) .info-box ul li >span{
     width: 56px;
     display: flex;
-    flex-direction: row;
-    gap: 25px;
+    flex-direction: column;
 }
 #check-up .result .detail-box >div:nth-of-type(2) >div:nth-of-type(2) .info-box ul li >ul{
     display: flex;

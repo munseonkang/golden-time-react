@@ -53,7 +53,7 @@ const Result = ({item, addResultRef}) => {
                     <label className="toggle-btn b14dg" onClick={getDetail}>상세보기</label>
                 </td>
             </tr>
-            {(isDetail && (<Detail hmcNo={item.hmcNo}/>))}
+            {(isDetail && (<Detail hmcNo={item.hmcNo} lat={item.cyVl} lon={item.cxVl}/>))}
         </>
     )
 }

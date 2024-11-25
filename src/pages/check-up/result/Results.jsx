@@ -1,7 +1,10 @@
 import { images } from '../../../utils/images';
+import Pagination from './Pagination';
 import Result from './Result';
 
 const Results = ({results}) => {
+
+
 
     return (
         <div className="result">
@@ -30,37 +33,7 @@ const Results = ({results}) => {
                     }
                 </tbody>
             </table>
-            <div className="pagination-box">
-                <ul>
-                    <li>
-                        <button className=""><img src={images['arrow_left6.png']} alt="" /></button>
-                    </li>
-                    <li>
-                        <button className="current-page r15w">1</button>
-                    </li>
-                    <li>
-                        <button className="r15mc">2</button>
-                    </li>
-                    <li>
-                        <button className="r15mc">3</button>
-                    </li>
-                    <li>
-                        <button className="r15mc">4</button>
-                    </li>
-                    <li>
-                        <button className="r15mc">5</button>
-                    </li>
-                    <li>
-                        <button className="r15mc">...</button>
-                    </li>
-                    <li>
-                        <button className="r15mc">10</button>
-                    </li>
-                    <li>
-                        <button className="clickable"><img src={images['arrow_right6.png']} alt="" /></button>
-                    </li>
-                </ul>
-            </div>
+            <Pagination results={Results}/>
         </div>
     )
 }
