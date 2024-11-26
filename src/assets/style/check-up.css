@@ -389,6 +389,7 @@ table{
 
 #check-up .result{
     margin-top: 30px;
+    margin-bottom: 150px;
 }
 #check-up .result .resp-msg{
     margin-top: 10px;
@@ -492,10 +493,18 @@ table{
     height: 37px;
     border-radius: 5px;
 }
+#check-up .result .pagination-box ul li button:first-of-type, button:last-of-type{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #check-up .result .pagination-box ul li .current-page{
     background-color: #3A7A8F;
 }
 #check-up .result .pagination-box ul li .clickable{
+    cursor: pointer;
+}
+#check-up .result .pagination-box ul li .clickable-background{
     background-color: #E3F3F8;
 }
 

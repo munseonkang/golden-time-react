@@ -1,14 +1,15 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import { sido as sidos, regionMap, siDoCodes, sigunguCodes } from '../../../constants/regions';
+import { sido as sidos, regionMap } from '../../../constants/regions';
 import { specialties } from '../../../constants/specialties';
 import { days, times } from '../../../constants/times';
-import axios from 'axios';
-import { getAddressByPosition } from '../../../apis/api/tmapAPI';
 import { getCurrentPosition } from '../../../apis/services/geolocation';
+import { CheckUpContext } from '../CheckUp';
+import { search } from '../../../apis/services/nhisService';
 
 const SelectItemBox = forwardRef((props, ref) => {
-    const {id, inputBox, searchTerms, search} = props;
+    const {setResults, searchTerms} = useContext(CheckUpContext);
+    const {id, inputBox} = props;
 
     const [inputs, setInputs] = useState({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
     const {sido, sigungu, day, time, specialty, center} = inputs;
@@ -196,7 +197,7 @@ const SelectItemBox = forwardRef((props, ref) => {
             getCurrentPosition((city_do, gu_gun)=>{
                 setInputs({...inputs, sido:city_do, sigungu:gu_gun});
                 searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
-                search({sido: city_do, sigungu: gu_gun});
+                search({sido: city_do, sigungu: gu_gun}, setResults);
             });
     
             // SelectBox 외 이벤트 등록

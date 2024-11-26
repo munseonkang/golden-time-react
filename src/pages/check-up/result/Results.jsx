@@ -1,10 +1,11 @@
+import { useContext } from 'react';
 import { images } from '../../../utils/images';
 import Pagination from './Pagination';
 import Result from './Result';
+import { CheckUpContext } from '../CheckUp';
 
-const Results = ({results}) => {
-
-
+const Results = () => {
+    const {results} = useContext(CheckUpContext);
 
     return (
         <div className="result">
@@ -33,7 +34,7 @@ const Results = ({results}) => {
                     }
                 </tbody>
             </table>
-            <Pagination results={Results}/>
+            {(results && (<Pagination />))}
         </div>
     )
 }
