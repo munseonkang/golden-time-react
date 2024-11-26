@@ -11,8 +11,8 @@ const SelectItemBox = forwardRef((props, ref) => {
     const {setResults, searchTerms} = useContext(CheckUpContext);
     const {id, inputBox} = props;
 
-    const [inputs, setInputs] = useState({ sido:"", sigungu:"", day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
-    const {sido, sigungu, day, time, specialty, center} = inputs;
+    const [inputs, setInputs] = useState({ sido:"", sigungu:"", day:"평일", time:"09:00", center:"" });
+    const {sido, sigungu, day, time, center} = inputs;
     const [isVisible, setIsVisible] = useState(false);
     
     const selectBoxRef = useRef(null);
@@ -28,8 +28,8 @@ const SelectItemBox = forwardRef((props, ref) => {
     useImperativeHandle(ref, ()=>({
         reset() {
             getCurrentPosition((city_do, gu_gun)=>{
-                setInputs({ sido:city_do, sigungu:gu_gun, day:"평일", time:"09:00", specialty:"가정의학과", center:"" });
-                searchTerms.current = { ...searchTerms.current, sido:city_do, sigungu:gu_gun, day:"평일", time:"09:00", specialty:"가정의학과", center:"" };
+                setInputs({ sido:city_do, sigungu:gu_gun, day:"평일", time:"09:00", center:"" });
+                searchTerms.current = { ...searchTerms.current, sido:city_do, sigungu:gu_gun, day:"평일", time:"09:00", center:"" };
             });
             setIsVisible(false);
         }
@@ -58,11 +58,11 @@ const SelectItemBox = forwardRef((props, ref) => {
         setInputs({...inputs, time:value});
         searchTerms.current.time = value;
     }
-    const changeSpecialtySelect = (e)=>{
-        const value = e.target.innerText;
-        setInputs({...inputs, specialty:value});
-        searchTerms.current.specialty = value;
-    }
+    // const changeSpecialtySelect = (e)=>{
+    //     const value = e.target.innerText;
+    //     setInputs({...inputs, specialty:value});
+    //     searchTerms.current.specialty = value;
+    // }
     const changeInputValue = (e)=>{
         const {id, value} = e.target;
         setInputs({...inputs, [id]:value});
@@ -152,25 +152,25 @@ const SelectItemBox = forwardRef((props, ref) => {
         })
     )
     // 진료과목 목록 초기화
-    const setSpecialtySelect = (
-        specialties.map((item)=>{
-            if(item === specialty) {
-                return (
-                    <li className="r17dp" key={item} onClick={changeSpecialtySelect}>
-                        {item}
-                        <div>
-                            <img src={images['check14_p.png']} alt="" />
-                        </div>
-                    </li>
-                )
-            }
-            else {
-                return (
-                    <li className="r17g" key={item} onClick={changeSpecialtySelect}>{item}</li>
-                )
-            }
-        })
-    )
+    // const setSpecialtySelect = (
+    //     specialties.map((item)=>{
+    //         if(item === specialty) {
+    //             return (
+    //                 <li className="r17dp" key={item} onClick={changeSpecialtySelect}>
+    //                     {item}
+    //                     <div>
+    //                         <img src={images['check14_p.png']} alt="" />
+    //                     </div>
+    //                 </li>
+    //             )
+    //         }
+    //         else {
+    //             return (
+    //                 <li className="r17g" key={item} onClick={changeSpecialtySelect}>{item}</li>
+    //             )
+    //         }
+    //     })
+    // )
 
     // select 토글
     const toggleSelectBox = () => {
@@ -199,13 +199,12 @@ const SelectItemBox = forwardRef((props, ref) => {
                 searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
                 search({sido: city_do, sigungu: gu_gun}, setResults);
             });
-    
-            // SelectBox 외 이벤트 등록
-            document.addEventListener("mousedown", hideSelectBox);
-    
-            return ()=>{
-                document.removeEventListener("mousedown", hideSelectBox);
-            }
+        }
+        // SelectBox 외 이벤트 등록
+        document.addEventListener("mousedown", hideSelectBox);
+
+        return ()=>{
+            document.removeEventListener("mousedown", hideSelectBox);
         }
     }, [])
 
@@ -277,26 +276,26 @@ const SelectItemBox = forwardRef((props, ref) => {
                     </div>
                 </div>
             );
-        case "specialty":
-            return (
-                <div className="item-box">
-                    <label className="b17mc" htmlFor="specialty">진료과 구분</label>
-                    <div className="input-box" onClick={toggleSelectBox}>
-                        <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} value={specialty} readOnly={inputBox.readOnly}
-                        ref={inputRef} />
-                        <div className="icon-box">
-                            <img src={images[`${inputBox.image}`]} alt="" />
-                        </div>
-                    </div>
-                    <div className="select-box hidden" ref={selectBoxRef}>
-                        <section>
-                            <ul className="scroll-y">
-                                { setSpecialtySelect }
-                            </ul>
-                        </section>
-                    </div>
-                </div>
-            );  
+        // case "specialty":
+        //     return (
+        //         <div className="item-box">
+        //             <label className="b17mc" htmlFor="specialty">진료과 구분</label>
+        //             <div className="input-box" onClick={toggleSelectBox}>
+        //                 <input className="r17b" type={inputBox.type} id={id} placeholder={inputBox.placeholder} value={specialty} readOnly={inputBox.readOnly}
+        //                 ref={inputRef} />
+        //                 <div className="icon-box">
+        //                     <img src={images[`${inputBox.image}`]} alt="" />
+        //                 </div>
+        //             </div>
+        //             <div className="select-box hidden" ref={selectBoxRef}>
+        //                 <section>
+        //                     <ul className="scroll-y">
+        //                         { setSpecialtySelect }
+        //                     </ul>
+        //                 </section>
+        //             </div>
+        //         </div>
+        //     );  
         case "center":
             return (
                 <div className="item-box">

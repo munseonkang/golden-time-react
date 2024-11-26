@@ -26,11 +26,15 @@ const Results = () => {
                 <tbody>
                     <tr></tr>
                     {
-                        results?.items.item.map((item)=>{
-                            return (
-                                <Result item={item} key={item.hmcNo}/>
-                            )
-                        })
+                        (Array.isArray(results?.items.item))?
+                            results?.items.item.map((item)=>{
+                                return (
+                                    <Result item={item} key={item.hmcNo}/>
+                                )
+                            }
+                        ):(
+                            <Result item={results?.items.item} key={results?.items.item.hmcNo}/>
+                        )
                     }
                 </tbody>
             </table>

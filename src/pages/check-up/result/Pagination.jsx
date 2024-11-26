@@ -10,37 +10,37 @@ const Pagination = () => {
     const pagingWidth = 5;
     
     const [pageMaker, setPageMaker] = useState({
-                                        currentPage: pageNo,
-                                        startPage: (pageNo+4)/5,
-                                        endPage: (pageNo<(pagingWidth+1))?pagingWidth:totalCount/numOfRows,
-                                        lastPage: Math.ceil(totalCount/numOfRows),
-                                        total: totalCount,
-                                        prev: false,
-                                        next: (pagingWidth<(totalCount/numOfRows)?true:false)
-                                    });
+            currentPage: pageNo,
+            startPage: Math.floor((pageNo-1)/pagingWidth)*pagingWidth+1,
+            endPage: (pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1)?Math.ceil(pageNo/5)*pagingWidth:Math.ceil(totalCount/numOfRows),
+            lastPage: Math.ceil(totalCount/numOfRows),
+            total: totalCount,
+            prev: false,
+            next: pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1
+        });
     const {currentPage, startPage, endPage, lastPage, total, prev, next} = pageMaker;
 
     useEffect(()=>{
         if(pageNo===1) {
             setPageMaker({
                 currentPage: pageNo,
-                startPage: (pageNo+4)/5,
-                endPage: (pageNo<(pagingWidth+1))?pagingWidth:totalCount/numOfRows,
+                startPage: Math.floor((pageNo-1)/pagingWidth)*pagingWidth+1,
+                endPage: (pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1)?Math.ceil(pageNo/5)*pagingWidth:Math.ceil(totalCount/numOfRows),
                 lastPage: Math.ceil(totalCount/numOfRows),
                 total: totalCount,
                 prev: false,
-                next: (pagingWidth<(totalCount/numOfRows)?true:false)
+                next: pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1
             })
         }
         else {
             setPageMaker({
                 currentPage: pageNo,
-                startPage: Math.floor((pageNo+4)/5),
-                endPage: (pageNo<(pagingWidth+1))?pagingWidth:totalCount/numOfRows,
+                startPage: Math.floor((pageNo-1)/pagingWidth)*pagingWidth+1,
+                endPage: (pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1)?Math.ceil(pageNo/5)*pagingWidth:Math.ceil(totalCount/numOfRows),
                 lastPage: Math.ceil(totalCount/numOfRows),
                 total: totalCount,
-                prev: ((pageNo+4)/5)>1,
-                next: pagingWidth<(totalCount/numOfRows)
+                prev: Math.floor((pageNo+4)/5)>1,
+                next: pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1
             })
         }
     }, [results])
@@ -109,7 +109,7 @@ const Pagination = () => {
             <ul>
                 {(prev ? (
                     <li key="prev">
-                        <button className="clickable clickable-background"><img src={images['arrow_left6.png']} alt="" /></button>
+                        <button className="clickable clickable-background" onClick={()=>{paging(startPage-1)}}><img src={images['arrow_left6.png']} alt="" /></button>
                     </li>
                 ):(
                     <li key="prev">
@@ -117,34 +117,13 @@ const Pagination = () => {
                     </li>
                 ))}
                 { setPagination() }
-                {/* <li>
-                    <button className="current-page r15w">1</button>
-                </li>
-                <li>
-                    <button className="r15mc">2</button>
-                </li>
-                <li>
-                    <button className="r15mc">3</button>
-                </li>
-                <li>
-                    <button className="r15mc">4</button>
-                </li>
-                <li>
-                    <button className="r15mc">5</button>
-                </li>
-                <li>
-                    <button className="r15mc">...</button>
-                </li>
-                <li>
-                    <button className="r15mc">10</button>
-                </li> */}
                 {(next ? (
                     <li key="next">
-                        <button className="clickable clickable-background"><img src={images['arrow_right6.png']} alt="" /></button>
+                        <button className="clickable clickable-background" onClick={()=>{paging(endPage+1)}}><img src={images['arrow_right6.png']} alt="" /></button>
                     </li>
                 ):(
                     <li key="next">
-                        <button className=""><img src={images['arrow_left6.png']} alt="" /></button>
+                        <button className=""><img src={images['arrow_right6.png']} alt="" /></button>
                     </li>
                 ))} 
             </ul>

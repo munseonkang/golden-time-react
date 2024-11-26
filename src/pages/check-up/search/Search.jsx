@@ -22,7 +22,7 @@ const Search = () => {
                 <div className="top-box">
                     <SelectItemBox id="region" ref={(child) => childRef.current[0] = child} inputBox={{type:"button", value:"지역을 선택해 주세요.", readOnly:true, image:"arrow_below14_g.png"}} />
                     <SelectItemBox id="time" ref={(child) => childRef.current[1] = child} inputBox={{type:"button", placeholder:"방문 예정 시간을 선택해 주세요.", readOnly:true, image:'time15_g.png'}} />
-                    <SelectItemBox id="specialty" ref={(child) => childRef.current[2] = child} inputBox={{type:"button", placeholder:"운영 진료과목을 선택해주세요.", readOnly:true, image:'arrow_below14_g.png'}} />
+                    {/* <SelectItemBox id="specialty" ref={(child) => childRef.current[2] = child} inputBox={{type:"button", placeholder:"운영 진료과목을 선택해주세요.", readOnly:true, image:'arrow_below14_g.png'}} /> */}
                     <SelectItemBox id="center" ref={(child) => childRef.current[3] = child} inputBox={{type:"text", placeholder:"검진기관명을 검색해 주세요.", readOnly:false, image:'search16.png'}} />
                 </div>
                 <div className="bottom-box">
