@@ -1,0 +1,141 @@
+input, button{
+    background: none;
+    border-width: 0;
+}
+table{
+    border-collapse: collapse;
+    /* border-spacing: 0px; */
+}
+#mypage{
+    padding-top: 81px;
+}
+
+#mypage h1{
+    font-family: 'GangwonExtraBoldA';
+    font-size: 27px;
+    color: #154757;
+    text-align: center;
+}
+#mypage h2{
+    font-family: 'Pretendard-Bold';
+    font-size: 21px;
+    color: #154757;
+}
+#mypage .b22lg{
+    font-family: 'Pretendard-Bold';
+    font-size: 22px;
+    color: #E3F3F8;
+}
+#mypage .b19dg{
+    font-family: 'Pretendard-Bold';
+    font-size: 18px;
+    color: #3A7A8F;
+}
+#mypage .b18mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 18px;
+    color: #154757;
+}
+#mypage .b17mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 17px;
+    color: #154757;
+}
+#mypage .b17lmc{
+    font-family: 'Pretendard-Bold';
+    font-size: 17px;
+    color: #7BB6CA;
+}
+#mypage .b16mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 16px;
+    color: #154757;
+}
+#mypage .b16dg{
+    font-family: 'Pretendard-Bold';
+    font-size: 16px;
+    color: #3A7A8F;
+}
+#mypage .b14dg{
+    font-family: 'Pretendard-Bold';
+    font-size: 14px;
+    color: #3A7A8F;
+}
+#mypage .b13dp{
+    font-family: 'Pretendard-Bold';
+    font-size: 13px;
+    color: #F07F8E;
+}
+#mypage .r17b{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #111;
+}
+#mypage .r17w{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #fff;
+}
+#mypage .r17dp{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #F07F8E;
+}
+#mypage .r17mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #154757;
+}
+#mypage .r17g{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #444;
+}
+#mypage .r16mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #154757;
+}
+#mypage .r16dg{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #3A7A8F;
+}
+#mypage .r16b{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #111;
+}
+#mypage .r15mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #154757;
+}
+#mypage .r15dg{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #3A7A8F;
+}
+#mypage .r15w{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #fff;
+}
+#mypage .r14g{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #aaa;
+}
+#mypage .r14mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #154757;
+}
+#mypage .r12b{
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+}
+
+#mypage .hidden{
+    display: none;
+}
