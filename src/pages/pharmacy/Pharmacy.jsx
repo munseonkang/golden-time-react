@@ -88,7 +88,7 @@ const Pharmacy = () => {
 
             const response = await axios.get(URL, {
                 params: {
-                    serviceKey: process.env.REACT_APP_PHARMACY_APP_KEY,
+                    serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                     Q0: sido === 'all' ? '' : sido,  
                     Q1: area === 'all' ? '' : area,  
                     numOfRows: 700,

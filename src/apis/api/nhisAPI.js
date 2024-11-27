@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
     baseURL: process.env.REACT_APP_DATA_NHIS_API_URL,
     params: {
-        serviceKey: process.env.REACT_APP_DATA_API_KEY,
+        serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
         numOfRows: 8
     }
 });

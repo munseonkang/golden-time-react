@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
     baseURL: process.env.REACT_APP_TMAP_API_URL,
     params: {
-        appKey: process.env.REACT_APP_SK_OPENAPI_APP_KEY
+        appKey: process.env.REACT_APP_TMAP_APP_KEY
     }
 });
 

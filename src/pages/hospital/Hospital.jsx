@@ -35,7 +35,7 @@ const Hospital = ()=>{
         const fetchHospitalData = async () => {
             // 공공데이터 API URL과 API 키 설정
             const apiUrl = "http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire";
-            const apiKey = process.env.REACT_APP_SERVICE_KEY;
+            const apiKey = process.env.REACT_APP_DATA_SERVICE_KEY;
             const { sido, sigungu } = region;
             const QN = searchKeyword.trim();
             const pageNo = 1;
@@ -97,7 +97,7 @@ const Hospital = ()=>{
     // @@ 병원 상세정보 불러오기 @@
     const fetchHospitalDetail = async (hpid, index) => {
         const apiUrl = "https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire";
-        const apiKey = process.env.REACT_APP_SERVICE_KEY;
+        const apiKey = process.env.REACT_APP_DATA_SERVICE_KEY;
 
         try {
             const response = await axios.get(
