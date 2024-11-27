@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>건강검진기관 조회</title>
+    <link rel="stylesheet" href="../styles/check-up.css">
+</head>
+<body>
+    <header></header>
+    <main>
+        <div id="check-up">
+            <h1>건강검진기관 조회</h1>
+            <!-- 검진기관 검색 -->
+            <div class="search">
+                <div class="container">
+                    <h2>검진기관 검색</h2>
+                    <!-- 지역 외 3개 기준 -->
+                    <div class="top-box">
+                        <div class="item-box">
+                            <div>
+                                <label class="b17mc" for="region">지역 선택</label>
+                                <div class="gps-box">
+                                    <img src="../images/gps13.png" alt="현재 위치를 검색 지역으로 선택합니다.">
+                                    <span class="r12b">현재 위치</span>
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <input class="r17b" type="button" id="region" placeholder="지역을 선택해 주세요." value="서울특별시 > 서초구" readonly>
+                                <div class="icon-box">
+                                    <img src="../images/arrow_below14.png" alt="">
+                                </div>
+                            </div>
+                            <div class="select-box">
+                                <section>
+                                    <ul>
+                                        <li class="r17dp">서울특별시
+                                            <div>
+                                                <img src="../images/check14.png" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="r17g">부산광역시</li>
+                                        <li class="r17g">인천광역시</li>
+                                    </ul>
+                                    <span></span>
+                                    <ul>
+                                        <li class="r17dp">강남구
+                                            <div>
+                                                <img src="../images/check14.png" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="r17g">강서구</li>
+                                        <li class="r17g">서초구</li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <label class="b17mc" for="time">방문 예정 시간</label>
+                            <div class="input-box">
+                                <input class="r17b" type="button" id="time" placeholder="방문 예정 시간을 선택해 주세요." value="평일 > 12:00" readonly>
+                                <div class="icon-box">
+                                    <img src="../images/time15.png" alt="">
+                                </div>
+                            </div>
+                            <div class="select-box">
+                                <section>
+                                    <ul>
+                                        <li class="r17dp">평일
+                                            <div>
+                                                <img src="../images/check14.png" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="r17g">주말</li>
+                                        <li class="r17g">공휴일</li>
+                                    </ul>
+                                    <span></span>
+                                    <ul>
+                                        <li class="r17dp">11:00
+                                            <div>
+                                                <img src="../images/check14.png" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="r17g">12:00</li>
+                                        <li class="r17g">13:00</li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <label class="b17mc" for="specialty">진료과 구분</label>
+                            <div class="input-box">
+                                <input class="r17b" type="button" id="specialty" placeholder="운영 진료과목을 선택해주세요." value="정신건강의학과" readonly>
+                                <div class="icon-box">
+                                    <img src="../images/arrow_below14.png" alt="">
+                                </div>
+                            </div>
+                            <div class="select-box">
+                                <section>
+                                    <ul>
+                                        <li class="r17dp">정신건강의학과
+                                            <div>
+                                                <img src="../images/check14.png" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="r17g">신경외과</li>
+                                        <li class="r17g">정형외과</li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <label class="b17mc" for="center">검진기관명</label>
+                            <div class="input-box">
+                                <input class="r17b" type="text" id="center" placeholder="검진기관명을 검색해 주세요.">
+                                <div class="icon-box">
+                                    <img src="../images/search16.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 검진 유형 (선택) -->
+                    <div class="bottom-box">
+                        <div>
+                            <span class="b17mc">검진 유형</span>
+                            <span class="r14g">(선택)</span>
+                        </div>
+                        <div class="item-box">
+                            <span class="b16mc">일반 검진</span>
+                            <div class="check-box">
+                                <!-- 클래스로만 -->
+                                <label class="check-btn checked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    전체
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    일반
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    구강
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    영유아
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    학생
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    학교 밖 청소년
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    장애친화 검진기관
+                                </label>
+                            </div>
+                        </div>
+                        <div class="item-box">
+                            <span class="b16mc">암 검진</span>
+                            <div class="check-box">
+                                <!-- 클래스로만 -->
+                                <label class="check-btn checked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    전체
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    위암
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    대장암
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    자궁경부암
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    유방암
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    간암
+                                </label>
+                                <label class="check-btn unchecked r17b">
+                                    <input class="hidden" type="checkbox">
+                                    폐암
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button class="r17w">초기화</button>
+                        <button class="r17w">검  색</button>
+                    </div>
+                </div>
+            </div>
+            <!-- hr -->
+            <span class="hr2"></span>
+            <!-- 주변 검진기관 -->
+            <div class="result">
+                <h2>주변 검진기관</h2>
+                <div class="resp-msg r14g"><span class="r14mc">8</span>개의 검진기관을 찾았습니다</div>
+                <!-- 결과 테이블 -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="b16dg">기관명</th>
+                            <th class="b16dg">구분</th>
+                            <th class="b16dg">진료과목</th>
+                            <th class="b16dg">검진유형</th>
+                            <th class="b16dg">운영시간</th>
+                            <th class="b16dg">거리</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr></tr>
+                        <tr class="item">
+                            <td class="r16mc">서울제이소아청소년과의원</td>
+                            <td class="r16b">종합병원</td>
+                            <td class="r16b">정형외과 외 13과목</td>
+                            <td>
+                                <ul>
+                                    <li class="b13dp">일반</li>
+                                    <li class="b13dp">구강</li>
+                                    <li class="b13dp">영유아</li>
+                                    <li class="b13dp">학생</li>
+                                    <li class="b13dp">학교 밖 청소년</li>
+                                    <li class="b13dp">장애친화 검진기관</li>
+                                    <li class="b13dp">위암</li>
+                                    <li class="b13dp">대장암</li>
+                                    <li class="b13dp">자궁경부암</li>
+                                    <li class="b13dp">유방암</li>
+                                    <li class="b13dp">간암</li>
+                                    <li class="b13dp">폐암</li>
+                                </ul>
+                            </td>
+                            <td class="r16b">목요일 9:00 ~ 19:00</td>
+                            <td class="r16b">5km</td>
+                            <td>
+                                <input class="hidden" type="checkbox">
+                                <label class="toggle-btn b14dg">상세보기</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <div class="detail-box">
+                                    <div>
+                                        <div class="map-box">
+
+                                        </div>
+                                        <div class="parking-box">
+                                            <div>
+                                                <img src="../images/parking11.png" alt="">
+                                                <span class="b16mc">주차 안내</span>
+                                            </div>
+                                            <div>
+                                                <ul>
+                                                    <li>
+                                                        <span class="b16dg">주차장 운영 여부</span>
+                                                        <span class="r16b">O</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="b16dg">주차 가능 대수</span>
+                                                        <span class="r16b">50대</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="b16dg">비용 부담 여부</span>
+                                                        <span class="r16b">무료</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="b16dg">기타</span>
+                                                        <span class="r16b">주차장은 임대업자의 운영으로 인하여 유료로 하고 있음</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="info-box">
+                                            <strong class="b18mc">안양명내과의원</strong>
+                                            <ul>
+                                                <li>
+                                                    <span class="b16dg">주소</span>
+                                                    <span class="r16b">경기도 안양시 만안구 양화로 112 4층 (박달동, 상민빌딩)</span>
+                                                </li>
+                                                <li>
+                                                    <span class="b16dg">검진실 전화번호</span>
+                                                    <span class="r16b">031-455-5272</span>
+                                                </li>
+                                                <li>
+                                                    <span class="b16dg">진료과목</span>
+                                                    <span class="r16b">내과, 결핵과</span>
+                                                </li>
+                                                <li>
+                                                    <span class="b16dg">구분</span>
+                                                    <span class="r16b">의원</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <div class="info-box">
+                                                    <strong class="b16mc">공휴일 검진 항목</strong>
+                                                    <ul>
+                                                        <li>
+                                                            <span class="b16dg">공휴일</span>
+                                                            <div>
+                                                                <span class="r16b">일반, 구강, 영유아, 학생</span>
+                                                                <span class="r16b">대장암, 간암, 자궁경부암, 위암, 유방암</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span class="b16dg">일휴일</span>
+                                                            <div>
+                                                                <span class="r16b">일반, 구강, 영유아, 학생</span>
+                                                                <span class="r16b">대장암, 간암, 자궁경부암, 위암, 유방암</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box">
+                                                    <strong class="b16mc">교통편 안내</strong>
+                                                    <ul>
+                                                        <li>
+                                                            <span class="b16dg">시내버스</span>
+                                                            <div>
+                                                                <div><span class="r16b">박달사거리에서 하차</span><span class="r15dg">500m</span></div>
+                                                                <span class="r15dg">(3, 8, 88, 37-1, 12, 6)</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span class="b16dg">마을버스</span>
+                                                            <div>
+                                                                <div><span class="r16b">박달사거리에서 하차</span><span class="r15dg">500m</span></div>
+                                                                <span class="r15dg">(3, 8, 88, 37-1, 12, 6)</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span class="b16dg">지하철</span>
+                                                            <div>
+                                                                <div><span class="r16b">1호선 안양역에서 하차</span><span class="r15dg">500m</span></div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="info-box">
+                                                <strong class="b16mc">운영시간 안내</strong>
+                                                <ul>
+                                                    <li>
+                                                        <span class="b16dg">검진시간</span>
+                                                        <ul>
+                                                            <li>
+                                                                <span class="r16dg">평일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">토요일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">일요일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">공휴일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <span class="b16dg">점심시간</span>
+                                                        <ul>
+                                                            <li>
+                                                                <span class="r16dg">평일</span>
+                                                                <span class="r16b">13시 00분 ~ 14시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">주말</span>
+                                                                <span class="r16b">13시 00분 ~ 14시 00분</span>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <span class="b16dg">접수시간</span>
+                                                        <ul>
+                                                            <li>
+                                                                <span class="r16dg">평일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">토요일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">일요일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="r16dg">공휴일</span>
+                                                                <span class="r16b">09시 00분 ~ 19시 00분</span>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- hr -->
+                    </tbody>
+                </table>
+                <!-- 페이지네이션 -->
+                <div class="pagination-box">
+                    <ul>
+                        <li>
+                            <button class=""><img src="../images/arrow_left6.png" alt=""></button>
+                        </li>
+                        <li>
+                            <button class="current-page r15w">1</button>
+                        </li>
+                        <li>
+                            <button class="r15mc">2</button>
+                        </li>
+                        <li>
+                            <button class="r15mc">3</button>
+                        </li>
+                        <li>
+                            <button class="r15mc">4</button>
+                        </li>
+                        <li>
+                            <button class="r15mc">5</button>
+                        </li>
+                        <li>
+                            <button class="r15mc">...</button>
+                        </li>
+                        <li>
+                            <button class="r15mc">10</button>
+                        </li>
+                        <li>
+                            <button class="clickable"><img src="../images/arrow_right6.png" alt=""></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

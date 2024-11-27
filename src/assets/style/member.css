@@ -1,0 +1,28 @@
+/* member 공통 */
+.member{display: flex; justify-content: center; align-items: center; height:100vh;}
+.member>div{width:400px; padding-top:70px; font-size: 17px;}
+.member .title{margin-bottom:25px; text-align: center; font-family: 'GangwonExtraBoldA';  font-size: 40px; color:#154757;}
+
+.member form p{margin-top:20px; padding-left:5px;}
+.member form input{width:100%; margin-top:5px; padding:0 10px; border:1px solid #ddd; outline: none; border-radius: 10px; line-height: 48px; font-size: 17px;}
+.member form input::placeholder{color:#aaa; font-size: 15px;}
+.member form+p{margin-top:20px; text-align: center;}
+.member form+p a{border-bottom:1px solid #154757; font-size: 13px; color:#154757;}
+.member form button{margin-top: 5px; border: 1px solid #154757; border-radius: 10px; line-height: 50px; font-family: 'Pretendard-Bold'; background: #154757; font-size: 17px; color:#fff; cursor: pointer; }
+.member form button.last-btn{width:100%; margin-top:30px;}
+
+ 
+/* @@@@@@@@@ 로그인 @@@@@@@@@ */
+#login form .f-right{float: right; margin:15px 5px 0 0; font-size: 13px;}
+#login form .f-right::after{content: ""; display: block; clear: both;}
+#login form .f-right a:first-child{margin-right:10px; padding-right:10px; border-right:1px solid #ddd;}
+
+
+/* @@@@@@@@@ 회원가입 @@@@@@@@@ */
+#join h5{margin-left:5px; font-size: 17px;}
+#join form span{display: block; margin:5px 0 0 5px; font-size: 13px; color:#aaa;}
+#join form button{width:100%;}
+#join form .id button{width:130px; margin-left:5px;}
+#join form .phone button{width:190px; margin-left:5px;}
+
+
