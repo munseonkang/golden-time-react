@@ -1,0 +1,241 @@
+body {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* 스크롤바 */
+#emergency .scroll {
+    overflow: auto;
+}
+#emergency .scroll::-webkit-scrollbar {
+    width: 5px;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+#emergency .scroll::-webkit-scrollbar-track {
+    background-color: #ddd;
+    border-radius: 3px;
+}
+#emergency .scroll::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 3px;
+}
+
+/* 폰트 */
+#emergency .b25mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 25px;
+    color: #154757;
+}
+#emergency .b20b{
+    font-family: 'Pretendard-Bold';
+    font-size: 20px;
+    color: #111;
+}
+#emergency .b18mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 18px;
+    color: #154757;
+}
+#emergency .b17mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 17px;
+    color: #154757;
+}
+#emergency .b16mc{
+    font-family: 'Pretendard-Bold';
+    font-size: 16px;
+    color: #154757;
+}
+#emergency .b15b{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #111;
+}
+#emergency .b14dg{
+    font-family: 'Pretendard-Bold';
+    font-size: 14px;
+    color: #3A7A8F;
+}
+#emergency .b13b{
+    font-family: 'Pretendard-Bold';
+    font-size: 13px;
+    color: #111;
+}
+#emergency .b13dp{
+    font-family: 'Pretendard-Bold';
+    font-size: 13px;
+    color: #F07F8E;
+}
+#emergency .r20b{
+    font-family: 'Pretendard-Regular';
+    font-size: 20px;
+    color: #111;
+}
+#emergency .r18mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 18px;
+    color: #154757;
+}
+#emergency .r17b{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #111;
+}
+#emergency .r17w{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #fff;
+}
+#emergency .r17dp{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #F07F8E;
+}
+#emergency .r17mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #154757;
+}
+#emergency .r17g{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #444;
+}
+#emergency .r16mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #154757;
+}
+#emergency .r16dg{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #3A7A8F;
+}
+#emergency .r16b{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #111;
+}
+#emergency .r15mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #154757;
+}
+#emergency .r15dg{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #3A7A8F;
+}
+#emergency .r15w{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #fff;
+}
+#emergency .r15b{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #111;
+}
+#emergency .r15d{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #ddd;
+}
+#emergency .r15f0{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #FF0000;
+}
+#emergency .r158{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #888;
+}
+#emergency .r14g{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #aaa;
+}
+#emergency .r14mc{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #154757;
+}
+#emergency .r13w{
+    font-family: 'Pretendard-Regular';
+    font-size: 13px;
+    color: #fff;
+}
+#emergency .r13b{
+    font-family: 'Pretendard-Regular';
+    font-size: 13px;
+    color: #111;
+}
+#emergency .r12b{
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+}
+#emergency .r128{
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+    color: #888;
+}
+
+/* 응급실 */
+#emergency { margin: 0 auto; position: relative; display: flex; overflow: hidden; height: 100vh;}
+
+/* 지도 */
+#emergency .map-background { position: absolute; width: 100%; height: 100vh; margin-top: 70px; z-index: 1;}
+
+/* 왼쪽 사이드바 */
+#emergency .sidebar { float: left; width: 400px; height: 100vh; margin-top: 70px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); overflow-x: hidden; overflow-y: auto; background-color: #f7f7f7; z-index: 2;}
+#emergency .sidebar .search-boxes { margin: 15px 15px 13px;} 
+#emergency .sidebar .search-boxes .select-boxs { display: flex; width: 370px; gap: 6px; margin-bottom: 10px;} 
+#emergency .sidebar .search-boxes .select-boxs select { width: 182px; height: 40px; border: 1px solid #154757; border-radius: 5px; padding: 11px 8px;} 
+#emergency .sidebar .search-boxes .search-box { width: 370px; height: 40px; border: none; position: relative; } 
+#emergency .sidebar .search-boxes .search-box .input { width: 100%; height: 100%; border: 1px solid #154757; border-radius: 5px; padding-left: 10px;} 
+#emergency .sidebar .search-boxes .search-box .input::placeholder { font-family: 'Pretendard-Regular'; font-size: 15px; color: #ddd;}
+#emergency .sidebar .search-boxes .search-box .search-button { width: 40px; height: 40px; background-color: #154757; border: none; border-top-right-radius: 5px; border-bottom-right-radius: 5px; position: absolute; top: 0; right: 0;} 
+#emergency .sidebar .total-count { margin-left: 20px;}
+#emergency .sidebar .list { width: 360px; margin: 4px 20px 0 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background-color: #fff; cursor: pointer;}
+#emergency .sidebar .list .title { display: flex; gap: 7px; margin-bottom: 2px;}
+#emergency .sidebar .list .acg9 { display: flex; align-items: center; gap: 9px; margin: 8px 0;}
+#emergency .sidebar .list .acg9 img { width: 15px; height: 15px;}
+#emergency .sidebar .list .s-table { width: 336px; height: 50px; table-layout: fixed; border-collapse: separate; border-spacing: 0; overflow: hidden;}
+#emergency .sidebar .list .s-table img { margin-right: 5px;}
+#emergency .sidebar .list .s-table th,
+#emergency .sidebar .list .s-table td { height: 22px; padding: 0; text-align: center; margin-bottom: 8px; font-weight: normal;}
+#emergency .sidebar .list .s-table td { font-size: 13px;}
+#emergency .sidebar .list .s-table thead tr { background-color: #154757;}
+#emergency .sidebar .list .s-table thead tr th:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px;}
+#emergency .sidebar .list .s-table thead tr th:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
+
+/* 종합상황판 */
+#emergency .simple-detail { height: calc(100vh - 110px); margin: 95px 10px 16px 22px; width: 200px; background-color: #fff; z-index: 2;}
+#emergency .situation-board { width: 720px; height: calc(100vh - 110px); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); padding: 14px 25px 20px 18px; margin: 95px 10px 16px 22px; overflow-x: hidden; overflow-y: auto; padding-bottom: 10px; position: relative; background-color: #fff; z-index: 2;}
+#emergency .situation-board .top-title { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #d9d9d9;}
+#emergency .situation-board .top-title .close-button { background-color: #fff; border: none; cursor: pointer;}
+#emergency .situation-board .top-title img { width: 16px; height: 16px;}
+#emergency .situation-board .emergency-name { margin: 16px 0 20px;}
+#emergency .situation-board .big-item { margin-bottom: 25px; width: 677px; }
+#emergency .situation-board .big-item .title,
+#emergency .situation-board .big-item .sub-title { margin-bottom: 6px;}
+#emergency .situation-board .big-item .b-table { width: 100%; table-layout: fixed; border: none; border-collapse: collapse; font-size: 13px; margin-bottom: 25px;}
+#emergency .situation-board .big-item .b-table img { margin-right: 5px;}
+#emergency .situation-board .big-item .item-boxs .item-box .b-table { margin-bottom: 15px !important;}
+#emergency .situation-board .big-item .b-table tr:nth-child(odd) { background-color: #fafafa;}
+#emergency .situation-board .big-item .b-table td { height: 26px; border: 1px solid #ddd; text-align: center; padding: 5px;}
+#emergency .situation-board .big-item .m-table td { width: 677px; text-align: left; padding-left: 10px; margin-bottom: 15px !important;}
+#emergency .situation-board .big-item .m-table td:first-child { width: 75%;}
+#emergency .situation-board .big-item .m-table td:nth-child(2) { width: 25%;}
+#emergency .situation-board .hospital-detail { display: flex; justify-content: center; position: absolute; width: 100%;}
+#emergency .situation-board .hospital-detail .button { width: 141px; height: 46px; border: none; border-radius: 25px; font-weight: normal; background-color: #FC7486; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); outline: none; cursor: pointer; position: fixed; bottom: 50px; z-index: 1000;}
+
+/* 라인잡기 */
+div {
+    /* outline: 1px solid black; */
+}
