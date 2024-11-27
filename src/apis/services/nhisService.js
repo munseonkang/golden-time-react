@@ -11,7 +11,7 @@ export async function search(terms, callback) {
             siGunGuCd: siGunGuCd,
             pageNo: terms.pageNo
         });
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         callback(response.data.response.body);
     }
     catch(error) {
