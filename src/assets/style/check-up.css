@@ -191,7 +191,9 @@ table{
     text-align: left;
     cursor: inherit;
 }
-#check-up .search .top-box .item-box:nth-of-type(1),:nth-of-type(2),:nth-of-type(3){
+#check-up .search .top-box .item-box:nth-of-type(1),
+#check-up .search .top-box .item-box:nth-of-type(2),
+#check-up .search .top-box .item-box:nth-of-type(3){
     position: relative;
 }
 #check-up .search .top-box .item-box:nth-of-type(1) .input-box{
@@ -397,7 +399,8 @@ table{
     width: 100%;
     margin-top: 24px;
 }
-#check-up .result table tr th, td{
+#check-up .result table tr th .result table tr td, 
+#check-up .result table tr check-up .result table tr td{
     text-align: left;
     padding-right: 35px;
 }
@@ -413,26 +416,33 @@ table{
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-#check-up .result table tr th:first-of-type, td:first-of-type{
+#check-up .result table tr th:first-of-type,
+#check-up .result table tr td:first-of-type{
     max-width: 221px;
     padding-left: 15px;
 }
-#check-up .result table tr th:nth-of-type(2), td:nth-of-type(2){
+#check-up .result table tr th:nth-of-type(2),
+#check-up .result table tr td:nth-of-type(2){
     width: 110px;
 }
-/* #check-up .result table tr th:nth-of-type(3), td:nth-of-type(3){
+/* #check-up .result table tr th:nth-of-type(3),
+    #check-up .result table tr td:nth-of-type(3){
     width: 157px;
 } */
-#check-up .result table tr th:nth-of-type(3) ,td:nth-of-type(3){
+#check-up .result table tr th:nth-of-type(3), 
+#check-up .result table tr td:nth-of-type(3){
     width: 401px;
 }
-#check-up .result table tr th:nth-of-type(4) ,td:nth-of-type(4){
+#check-up .result table tr th:nth-of-type(4),
+#check-up .result table tr td:nth-of-type(4){
     width: 175px;
 }
-#check-up .result table tr th:nth-of-type(5) ,td:nth-of-type(5){
+#check-up .result table tr th:nth-of-type(5),
+#check-up .result table tr td:nth-of-type(5){
     width: 62px;
 }
-#check-up .result table tr th:nth-of-type(6) ,td:nth-of-type(6){
+#check-up .result table tr th:nth-of-type(6),
+#check-up .result table tr td:nth-of-type(6){
     width: 93px;
     padding-right: 20px;
 }
@@ -473,7 +483,7 @@ table{
     background-image: url('../images/arrow_below10.png');
     margin-top: 5px;
 }
-#check-up .result table tbody tr.item:not(:first-of-type, :nth-of-type(2)){
+#check-up .result table tbody tr.item:not(:first-of-type):not(:nth-of-type(2)){
     border-top: 1px solid #eee;
 }
 
@@ -492,7 +502,8 @@ table{
     height: 37px;
     border-radius: 5px;
 }
-#check-up .result .pagination-box ul li button:first-of-type, button:last-of-type{
+#check-up .result .pagination-box ul li button:first-of-type,
+#check-up .result .pagination-box ul li button:last-of-type{
     display: flex;
     justify-content: center;
     align-items: center;
