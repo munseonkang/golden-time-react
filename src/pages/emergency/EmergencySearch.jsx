@@ -1,20 +1,48 @@
 import { images } from "../../utils/images";
 import {sido, regionMap} from "../../constants/regions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const EmergencySearch = ({onSearch}) => {
-    const [selectedSido, setSido] = useState("");
-    const [regions, setRegions] = useState([]);
-    const [region, setRegion] = useState("");
+const EmergencySearch = ({ onSearch }) => {
+    const [selectedSido, setSelectedSido] = useState("");
+    const [selectedRegion, setSelectedRegion] = useState("");
     const [keyword, setKeyword] = useState("");
+    const [regions, setRegions] = useState([]);
 
-    const handleSearch = () => {
-        if(!selectedSido || !region) {
-            alert("지역을 선택해주세요.");
-            return;
+    // 지역 업데이트
+    useEffect(() => {
+        if(selectedSido) {
+            setRegions(regionMap.get(selectedSido) || []);
         }
-        onSearch({selectedSido, region, keyword: keyword || null});
-    }
+    }, [selectedSido]);
+
+    // api 호출
+    useEffect(() => {
+        if (selectedRegion) {
+            onSearch({
+                region: { sido: selectedSido, sigungu: selectedRegion },
+                keyword,
+            });
+        }
+    }, [selectedSido, selectedRegion, keyword]);
+
+    // 상위로 전달
+    const handleSearch = () => {
+        onSearch({
+            region: { sido: selectedSido, sigungu: selectedRegion }, 
+            keyword: keyword || null
+        });
+    };
+
+    // 시구군 선택 시 api 호출
+    const handleRegionChange = (e) => {
+        setSelectedRegion(e.target.value)
+        
+        // 즉시 api 호출
+        onSearch({
+            region: { sido: selectedSido, sigungu: selectedRegion }, 
+            keyword: keyword || null
+        });
+    };
 
     return (
         <div className="search-boxes">
@@ -24,29 +52,23 @@ const EmergencySearch = ({onSearch}) => {
                     id="sido" 
                     value={selectedSido} 
                     onChange={(e) => {
-                        setSido(e.target.value);
-                        setRegions(regionMap.get(e.target.value) || []);
+                        setSelectedSido(e.target.value);
+                        setSelectedRegion(""); //sido 변경시 selectredRegion 초기화
                         }}>
                     <option value="">시/도 선택</option>
-                    {
-                        sido.map((sidoName, index) => (
-                            <option key={index} value={sidoName}>{sidoName}</option>
-                        ))
-                    }
+                    {sido.map((sidoName, index) => (
+                        <option key={index} value={sidoName}>{sidoName}</option>
+                    ))}
                 </select>
                 <select 
                     name="region" 
                     id="region" 
-                    value={region} 
-                    onChange={(e) => {
-                        setRegion(e.target.value)
-                        }}>
+                    value={selectedRegion} 
+                    onChange={handleRegionChange}>
                     <option value="">시/구/군 선택</option>
-                    {
-                        regions.map((region, index) => (
-                            <option key={index} value={region}>{region}</option>
-                        ))
-                    }
+                    {regions.map((regionName, index) => (
+                        <option key={index} value={regionName}>{regionName}</option>
+                    ))}
                 </select>
             </div>
             <div className="search-box">
@@ -56,11 +78,16 @@ const EmergencySearch = ({onSearch}) => {
                     name="emergencyName" 
                     id="emergencyName" 
                     value={keyword} 
-                    onChange={(e) => {
-                        setKeyword(e.target.value)
+                    onChange={(e) => setKeyword(e.target.value)}
+                    onKeyDown={(e) => {
+                        if(e.key === "Enter") {
+                            e.preventDefault();
+                            handleSearch();
+                        }
                     }}
                 />
-                <button className="search-button" onClick={handleSearch}>
+                <button className="search-button" 
+                    onClick={handleSearch}>
                     <img src={images['search19_w.png']} alt="검색" />
                 </button>
             </div>
