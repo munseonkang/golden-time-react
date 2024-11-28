@@ -33,7 +33,7 @@ const Pharmacy = () => {
     };
 
 
-    
+
 
 
     const [selectedSido, setSelectedSido] = useState('all');
@@ -67,7 +67,11 @@ const Pharmacy = () => {
 
     const handleAreaChange = (e) => {
         setSelectedArea(e.target.value);
+        // handleSearch();
     };
+
+
+
 
     //약국 api 불러오는
 
@@ -75,10 +79,14 @@ const Pharmacy = () => {
     // const [loading, setLoading] = useState(false);
     // const [error, setError] = useState(null);
 
+
+    
+
+    // 검색버튼 클릭시 선택된 시/도와 시/군/구 값으로 API 호출
     const handleSearch = () => {
-        // 선택된 시/도와 시/군/구 값으로 API 호출
-        fetchpharm(selectedSido, selectedArea);
+        fetchpharm(selectedSido, selectedArea, keyword);
     };
+
 
     const fetchpharm = async (sido, area) => {
         try {
@@ -89,8 +97,9 @@ const Pharmacy = () => {
             const response = await axios.get(URL, {
                 params: {
                     serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
-                    Q0: sido === 'all' ? '' : sido,  
-                    Q1: area === 'all' ? '' : area,  
+                    Q0: sido === 'all' ? '' : sido,
+                    Q1: area === 'all' ? '' : area,
+                    QN: keyword ? keyword : '',
                     numOfRows: 700,
                     pageNo: 1
                 }
@@ -107,12 +116,103 @@ const Pharmacy = () => {
         // setLoading(false);
     };
 
+    // useEffect(() => {
+    //     fetchpharm();
+    // }, []);
+
+    //군/구 선택시 자동으로 데이터를 불러오는 것
     useEffect(() => {
-        fetchpharm();
-    }, []);
+        if (selectedSido !== 'all' && selectedArea !== 'all') {
+            fetchpharm(selectedSido, selectedArea);
+        }
+    }, [selectedSido, selectedArea]);
 
 
     //지도 api
+
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [region, setRegion] = useState({
+        sido: "", // 시/도
+        sigungu: "", // 시/군/구
+    });
+
+    const getLocation = async () => {
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        setLatitude(position.coords.latitude);
+                        setLongitude(position.coords.longitude);
+                        resolve({ latitude, longitude });
+                        // console.log("1.위도:", latitude, "/ 경도:", longitude);
+
+                        getAddress(latitude, longitude);
+                    },
+                    (error) => {
+                        console.error("위치 정보를 가져오는 데 실패했습니다.", error);
+                        reject(error);
+                    }
+                );
+            } else {
+                alert("Geolocation을 지원하지 않는 브라우저입니다.");
+                reject(new Error("Geolocation not supported"));
+            }
+        });
+    };
+
+    const getAddress = async (latitude, longitude) => {
+        const appKey = process.env.REACT_APP_TMAP_APP_KEY;
+        const version = "1";
+        const url = `https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=${version}&lat=${latitude}&lon=${longitude}&appKey=${appKey}`;
+    
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
+            const data = await response.json();
+            if (data) {
+                const cityDo = data.addressInfo.city_do; // 시/도
+                const sigungu = data.addressInfo.gu_gun; // 시/군/구
+
+                if (sigungu.includes(' ')) {
+                    // 첫 번째 띄어쓰기를 기준으로 잘라서 첫 번째 부분만 사용
+                    sigungu = sigungu.split(' ')[0];
+                }
+
+                setRegion({
+                    sido: cityDo,
+                    sigungu: sigungu,
+                });
+    
+                if (regions.sido.includes(cityDo)) {
+                    setSelectedSido(cityDo);
+    
+                    // 시/도가 변경되면, 해당 시/도의 군/구 목록에서 군/구를 선택
+                    if (areaMapping[cityDo]?.includes(sigungu)) {
+                        setSelectedArea(sigungu);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("주소 변환 오류: ", error);
+        }
+    };
+
+    useEffect(() => {
+        const initialize = async () => {
+            try {
+                const location = await getLocation();
+                await getAddress(location.latitude, location.longitude);
+            } catch (error) {
+                console.error("초기화 오류:", error);
+            }
+        };
+        initialize();
+    }, []);
+
 
     const { Tmapv2 } = window;
 
@@ -123,7 +223,7 @@ const Pharmacy = () => {
         if (!mapDiv.firstChild) {
             const tmap = new Tmapv2.Map("map_div",
                 {
-                    center: new Tmapv2.LatLng(37.566481622437934, 126.98502302169841), // 지도 초기 좌표
+                    center: new Tmapv2.LatLng(latitude, longitude), // 지도 초기 좌표
                     width: "100%",
                     height: "calc(100vh - 70px)",
                     zoom: 15,
@@ -134,54 +234,56 @@ const Pharmacy = () => {
     };
 
     const [markers, setMarkers] = useState([]);
+    const markerImage = images['marker_pharmacy.png'];
 
     const createMarkers = (data) => {
         const pharmacies = data?.response?.body?.items?.item;
-        
-        if (pharmacies) { 
-            
+
+        if (pharmacies) {
+
             removeMarkers();
-    
+
             // pharmacies 배열을 순회하며 마커를 생성
             pharmacies.forEach((pharmacy) => {
                 const lat = pharmacy.wgs84Lat;
                 const lon = pharmacy.wgs84Lon;
                 const title = pharmacy.dutyName;
-    
+
                 if (lat && lon) {
                     const position = new Tmapv2.LatLng(lat, lon); // Tmapv3.LatLng으로 위치 설정
                     const marker = new Tmapv2.Marker({
                         position: position,
                         map: map, // 마커가 표시될 Map 객체
                         // label: title // 마커 라벨로 약국 이름 설정
+                        icon: markerImage
                     });
 
-                    marker.addListener("mouseenter", function(evt) {
+                    marker.addListener("mouseenter", function (evt) {
                         marker.setLabel(title);  // 마우스 오버 시 label을 표시
                     });
 
-                    marker.addListener("mouseleave", function(evt) {
+                    marker.addListener("mouseleave", function (evt) {
                         marker.setLabel('');  // 마우스 벗어날 때 label 숨기기
                     });
 
-                    marker.addListener("click", function(evt) {
+                    marker.addListener("click", function (evt) {
                         handleOpenDetail(pharmacy);  // pharmacy 객체를 전달하여 handleOpenDetail 호출
                         map.setCenter(position); // 마커 클릭시 center로 이동, 그러나 마커 클릭시에는 없에는게 좋을듯
                         map.setZoom(18);
-                        
+
                     });
-    
+
                     // 상태에 마커 추가
                     setMarkers(prevMarkers => [...prevMarkers, marker]);
-                    
+
                     map.setCenter(position); // 마커 생성시 center로 이동
                     map.setZoom(13);
-                    
+
                 }
             });
         }
     };
-    
+
     // 모든 마커를 제거하는 함수
     const removeMarkers = () => {
         markers.forEach(marker => {
@@ -191,10 +293,10 @@ const Pharmacy = () => {
     };
 
     useEffect(() => {
-
-        initTmap();
-
-    }, []);
+        if (latitude !== null && longitude !== null) {
+            initTmap();
+        }
+    }, [latitude, longitude]);
 
     //날짜 계산
     const formatTime = (time) => {
@@ -246,13 +348,13 @@ const Pharmacy = () => {
         const lat = pharmacy.wgs84Lat;
         const lon = pharmacy.wgs84Lon;
         const position = new Tmapv2.LatLng(lat, lon);  // 마커의 위치
-    
+
         // 지도 중심을 해당 약국의 위치로 이동시키고 줌을 설정
         if (map) {
             map.setCenter(position);
             map.setZoom(18);  // 줌 레벨 설정
         }
-    
+
         // 약국 세부 정보 표시
         handleOpenDetail(pharmacy);
     };
@@ -264,13 +366,12 @@ const Pharmacy = () => {
         setIsDetailOpen(true);
     };
 
+    //검색 기능
+    const [keyword, setKeyword] = useState('');
+
 
     return (
         <>
-            <div id="header" className="short flex">
-                <Header></Header>
-            </div>
-
             <div id="yakgook">
                 <div class="flex top">
 
@@ -298,7 +399,9 @@ const Pharmacy = () => {
                                     </select>
                                 </div>
                                 <div class="flex">
-                                    <input type="search" id="keyword" name="keyword" placeholder="약국명 검색" />
+                                    <input type="search" id="keyword" name="keyword" placeholder="약국명 검색"
+                                        value={keyword}
+                                        onChange={(e) => setKeyword(e.target.value)} />
                                     <a id="search-btn" class="btn" onClick={handleSearch}>
                                         <img src={images['search20_w.png']} alt="" />
                                     </a>
