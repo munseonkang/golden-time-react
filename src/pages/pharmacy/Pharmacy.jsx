@@ -80,7 +80,7 @@ const Pharmacy = () => {
     // const [error, setError] = useState(null);
 
 
-    
+
 
     // 검색버튼 클릭시 선택된 시/도와 시/군/구 값으로 API 호출
     const handleSearch = () => {
@@ -90,9 +90,10 @@ const Pharmacy = () => {
 
     const fetchpharm = async (sido, area) => {
         try {
-            // setError(null);
+            //기존 모달창 닫기
+            setIsDetailOpen(false);
+            
             setpharm(null);
-            // setLoading(true);
 
             const response = await axios.get(URL, {
                 params: {
@@ -148,6 +149,8 @@ const Pharmacy = () => {
                         resolve({ latitude, longitude });
                         // console.log("1.위도:", latitude, "/ 경도:", longitude);
 
+                        createCurrentLocationMarker(latitude, longitude);
+
                         getAddress(latitude, longitude);
                     },
                     (error) => {
@@ -166,7 +169,7 @@ const Pharmacy = () => {
         const appKey = process.env.REACT_APP_TMAP_APP_KEY;
         const version = "1";
         const url = `https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=${version}&lat=${latitude}&lon=${longitude}&appKey=${appKey}`;
-    
+
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -186,10 +189,10 @@ const Pharmacy = () => {
                     sido: cityDo,
                     sigungu: sigungu,
                 });
-    
+
                 if (regions.sido.includes(cityDo)) {
                     setSelectedSido(cityDo);
-    
+
                     // 시/도가 변경되면, 해당 시/도의 군/구 목록에서 군/구를 선택
                     if (areaMapping[cityDo]?.includes(sigungu)) {
                         setSelectedArea(sigungu);
@@ -236,61 +239,126 @@ const Pharmacy = () => {
     const [markers, setMarkers] = useState([]);
     const markerImage = images['marker_pharmacy.png'];
 
+
+    // 모든 마커를 제거하는 함수
+
     const createMarkers = (data) => {
         const pharmacies = data?.response?.body?.items?.item;
 
         if (pharmacies) {
+            removeMarkers(); // 기존 마커 제거
 
-            removeMarkers();
+            // pharmacies가 배열인지 확인 후 순회
+            if (Array.isArray(pharmacies)) {
+                pharmacies.forEach((pharmacy) => {
+                    const lat = pharmacy.wgs84Lat;
+                    const lon = pharmacy.wgs84Lon;
+                    const title = pharmacy.dutyName;
 
-            // pharmacies 배열을 순회하며 마커를 생성
-            pharmacies.forEach((pharmacy) => {
+                    if (lat && lon) {
+                        const position = new Tmapv2.LatLng(lat, lon);
+                        const marker = new Tmapv2.Marker({
+                            position: position,
+                            map: map,
+                            icon: markerImage
+                        });
+
+                        marker.addListener("mouseenter", function (evt) {
+                            marker.setLabel(title);
+                        });
+
+                        marker.addListener("mouseleave", function (evt) {
+                            marker.setLabel('');
+                        });
+
+                        marker.addListener("click", function (evt) {
+                            handleOpenDetail(pharmacy);
+                            map.setCenter(position);
+                            map.setZoom(18);
+                        });
+
+                        setMarkers(prevMarkers => [...prevMarkers, marker]);
+                        map.setCenter(position);
+                        map.setZoom(13);
+                    }
+                });
+            } else if (pharmacies) {
+                // pharmacies가 배열이 아닌 경우 (단일 객체일 때)
+                const pharmacy = pharmacies;
                 const lat = pharmacy.wgs84Lat;
                 const lon = pharmacy.wgs84Lon;
                 const title = pharmacy.dutyName;
 
                 if (lat && lon) {
-                    const position = new Tmapv2.LatLng(lat, lon); // Tmapv3.LatLng으로 위치 설정
+                    const position = new Tmapv2.LatLng(lat, lon);
                     const marker = new Tmapv2.Marker({
                         position: position,
-                        map: map, // 마커가 표시될 Map 객체
-                        // label: title // 마커 라벨로 약국 이름 설정
+                        map: map,
                         icon: markerImage
                     });
 
                     marker.addListener("mouseenter", function (evt) {
-                        marker.setLabel(title);  // 마우스 오버 시 label을 표시
+                        marker.setLabel(title);
                     });
 
                     marker.addListener("mouseleave", function (evt) {
-                        marker.setLabel('');  // 마우스 벗어날 때 label 숨기기
+                        marker.setLabel('');
                     });
 
                     marker.addListener("click", function (evt) {
-                        handleOpenDetail(pharmacy);  // pharmacy 객체를 전달하여 handleOpenDetail 호출
-                        map.setCenter(position); // 마커 클릭시 center로 이동, 그러나 마커 클릭시에는 없에는게 좋을듯
+                        handleOpenDetail(pharmacy);
+                        map.setCenter(position);
                         map.setZoom(18);
-
                     });
 
-                    // 상태에 마커 추가
                     setMarkers(prevMarkers => [...prevMarkers, marker]);
-
-                    map.setCenter(position); // 마커 생성시 center로 이동
+                    map.setCenter(position);
                     map.setZoom(13);
-
                 }
-            });
+            }
         }
     };
 
-    // 모든 마커를 제거하는 함수
+
     const removeMarkers = () => {
         markers.forEach(marker => {
             marker.setMap(null);
         });
         setMarkers([]); // 상태 초기화
     };
+
+    const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
+    const markerImage2 = images['marker_checkup.png'];
+
+    const createCurrentLocationMarker = (latitude, longitude) => {
+        if (map) {
+            // 기존 현재 위치 마커가 있으면 제거
+            if (currentLocationMarker) {
+                currentLocationMarker.setMap(null);
+            }
+
+            // 새로운 현재 위치 마커 생성
+            const position = new Tmapv2.LatLng(latitude, longitude);
+            const marker = new Tmapv2.Marker({
+                position: position,
+                map: map,
+                icon: markerImage2, // 현재 위치를 나타내는 마커 아이콘
+                label: '현재위치'
+            });
+
+            // 상태에 현재 위치 마커 저장
+            setCurrentLocationMarker(marker);
+        }
+    };
+
+    useEffect(() => {
+        if (latitude !== null && longitude !== null) {
+            if (map) {
+                createCurrentLocationMarker(latitude, longitude);
+            }
+        }
+    }, [latitude, longitude, map]);
+
 
     useEffect(() => {
         if (latitude !== null && longitude !== null) {
@@ -401,7 +469,13 @@ const Pharmacy = () => {
                                 <div class="flex">
                                     <input type="search" id="keyword" name="keyword" placeholder="약국명 검색"
                                         value={keyword}
-                                        onChange={(e) => setKeyword(e.target.value)} />
+                                        onChange={(e) => setKeyword(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                handleSearch();
+                                            }
+                                        }} />
                                     <a id="search-btn" class="btn" onClick={handleSearch}>
                                         <img src={images['search20_w.png']} alt="" />
                                     </a>
@@ -472,7 +546,7 @@ const Pharmacy = () => {
                                 ) : (
                                     // 만약 배열이 아니라 객체일 경우, 이를 배열처럼 처리하여 하나의 항목을 렌더링
                                     pharm?.response?.body?.items?.item ? (
-                                        <li onClick={handleOpenDetail}>
+                                        <li onClick={() => handlePharmacyClick(pharm.response.body.items.item)}>
                                             <div className="name">
                                                 {pharm?.response?.body?.items?.item?.dutyName}
                                                 <a href="#">
