@@ -19,27 +19,18 @@ const Emergency = ()=>{
 
     const API_BASE_URL = "https://apis.data.go.kr/B552657/ErmctInfoInqireService";
 
-    // 지도 초기화
+    // 지도 초기화, 현재 위치
     useEffect(() => {
         const mapDiv = document.getElementById("map_div");
         if(!mapDiv.firstChild && Tmapv2) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    const userLat = position.coords.latitude;
-                    const userLng = position.coords.longitude;
-                    const map = new Tmapv2.Map("map_div", {
-                        center: new Tmapv2.LatLng(userLat, userLng),
-                        zoom: 15,
-                    });
-                    mapRef.current = map;
+                    const { latitude, longitude } = position.coords;
+                    initializeMap(latitude, longitude);
                 },
                 () => {
-                    // 실패 시 기본 좌표로 지도 표시
-                    const map = new Tmapv2.Map("map_div", {
-                        center: new Tmapv2.LatLng(37.566481622437934,126.98502302169841), // 지도 초기 좌표
-                        zoom: 15,
-                    });
-                    mapRef.current = map;
+                    // 실패 시 기본 좌표
+                    initializeMap(37.566481622437934,126.98502302169841);
                 }
             );
         }
@@ -47,10 +38,10 @@ const Emergency = ()=>{
 
     // 지역, 키워드 업데이트
     useEffect(() => {
-        if (region.sigungu) {
+        if (region.sigungu || searchKeyword) {
             getSearchResults();
         }
-    }, [region.sigungu]);
+    }, [region.sigungu, searchKeyword]);
 
     // 마커 업데이트
     useEffect(() => {
@@ -111,6 +102,36 @@ const Emergency = ()=>{
             console.error("api 요청 실패한 이유: ", error);
         }
     };
+    
+    // 지도
+    const initializeMap = (lat, lon) => {
+        if(!mapRef.current && Tmapv2) {
+            mapRef.current = new Tmapv2.Map("map_div", {
+                center: new Tmapv2.LatLng(lat, lon),
+                zoom: 15,
+            });
+        }
+    }
+    
+    // 지도 범위 및 줌 설정
+    const adjustMapToMarkers = (positions) => {
+        if (positions.length === 0 || !mapRef.current) return;
+
+        const latitudes = positions.map((pos) => parseFloat(pos.latitude));
+        const longitudes = positions.map((pos) => parseFloat(pos.longitude));
+
+        const minLat = Math.min(...latitudes);
+        const maxLat = Math.max(...latitudes);
+        const minLon = Math.min(...longitudes);
+        const maxLon = Math.max(...longitudes);
+
+        const bounds = new Tmapv2.LatLngBounds(
+            new Tmapv2.LatLng(minLat, minLon), // 남서쪽
+            new Tmapv2.LatLng(maxLat, maxLon)  // 북동쪽
+        );
+
+        mapRef.current.fitBounds(bounds);
+    }
 
     // 마커
     const createMarkers = (filteredData) => {
@@ -134,13 +155,7 @@ const Emergency = ()=>{
         });
         markersRef.current = newMarkers;
 
-        // 지도 중심 업데이트(전체 평균 마커 기준)
-        if (positions.length > 0) {
-            const avgLat = positions.reduce((sum, pos) => sum + parseFloat(pos.latitude), 0) / positions.length;
-            const avgLon = positions.reduce((sum, pos) => sum + parseFloat(pos.longitude), 0) / positions.length;
-    
-            mapRef.current.setCenter(new Tmapv2.LatLng(avgLat, avgLon));
-        }
+        adjustMapToMarkers(positions);
     };
 
     // 종합상환판 열림
@@ -156,7 +171,7 @@ const Emergency = ()=>{
     };
 
     // onSearch 핸들러 - 지역/키워드 업데이트
-    const handleSearch = ({region, searchKeyword}) => {
+    const handleSearch = ({region, keyword: searchKeyword }) => {
         setRegion(region);
         setSearchKeyword(searchKeyword);
     };

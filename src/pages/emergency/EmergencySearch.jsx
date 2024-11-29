@@ -1,6 +1,7 @@
 import { images } from "../../utils/images";
 import {sido, regionMap} from "../../constants/regions";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const EmergencySearch = ({ onSearch }) => {
     const [selectedSido, setSelectedSido] = useState("");
@@ -14,6 +15,41 @@ const EmergencySearch = ({ onSearch }) => {
             setRegions(regionMap.get(selectedSido) || []);
         }
     }, [selectedSido]);
+
+    // 초기 렌더링 시 현재 위치 가져오기
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                try {
+                    // Reverse Geocoding 요청
+                    const response = await axios.get("https://apis.openapi.sk.com/tmap/geo/reversegeocoding", {
+                        params: {
+                            version: 1,
+                            lat: latitude,
+                            lon: longitude,
+                            appKey: process.env.REACT_APP_TMAP_APP_KEY,
+                        },
+                    });
+
+                    const address = response.data?.addressInfo;
+                    const sido = address?.city_do || "";
+                    const region = address?.gu_gun || "";
+
+                    setSelectedSido(sido);
+                    setSelectedRegion(region);
+
+                    // 자동으로 응급실 목록 검색
+                    onSearch({
+                        region: {sido, sigungu: region},
+                        keyword,
+                    });
+                } catch (error) {
+                    console.log("Reverse Geocoding 실패:", error);
+                }
+            }
+        );
+    }, []);
 
     // api 호출
     useEffect(() => {
@@ -54,6 +90,7 @@ const EmergencySearch = ({ onSearch }) => {
                     onChange={(e) => {
                         setSelectedSido(e.target.value);
                         setSelectedRegion(""); //sido 변경시 selectredRegion 초기화
+                        setKeyword(""); //sido 변경시 keyword 초기화
                         }}>
                     <option value="">시/도 선택</option>
                     {sido.map((sidoName, index) => (

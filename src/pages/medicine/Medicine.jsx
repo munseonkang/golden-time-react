@@ -3,6 +3,7 @@ import '../../assets/style/pharmacy.css';
 import { images } from '../../utils/images';
 import Pagination from '../../components/Pagination';
 import axios from 'axios';
+import MedicineHistory from './MedicineHistory';
 
 const Medicine = () => {
     const [data, setData] = useState([]);
@@ -21,18 +22,18 @@ const Medicine = () => {
     const API_BASE_URL = "https://apis.data.go.kr/1471000";
 
     // 의약품 api
-    const getMedicines = async () => {
+    const getMedicines = async (query) => {
 
         try {
             const [response1, response2] = await axios.all([
                 // 의약품 낱알식별 정보
                 axios.get(`${API_BASE_URL}/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01`, {
                     params: {
+                        item_name: query,
                         serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                         pageNo: 1,
                         numOfRows: 50,
                         type: "json",
-                        item_name: query,
                     },
                 }),
                 // 의약품개요정보(e약은요)
@@ -60,35 +61,20 @@ const Medicine = () => {
 
             setData(medicineData);
             setFilteredData(medicineData);
+            console.log(filteredData);
 
         } catch (error) {
             console.error("api 요청 실패한 이유: ", error);
         }
     };
 
-    // 검색어 입력
-    const handleInputChange = (e) => {
-        const keyword = e.target.value;
-        setQuery(keyword);
-
-        // 연관검색어-  입력값을 포함하는 데이터를 필터링
-        if(keyword.trim() !== ""){
-            const filtered = data.filter((item) => 
-            item.ITEM_NAME.toLowerCase().includes(keyword.toLowerCase())
-            );
-            setSuggestions(filtered);
-        } else {
-            setSuggestions([]);
-        }
-    };
-
     // 검색 버튼 클릭 시
-    const handleSearch = () => {
+    const handleSearch = (query) => {
         if(query.trim() === "") {
             alert("검색어를 입력하세요!");
             return;
         }
-        getMedicines();
+        getMedicines(query);
     };
 
     // 아코디언
@@ -101,37 +87,7 @@ const Medicine = () => {
 
             <div className="dsearch">
                 <h2>의약품 검색</h2>
-                <div className="dsearch-bar">
-                    <div className="input-container">
-                        <img className="search-logo" src={images['logo20.png']} alt="goldtime logo" />
-                        <input 
-                            type="text" 
-                            placeholder="제품명 검색"
-                            name="" id=""
-                            value={query}
-                            onChange={handleInputChange}
-                            onKeyDown={(e) => {
-                                if(e.key === "Enter") {
-                                    handleSearch();
-                                }
-                            }}
-                        />
-                        <button className="ddropdown-button">
-                            <img src={images['dropdown17.png']} alt="열기" />
-                        </button>
-                        <button className="dsearch-button" onClick={handleSearch}>
-                            <img src={images['search20.png']} alt="검색" />
-                        </button>
-                    </div>
-                    {/* <div className="dresult-items">
-                        {filteredData.map((item, index) => (
-                            <div key={index} className="dresult-item">
-                                <img src={images['search16.png']} alt="관련검색어" />
-                                <span>{item.ITEM_NAME}</span>
-                            </div>
-                        ))}
-                    </div> */}
-                </div>
+                <MedicineHistory onSearch={handleSearch} />
             </div>
 
             <div className="ddetail-search">

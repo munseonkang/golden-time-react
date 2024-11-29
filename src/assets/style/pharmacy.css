@@ -200,15 +200,20 @@ body {
 #medicine .dsearch { text-align: center; margin-bottom: 57px;}
 #medicine .dsearch h2 { font-size: 27px; color: #154757; margin-bottom: 30px;}
 #medicine .dsearch .dsearch-bar { position: relative; display: inline-block;}
-#medicine .dsearch .dsearch-bar .input-container { display: flex; width: 880px; border-radius: 30px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); border: 1px solid #ddd; overflow: hidden;}
-#medicine .dsearch .dsearch-bar:focus-within .input-container { display: flex; align-items: center; border-radius: 30px 30px 0 0; border-bottom: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;}
+#medicine .dsearch .dsearch-bar .input-container { display: flex; align-items: center; border-radius: 30px; border: 1px solid #ddd; width: 880px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;}
+
+#medicine .dsearch .dsearch-bar:focus-within .input-container { border-radius: 30px 30px 0 0; border-bottom: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);}
+
 #medicine .dsearch .dsearch-bar .input-container .search-logo { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); margin-right: 10px; height: 30px; text-align: center;}
-#medicine .dsearch .dsearch-bar .input-container input[type="text"] { flex: 1; width: 100%; height: 60px; padding: 18px 80px; border: none; outline: none;}
+
+#medicine .dsearch .dsearch-bar .input-container input[type="text"] { flex: 1; width: 100%; height: 60px; padding: 18px 80px; border: none; outline: none; }
+
 #medicine .dsearch .dsearch-bar .dsearch-button { position: absolute; top: 50%; transform: translateY(-50%); right: 32px; background: none; border: none; cursor: pointer;}
 #medicine .dsearch .dsearch-bar .ddropdown-button { position: absolute; top: 50%; transform: translateY(-50%); right: 75px; background: none; border: none; cursor: pointer;}
-#medicine .dsearch .dsearch-bar .dresult-items { position: absolute; top: 100%; left: 0; width: 100%; background-color: #fff; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-height: 456px; display: none; z-index: 1000; padding-right: 20px;}
-#medicine .dsearch .dsearch-bar:focus-within .dresult-items { display: block;}
-#medicine .dsearch .dsearch-bar .dresult-items .dresult-item { display: flex; align-items: center; padding: 10px 20px; cursor: pointer; padding: 15px; border-radius: 0 30px 30px 0;}
+
+#medicine .dsearch .dsearch-bar .dresult-items { display: block; position: absolute; top: 100%; left: -1px; width: 880px; background-color: #fff; border: 1px solid #ddd; border-top: none; border-radius: 0 0 30px 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-height: 456px; z-index: 1000; }
+
+#medicine .dsearch .dsearch-bar .dresult-items .dresult-item { display: flex; align-items: center; padding: 10px 20px; cursor: pointer; padding: 15px; border-radius: 0 30px 30px 0; width: 100%;}
 #medicine .dsearch .dsearch-bar .dresult-items .dresult-item:hover { background-color: #569eb6; color: white;}
 #medicine .dsearch .dsearch-bar .dresult-items .dresult-item img { width: 20px; height: 20px; margin: 0 20px;}
 
@@ -229,22 +234,30 @@ body {
 #medicine .ddetail-search form .dbutton-row .dsubmit-button { background-color: #154757; color: white; font-size: 17px;}
 
 /* 검색결과 */
-#medicine .dresult { background-color: #fff; border-radius: 10px;}
+#medicine .dresult { background-color: #fff;}
 #medicine .dresult .result-header { display: flex; justify-content: space-between; align-items: center; margin: 90px 0 20px 0;}
 #medicine .dresult .result-header span { font-size: 15px; color: #111;}
-#medicine .dresult .dtable { width: 100%; max-width: 1200px; table-layout: fixed; border-collapse: collapse; border: 1px solid #ddd;}
+#medicine .dresult .dtable { width: 100%; max-width: 1200px; table-layout: fixed; border-collapse: collapse;}
 #medicine .dresult .dtable .no-results { text-align: center; padding: 20px 0;}
-#medicine .dresult .dtable thead th, td { text-align: left; padding: 0 30px; font-weight: normal;}
-#medicine .dresult .dtable thead th { height: 40px; background-color: #154757; color: #fff; font-size: 18px; text-align: center;}
-#medicine .dresult .dtable tbody td { height: 79px; padding: 0 20px;}
-#medicine .dresult .dtable tbody td:first-child { padding: 0;}
-#medicine .dresult .dtable tbody .pill-image { width: 151px; height: 69px;  border-radius: 10px; padding: 0;}
-#medicine .dresult .dtable tbody tr td.img-tag { text-align: center;}
+#medicine .dresult .dtable thead th { height: 40px; background-color: #154757; color: #fff; font-size: 18px; text-align: center; padding: 0 30px; font-weight: normal;}
+
+/* #medicine .dresult .dtable tbody tr:last-child td:first-child {border-bottom-left-radius: 10px;}
+#medicine .dresult .dtable tbody tr:last-child td:last-child {border-bottom-right-radius: 10px;} */
+#medicine .dresult .dtable tbody td:first-child { border-left: 1px solid #ddd;}
+#medicine .dresult .dtable tbody td:last-child { border-right: 1px solid #ddd;}
+#medicine .dresult .dtable tbody tr:last-child td { border-bottom: 1px solid #ddd;}
+#medicine .dresult .dtable tbody td { height: 79px; padding: 0 10px;}
+#medicine .dresult .dtable tbody .pill-image { width: 151px; height: 69px; border-radius: 10px; padding: 0;}
+#medicine .dresult .dtable tbody tr td.img-tag { text-align: center; vertical-align: middle;}
 #medicine .dresult .dtable tbody .accordion-cell { text-align: left; padding-left: 0;}
 #medicine .dresult .dtable tbody tr:hover { background-color: #f5f5f5;}
 #medicine .dresult .dtable tbody tr.no-hover:hover { background-color: transparent;}
+
+#medicine .dresult .dtable thead th:first-child { border-radius: 10px 0 0 0;}
+#medicine .dresult .dtable thead th:last-child { border-radius: 0 10px 0 0;}
+
 #medicine .dresult .dtable thead th:nth-child(1),
-#medicine .dresult .dtable tbody td:nth-child(1) { width: 180px;}
+#medicine .dresult .dtable tbody td:nth-child(1) { width: 180px; }
 #medicine .dresult .dtable thead th:nth-child(3),
 #medicine .dresult .dtable tbody td:nth-child(3) { width: 260px;}
 #medicine .dresult .dtable thead th:nth-child(4),
@@ -252,9 +265,10 @@ body {
 #medicine .dresult .dtable thead th:nth-child(5),
 #medicine .dresult .dtable tbody td:nth-child(5),
 #medicine .dresult .dtable thead th:nth-child(6),
-#medicine .dresult .dtable tbody td:nth-child(6) { text-align: center; width: 150px;}
+#medicine .dresult .dtable tbody td:nth-child(6) { width: 150px; text-align: center;}
 #medicine .dresult .dtable thead th:nth-child(7),
 #medicine .dresult .dtable tbody td:nth-child(7) { width: 50px; text-align: center; padding: 0;}
+
 
 /* 아코디언 */
 #medicine .accordion-content { border-radius: 10px; border-top: none; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);}
@@ -273,3 +287,7 @@ body {
 #medicine .accordion-content td .medicine-details .medicine-item .medicine-right .dimension-table td { width: 33.33%; height: 32px; padding: 0; border: 1px solid #154757; font-weight: normal; text-align: center; background-color: #fff; color: #111;}
 #medicine .accordion-content td .medicine-details .medicine-item .medicine-right .dimension-table th { color: #154757;}
 
+/* 라인잡기 */
+div {
+    /* outline: 1px solid black; */
+}
