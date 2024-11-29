@@ -20,7 +20,6 @@ const MedicineHistory = ({ onSearch }) => {
         };
     }, [dropdownRef]);
 
-
     // 최신 검색어 추가, 7개 제한
     const handleSearch = () => {
         if(query.trim() === "") {

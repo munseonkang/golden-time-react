@@ -201,18 +201,12 @@ body {
 #medicine .dsearch h2 { font-size: 27px; color: #154757; margin-bottom: 30px;}
 #medicine .dsearch .dsearch-bar { position: relative; display: inline-block;}
 #medicine .dsearch .dsearch-bar .input-container { display: flex; align-items: center; border-radius: 30px; border: 1px solid #ddd; width: 880px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;}
-
 #medicine .dsearch .dsearch-bar:focus-within .input-container { border-radius: 30px 30px 0 0; border-bottom: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);}
-
 #medicine .dsearch .dsearch-bar .input-container .search-logo { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); margin-right: 10px; height: 30px; text-align: center;}
-
 #medicine .dsearch .dsearch-bar .input-container input[type="text"] { flex: 1; width: 100%; height: 60px; padding: 18px 80px; border: none; outline: none; }
-
 #medicine .dsearch .dsearch-bar .dsearch-button { position: absolute; top: 50%; transform: translateY(-50%); right: 32px; background: none; border: none; cursor: pointer;}
 #medicine .dsearch .dsearch-bar .ddropdown-button { position: absolute; top: 50%; transform: translateY(-50%); right: 75px; background: none; border: none; cursor: pointer;}
-
-#medicine .dsearch .dsearch-bar .dresult-items { display: block; position: absolute; top: 100%; left: -1px; width: 880px; background-color: #fff; border: 1px solid #ddd; border-top: none; border-radius: 0 0 30px 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-height: 456px; z-index: 1000; }
-
+#medicine .dsearch .dsearch-bar .dresult-items { display: block; position: absolute; top: 100%; left: -1px; width: 880px; background-color: #fff; border: 1px solid #ddd; border-top: none; border-radius: 0 0 30px 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-height: 456px; z-index: 1000; overflow: hidden;}
 #medicine .dsearch .dsearch-bar .dresult-items .dresult-item { display: flex; align-items: center; padding: 10px 20px; cursor: pointer; padding: 15px; border-radius: 0 30px 30px 0; width: 100%;}
 #medicine .dsearch .dsearch-bar .dresult-items .dresult-item:hover { background-color: #569eb6; color: white;}
 #medicine .dsearch .dsearch-bar .dresult-items .dresult-item img { width: 20px; height: 20px; margin: 0 20px;}
@@ -240,9 +234,6 @@ body {
 #medicine .dresult .dtable { width: 100%; max-width: 1200px; table-layout: fixed; border-collapse: collapse;}
 #medicine .dresult .dtable .no-results { text-align: center; padding: 20px 0;}
 #medicine .dresult .dtable thead th { height: 40px; background-color: #154757; color: #fff; font-size: 18px; text-align: center; padding: 0 30px; font-weight: normal;}
-
-/* #medicine .dresult .dtable tbody tr:last-child td:first-child {border-bottom-left-radius: 10px;}
-#medicine .dresult .dtable tbody tr:last-child td:last-child {border-bottom-right-radius: 10px;} */
 #medicine .dresult .dtable tbody td:first-child { border-left: 1px solid #ddd;}
 #medicine .dresult .dtable tbody td:last-child { border-right: 1px solid #ddd;}
 #medicine .dresult .dtable tbody tr:last-child td { border-bottom: 1px solid #ddd;}
@@ -252,10 +243,8 @@ body {
 #medicine .dresult .dtable tbody .accordion-cell { text-align: left; padding-left: 0;}
 #medicine .dresult .dtable tbody tr:hover { background-color: #f5f5f5;}
 #medicine .dresult .dtable tbody tr.no-hover:hover { background-color: transparent;}
-
 #medicine .dresult .dtable thead th:first-child { border-radius: 10px 0 0 0;}
 #medicine .dresult .dtable thead th:last-child { border-radius: 0 10px 0 0;}
-
 #medicine .dresult .dtable thead th:nth-child(1),
 #medicine .dresult .dtable tbody td:nth-child(1) { width: 180px; }
 #medicine .dresult .dtable thead th:nth-child(3),

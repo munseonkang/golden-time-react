@@ -4,25 +4,26 @@ import { images } from '../../utils/images';
 import Pagination from '../../components/Pagination';
 import axios from 'axios';
 import MedicineHistory from './MedicineHistory';
+import MedicineDetailSearch from './MedicineDetailSearch';
 
 const Medicine = () => {
-    const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [query, setQuery] = useState("");
+    const [data, setData] = useState([]); //원본 데이터
+    const [filteredData, setFilteredData] = useState([]); //필터링 데이터
     const [expand, setExpand] = useState("");
-    const [suggestion, setSuggestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const medicinesPerPage = 10;
     const totalPages = Math.ceil(filteredData.length / medicinesPerPage);
-
     const startIndex = (currentPage -1) * medicinesPerPage;
     const endIndex = startIndex + medicinesPerPage;
     const currentData = filteredData.slice(startIndex, endIndex);
 
     const API_BASE_URL = "https://apis.data.go.kr/1471000";
 
+    useEffect(() => {
+    }, [filteredData]);
+
     // 의약품 api
-    const getMedicines = async (query) => {
+    const getMedicines = async (query = '', company = '') => {
 
         try {
             const [response1, response2] = await axios.all([
@@ -30,6 +31,7 @@ const Medicine = () => {
                 axios.get(`${API_BASE_URL}/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01`, {
                     params: {
                         item_name: query,
+                        entp_name: company,
                         serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                         pageNo: 1,
                         numOfRows: 50,
@@ -59,88 +61,61 @@ const Medicine = () => {
                     : {...medi1Item, isMatched: false};
             });
 
-            setData(medicineData);
-            setFilteredData(medicineData);
-            console.log(filteredData);
+            return medicineData;
 
         } catch (error) {
             console.error("api 요청 실패한 이유: ", error);
         }
     };
 
-    // 검색 버튼 클릭 시
-    const handleSearch = (query) => {
+    // 검색
+    const handleSearch = async (query) => {
         if(query.trim() === "") {
             alert("검색어를 입력하세요!");
             return;
         }
-        getMedicines(query);
+        const medicineData = await getMedicines(query);
+        setData(medicineData);
+        setFilteredData(medicineData);
+    };
+
+    // 상세 검색
+    const handleDetailSearch = async (formValues) => {
+        const { query, company, ingredient, effect, type, form } = formValues;
+        const medicineData = await getMedicines(query, company);
+
+        // 상세조건 필터링
+        const filtered = medicineData.filter((item) => {
+            const matchesIngredient = !ingredient || item.ITEM_NAME?.includes(ingredient);
+            const matchesEffect = !effect || item.efcyQesitm?.includes(effect);
+            const matchesType = type === '전체' || item.ETC_OTC_NAME === type;
+            const matchesForm = form === '전체' || item.FORM_CODE_NAME?.includes(form);
+            
+            return matchesIngredient && matchesEffect && matchesType && matchesForm;
+        });
+
+        setData(medicineData);
+        setFilteredData(filtered);
     };
 
     // 아코디언
     const toggle = (index) => {
         setExpand(expand === index ? null : index);
-    }
+    };
 
     return (
         <div id="medicine" className="medicine-container" >
-
             <div className="dsearch">
                 <h2>의약품 검색</h2>
                 <MedicineHistory onSearch={handleSearch} />
             </div>
 
-            <div className="ddetail-search">
-                <div className="ddetail-title">
-                    <h3>의약품 상세검색</h3>
-                    <p>
-                        상세검색에서 각 항복에 검색어를 입력한 후 검색 버튼을 클릭하면 해당 조건에 맞는 내용이 검색됩니다. 여러 항목을 동시에 검색할 수 있습니다.
-                    </p>
-                </div>
-                <form action="">
-                    <div className="dform-row">
-                        <label>제품명<br />(한글/영문)</label>
-                        <input type="text" name="" id="" />
-                        <label>성분명<br />(한글/영문)</label>
-                        <input type="text" name="" id="" />
-                    </div>
-                    <div className="dform-row">
-                        <label>회사명</label>
-                        <input type="text" name="" id="" />
-                        <label>효능효과</label>
-                        <input type="text" name="" id="" />
-                    </div>
-                    <div className="dform-row checkbox">
-                        <label>구분</label>
-                        <div className="check">
-                            <input type="checkbox" name="" id="전체" />
-                            <label htmlFor="전체">전체</label>
-                            <input type="checkbox" name="" id="일반" />
-                            <label htmlFor="일반">일반</label>
-                            <input type="checkbox" name="" id="전문" />
-                            <label htmlFor="전문">전문</label>
-                        </div>
-                        <label>제형</label>
-                        <select name="" id="">
-                            <option value="전체">전체</option>
-                            <option value="정제">정제</option>
-                            <option value="캡슐">캡슐</option>
-                            <option value="정제">가글액체</option>
-                            <option value="정제">건조시럽</option>
-                            <option value="정제">경피흡수제</option>
-                        </select>
-                    </div>
-                    <div className="dbutton-row">
-                        <button type="reset" className="dreset-button">초기화</button>
-                        <button type="submit" className="dsubmit-button">검색</button>
-                    </div>
-                </form>
-            </div>
-
+            <MedicineDetailSearch onSearch={handleDetailSearch}/>
+            
             <div className="dresult">
                 <div className="result-header">
                     <h3>검색결과 리스트</h3>
-                    <span className="reault-count">총 {data.length}개</span>
+                    <span className="reault-count">총 {filteredData.length}개</span>
                 </div>
                 <table className="dtable">
                     <thead className="r15w">
@@ -158,9 +133,9 @@ const Medicine = () => {
                         {currentData.length > 0 ? (
                             currentData.map((item, index) => {
                                 // ITEM_NAME 기준으로 분리
-                                const parts = item.ITEM_NAME.split(/\(|\)/);
-                                const name = parts[0] || "";
-                                const ingredient = parts[1] || "";
+                                const parts = item.ITEM_NAME ? item.ITEM_NAME.split(/\(|\)/) : [];
+                                const name = parts[0]?.trim() || "";
+                                const ingredient = parts[1]?.trim() || "";
 
                                 return (
                                     <React.Fragment key={index}>
