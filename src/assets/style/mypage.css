@@ -289,7 +289,7 @@ table{
     cursor: default;
 }
 #mypage .nav-selected{
-    cursor: none;
+    cursor: default;
     background-color: #E6F6FB;
     border-right: 3px solid #3A7A8F;
 }
@@ -305,6 +305,7 @@ main{
 #mypage h1{
     margin-left: 18px;
     margin-bottom: 26px;
+    cursor: pointer;
 }
 
 #mypage >section{
@@ -324,6 +325,7 @@ main{
     gap: 17px;
     align-items: center;
     padding-left: 32px;
+    cursor: pointer;
 }
 #mypage >section >aside ul li:nth-of-type(3){
     padding-left: 33px;
@@ -341,19 +343,19 @@ main{
     padding-top: 17px;
 }
 
-#mypage >section .my-account{
+#mypage >section .dash-board{
     width: 917px;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-#mypage >section .my-account >section:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(1){
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div{
+#mypage >section .dash-board >section:nth-of-type(1) >div{
     width: 867px;
     height: 128px;
     border-radius: 20px;
@@ -365,42 +367,42 @@ main{
     gap: 24px;
     position: relative;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1){
     display: flex;
     align-items: center;
     margin-left: 9px;
     position: relative;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(1) >img{
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img{
     cursor: pointer;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(1) >img:nth-of-type(2){
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img:nth-of-type(2){
     display: inline-block;
     position: absolute;
     right: -2px;
-    bottom: 9px;
+    bottom: 2px;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(2){
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(2){
     width: 363px;
     display: flex;
     flex-direction: column;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(2) >span:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(2) >span:nth-of-type(1){
     margin-bottom: 1px;
 }
 
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(3){
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(3){
     display: flex;
     flex-direction: row;
     gap: 12px;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >div:nth-of-type(3) >div{
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(3) >div{
     width: 94px;
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-#mypage >section .my-account >section:nth-of-type(1) >div >button{
+#mypage >section .dash-board >section:nth-of-type(1) >div >button{
     position: absolute;
     top: 15px;
     right: 15px;
@@ -409,24 +411,24 @@ main{
     padding: 8px 13px 8px 13px;
 }
 
-#mypage >section .my-account >section:nth-of-type(2){
+#mypage >section .dash-board >section:nth-of-type(2){
     display: flex;
     flex-direction: row;
     gap: 23px;
 }
-#mypage >section .my-account >section:nth-of-type(2) section{
+#mypage >section .dash-board >section:nth-of-type(2) section{
     display: flex;
     flex-direction: column;
 }
-#mypage >section .my-account >section:nth-of-type(2) section >:nth-child(1){
+#mypage >section .dash-board >section:nth-of-type(2) section >:nth-child(1){
     margin-bottom: 6px;
 }
-#mypage >section .my-account >section:nth-of-type(2) section >:nth-child(2){
+#mypage >section .dash-board >section:nth-of-type(2) section >:nth-child(2){
     margin-bottom: 16px;
 }
 
 
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article{
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article{
     width: 411px;
     height: 203px;
     display: flex;
@@ -435,19 +437,19 @@ main{
     border-radius: 20px;
     padding: 20px;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >div:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >div:nth-of-type(1){
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: start;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >div:nth-of-type(1) >div:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >div:nth-of-type(1) >div:nth-of-type(1){
     display: flex;
     flex-direction: row;
     gap: 6px;
     align-items: baseline;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >textarea{
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >textarea{
     display: block;
     height: 95px;
     text-align: start;
@@ -462,13 +464,13 @@ main{
     background-color: #D3EBFF;
 }
 
-#mypage >section .my-account >section:nth-of-type(2) >span{
+#mypage >section .dash-board >section:nth-of-type(2) >span{
     width: 2px;
     height: 492px;
     background-color: #eee;
 }
 
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >ul >li{
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li{
     width: 403px;
     height: 53px;
     display: flex;
@@ -476,7 +478,7 @@ main{
     gap: 18px;
     align-items: center;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(1){
     width: 53px;
     height: 53px;
     display: flex;
@@ -485,23 +487,23 @@ main{
     border-radius: 9999px;
     border: 1px solid #d9d9d9;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2){
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2){
     width: 225px;
     display: flex;
     flex-direction: column;
     gap: 7px;
     margin-top: 1px;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1){
     display: flex;
     flex-direction: row;
     gap: 6px;
     align-items: baseline;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1) >span:nth-of-type(1){
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1) >span:nth-of-type(1){
     max-width: 167px;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >button{
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >button{
     border-radius: 10px;
     padding: 8px 10px 8px 10px;
 }
@@ -523,7 +525,7 @@ main{
 #mypage .lbgc-c{
     background-color: #507CD9;
 }
-#mypage >section .my-account >section:nth-of-type(2) >section:nth-of-type(2) >button{
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >button{
     width: 157px;
     height: 47px;
     border-radius: 10px;
