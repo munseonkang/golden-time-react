@@ -13,27 +13,8 @@
 /* 검색창 */
 #hospital .info{position:relative; width:400px; min-width: 400px; height:100vh; padding:85px 15px 0; box-shadow: 4px 0 4px rgba(0, 0, 0, 0.1); background: #f7f7f7; z-index: 10;} 
 #hospital .info .search form select{width:182px; height:40px; margin-bottom:10px; padding:0 10px; border: 1px solid #154757; border-radius: 5px; outline: none; line-height: 40px; }
-#hospital .info .search input{width:330px; height:40px; padding:0 10px; border:1px solid #154757; border-radius: 5px 0 0 5px; outline: none; }
+#hospital .info .search input{width:330px; height:40px; padding:0 10px; border:1px solid #154757; border-radius: 5px 0 0 5px; outline: none; background: #fff;}
 #hospital .info .search button{display: flex; justify-content: center; align-items: center; width:40px; height:40px; border:none; border-radius: 0 5px 5px 0; background: #154757; cursor: pointer;}
-
-/* @@@@@@@@@ 병원조회 @@@@@@@@@ */
-/* 지도 */
-#hospital .map{width:100%; height:100vh;}
-#hospital .map #daumRoughmapContainer1731309425170{ width:100%; height:100%;}
-
-
-/* 스크롤바(공통) */
-#hospital .scroll{overflow: auto;}
-#hospital .scroll::-webkit-scrollbar{width:5px; margin-left:5px; border-radius: 3px;}
-#hospital .scroll::-webkit-scrollbar-track{background: #ddd; border-radius: 3px;}
-#hospital .scroll::-webkit-scrollbar-thumb{background: #aaa; border-radius: 3px;}
-
-
-/* 검색창 */
-#hospital .info{position:relative; width:400px; min-width: 400px; height:100vh; padding:85px 15px 0; box-shadow: 4px 0 4px rgba(0, 0, 0, 0.1); background: #f7f7f7; z-index: 10;} 
-#hospital .info .search form select{width:182px; height:40px; margin-bottom:10px; padding:0 10px; border: 1px solid #154757; border-radius: 5px; outline: none; line-height: 40px; }
-#hospital .info .search input{width:330px; height:40px; padding:0 10px; border:1px solid #154757; border-radius: 5px 0 0 5px; outline: none; }
-#hospital .info .search a{display: flex; justify-content: center; align-items: center; width:40px; height:40px; border-radius: 0 5px 5px 0; background: #154757; }
 
 
 /* 검색결과(리스트) */
@@ -61,6 +42,7 @@
 #hospital .detail .scroll{height:100%; padding:0 15px 10px 20px; }
 #hospital .detail .scroll>p{position:fixed; width:350px; margin-bottom:15px; padding-top:10px; border-bottom:1px solid #ddd; background: #fff; font-size: 17px; line-height: 45px; z-index: 100;}
 #hospital .detail .scroll>p span{float: right; cursor: pointer;}
+#hospital .detail .data{width:350px;}
 #hospital .detail .data>p{margin-top:65px; margin-bottom:5px; font-family: 'Pretendard-Bold'; font-size: 22px; color:#154757;}
 #hospital .detail .data>p a{float:right;}
 #hospital .detail .data>p a img{vertical-align: -2px;}
@@ -73,10 +55,10 @@
 #hospital .detail .data table tr td{line-height: 18px; font-size: 15px;}
 #hospital .detail .data table tr.emergency{color:#FF3C3C}
 /* 상세정보-탭메뉴 */
-#hospital .detail .detail-tab{margin-top:15px; cursor: pointer;}
+#hospital .detail .detail-tab{margin-top:15px; width:350px; cursor: pointer;}
 #hospital .detail .detail-tab p{width:50%; height: 27px; text-align: center; font-size: 17px; height: 27px; border-bottom: 1px solid #ddd;}
 #hospital .detail .detail-tab p.on{border-bottom:3px solid #FC7486;}
-#hospital .detail .tab-container{position:relative;}
+#hospital .detail .tab-container{position:relative; width:350px;}
 #hospital .detail .tab-container .tab-con{position:absolute; top:0; left:0; width:100%; padding-bottom:20px; display: none;}
 #hospital .detail .tab-container .tab-con.show{display: block;}
 #hospital .detail .tab-container .tab-con.hide{display: none;}
@@ -126,104 +108,4 @@
 #hospital .review-modal .box .btn{justify-content: center}
 #hospital .review-modal .box .btn a{width:90px; margin:0 5px; border:1px solid #ddd; border-radius: 5px; line-height: 37px; text-align: center; color:#888; cursor: pointer;}
 #hospital .review-modal .box .btn a.review-btn{background: #FC7486; border-color: #FC7486; color:#fff;}
-
-
-
-
-
-
-
-/* 검색결과(리스트) */
-#hospital .list{margin-top:15px;}
-#hospital .list>div ul.sorting{justify-content: end;}
-#hospital .list>div ul.sorting li{margin-left: 5px; font-size: 13px;}
-#hospital .list>div ul.sorting li a{color:#555;}
-#hospital .list>ul{height: calc(100vh - 214px); margin-top:5px; padding-right:5px;}
-#hospital .list>ul li{margin-bottom:10px; padding:10px; border-radius: 10px; background: #fff; font-size: 15px; cursor: pointer;}
-#hospital .list>ul li .name{margin-bottom:7px; font-size: 18px; color:#154757;}
-#hospital .list>ul li .name span{font-size: 15px; color:#aaa;}
-#hospital .list>ul li .name a{float: right;}
-#hospital .list>ul li .open{margin:5px 0; line-height: 20px; font-size: 15px;}
-#hospital .list>ul li .open p{display: inline-block; margin-right:5px; padding:0 7px; border-radius: 10px; font-size: 13px;}
-#hospital .list>ul li .open p.green{background: #D6EBD9; color:#104918;}
-#hospital .list>ul li .open p.red{background: #F3DEDE; color:#991E1E;}
-#hospital .list>ul li .grade{justify-self: start; font-size: 15px;}
-#hospital .list>ul li .grade span{color:#FC7486;}
-#hospital .list>ul li .grade .img{margin:0 7px;}
-#hospital .list>ul li .grade .img img{transform: translateY(1px);}
-
-
-/* 펼쳐지는 상세정보 */
-#hospital .detail{position:absolute; top:85px; left:415px; width:390px; height: calc(100% - 100px); box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; background: #fff; overflow: hidden;}
-#hospital .detail .scroll{height:100%; padding:0 15px 10px 20px; }
-#hospital .detail .scroll>p{position:fixed; width:350px; margin-bottom:15px; padding-top:10px; border-bottom:1px solid #ddd; background: #fff; font-size: 17px; line-height: 45px; z-index: 100;}
-#hospital .detail .scroll>p span{float: right; cursor: pointer;}
-#hospital .detail .data>p{margin-top:65px; margin-bottom:5px; font-family: 'Pretendard-Bold'; font-size: 22px; color:#154757;}
-#hospital .detail .data>p a{float:right;}
-#hospital .detail .data>p a img{vertical-align: -2px;}
-#hospital .detail .data span{font-size: 17px; color:#888;}
-#hospital .detail .data .open{margin:5px 0 10px; font-size: 17px; }
-#hospital .detail .data .open p{display: inline-block; margin-right:5px; font-family: 'Pretendard-Regular';  font-size: 17px; }
-#hospital .detail .data .open p.green{color:#43AC52;}
-#hospital .detail .data .open p.red{color:#FF3C3C;}
-#hospital .detail .data table tr th{padding:3px 8px 3px 0px;}
-#hospital .detail .data table tr td{line-height: 18px; font-size: 15px;}
-#hospital .detail .data table tr.emergency{color:#FF3C3C}
-/* 상세정보-탭메뉴 */
-#hospital .detail .detail-tab{margin-top:15px; cursor: pointer;}
-#hospital .detail .detail-tab p{width:50%; height: 27px; text-align: center; font-size: 17px; height: 27px; border-bottom: 1px solid #ddd;}
-#hospital .detail .detail-tab p.on{border-bottom:3px solid #FC7486;}
-#hospital .detail .tab-container{position:relative;}
-#hospital .detail .tab-container .tab-con{position:absolute; top:0; left:0; width:100%; padding-bottom:20px; display: none;}
-#hospital .detail .tab-container .tab-con.show{display: block;}
-#hospital .detail .tab-container .tab-con.hide{display: none;}
-/* 상세정보-시간&진료과목 */
-#hospital .detail h4{margin:20px 0 7px; font-family: 'Pretendard-Bold'; font-size: 18px; }
-#hospital .detail .time table{width:100%; border-collapse: collapse;}
-#hospital .detail .time table tr{line-height: 40px;}
-#hospital .detail .time table tr th{ border:1px solid #ddd; background: #f4f4f4; font-weight: 400;}
-#hospital .detail .time table tr td{padding-left:10px; border:1px solid #ddd;}
-#hospital .detail .time table tr.holiday{color:#FF3C3C}
-#hospital .detail .subject ul li{list-style: disc; margin-left:25px; line-height: 25px;}
-
-
-/* 상세정보-평점&리뷰 */
-#hospital .detail .score table{width:100%;}
-#hospital .detail .score table th{padding-right:15px; font-weight: 400;}
-#hospital .detail .score table td{padding:7px 0;}
-#hospital .detail .score table td>div{width:220px; height:8px; border-radius: 4px; background: #ddd; }
-#hospital .detail .score table td>div p{width:170px; height:8px; border-radius: 4px; background: #FC7486; }
-#hospital .detail .score table td:nth-child(3){text-align: center;}
-#hospital .detail .score table td>p{font-family: 'Pretendard-Bold'; font-size: 50px; text-align: center;}
-#hospital .detail .score table td>span{display: block;}
-#hospital .detail .score table+a{display: block; width:110px; margin:20px auto; border:1px solid #FC7486; border-radius: 19px; line-height:38px; text-align: center; font-size: 15px; color:#FC7486; }
-#hospital .detail .review ul{margin-top:15px;}
-#hospital .detail .review ul li{margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ddd}
-#hospital .detail .review ul li:last-child{margin-bottom:0; padding-bottom:0; border:none;}
-#hospital .detail .review ul li .flex{justify-content: start; margin-bottom:8px;}
-#hospital .detail .review ul li .flex .img{width:40px; height:40px; margin-right:10px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;}
-#hospital .detail .review ul li .flex .img img{width:100%; height:100%;}
-#hospital .detail .review ul li .flex div{font-size: 17px;}
-#hospital .detail .review ul li .flex div p{margin-top:3px; font-size: 13px; color:#888;}
-#hospital .detail .review ul li>p{margin-top:5px; font-size: 15px;}
-
-
-/* 리뷰 모달창 */
-#hospital .review-modal{ position: fixed; top:0; left:0; display: flex; justify-content: center; align-items: center; width:100%; height:100vh; background: rgba(0, 0, 0, 0.7); z-index: 99999;}
-#hospital .review-modal .box{width:580px; height:352px; padding:40px 30px; border-radius: 10px; background: #fff; }
-#hospital .review-modal .box form>p{margin-bottom:20px; text-align: center; font-family: 'Pretendard-Bold'; font-size: 25px; color:#154757;}
-#hospital .review-modal .box .flex p{font-size: 22px;}
-#hospital .review-modal .box .flex .img{width:40px; height:40px; margin-right:10px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;}
-#hospital .review-modal .box .flex .img img{width:100%; height:100%;}
-#hospital .review-modal .box .grade{cursor: pointer;}
-#hospital .review-modal .box textarea{width:100%; height:100px; margin:20px 0; padding:10px; border:1px solid #ddd; border-radius: 5px;  resize: none; overflow-y: auto; outline: none;}
-#hospital .review-modal .box textarea::-webkit-scrollbar{width:5px; margin-left:5px; border-radius: 3px;}
-#hospital .review-modal .box textarea::-webkit-scrollbar-track{background: #ddd; border-radius: 3px;}
-#hospital .review-modal .box textarea::-webkit-scrollbar-thumb{background: #aaa; border-radius: 3px;}
-#hospital .review-modal .box .btn{justify-content: center}
-#hospital .review-modal .box .btn a{width:90px; margin:0 5px; border:1px solid #ddd; border-radius: 5px; line-height: 37px; text-align: center; color:#888; cursor: pointer;}
-#hospital .review-modal .box .btn a.review-btn{background: #FC7486; border-color: #FC7486; color:#fff;}
-
-
-
 

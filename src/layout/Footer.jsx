@@ -8,12 +8,11 @@ const Footer = () => {
     // Footer가 렌더링될 경로 설정
     const footerPaths = [
       '/',
+      '/check-up', 
       '/medicine', 
       '/first-aid/faq', 
       '/first-aid/solution', 
-      '/first-aid/principle', 
-      '/member/join', 
-      '/member/login', 
+      '/first-aid/principle',  
       '/member/mypage'
     ];
 

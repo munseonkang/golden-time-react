@@ -81,7 +81,6 @@ const Pharmacy = () => {
 
 
 
-
     // 검색버튼 클릭시 선택된 시/도와 시/군/구 값으로 API 호출
     const handleSearch = () => {
         fetchpharm(selectedSido, selectedArea, keyword);
@@ -169,7 +168,6 @@ const Pharmacy = () => {
         const appKey = process.env.REACT_APP_TMAP_APP_KEY;
         const version = "1";
         const url = `https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=${version}&lat=${latitude}&lon=${longitude}&appKey=${appKey}`;
-
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -318,7 +316,6 @@ const Pharmacy = () => {
             }
         }
     };
-
 
     const removeMarkers = () => {
         markers.forEach(marker => {

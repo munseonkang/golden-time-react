@@ -68,47 +68,47 @@ const Header = () => {
         <>
             <div ref={headerRef} id="header" className={`flex ${location.pathname == '/' ? 'short' : ''}`}>         
                 <h1><a href="/"><img src={require('../assets/images/logo.png')} alt=""/></a></h1>
-                <ul class="flex">
+                <ul className="flex">
                     <li>
                         <a href="/emergency">응급실</a>
                     </li>
                     <li>
                         <a href="/hospital">의료·진료</a>
-                        <ul class="submenu">
+                        <ul className="submenu">
                             <li><a href="/hospital">병원 조회</a></li>
                             <li><a href="/check-up">건강검진기관 조회</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="/pharmacy">약국·의약</a>
-                        <ul class="submenu">
+                        <ul className="submenu">
                             <li><a href="/pharmacy">약국 조회</a></li>
                             <li><a href="/medicine">의약품 정보 조회</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="/first-aid/faq">응급처치</a>
-                        <ul class="submenu">
+                        <ul className="submenu">
                             <li><a href="/first-aid/faq">FAQ</a></li>
                             <li><a href="/first-aid/solution">상황별 대처방법</a></li>
                             <li><a href="/first-aid/principle">응급상황시 행동원칙</a></li>
                         </ul>
                     </li>
                 </ul>
-                <div ul class="flex">
-                    <ul class="flex">
+                <div ul className="flex">
+                    <ul className="flex">
                         <li><a href="/member/login">LOGIN</a></li>
                         <li><a href="/member/join">JOIN</a></li>
                     </ul>
-                    <div class="search">
+                    <div className="search">
                         <button ref={openBtnRef} id="open-btn">
                             <img src={require('../assets/images/search20_w.png')} alt="Open search"/>
                         </button>
                         {/* 숨겨진 검색창 */}
                         <div ref={searchHiddenRef} id="search-hidden">
-                            <form name="searchForm" id="searchForm" action="/plan/list" class="flex">
+                            <form name="searchForm" id="searchForm" action="/plan/list" className="flex">
                                 <input type="search" id="keyword" name="keyword" placeholder="검색어를 입력하세요"/>
-                                <a id="search_btn" class="btn" onclick="searchBtnHandler()">
+                                <a id="search_btn" className="btn" onClick="searchBtnHandler()">
                                     <img src={require('../assets/images/search16.png')} alt=""/>
                                 </a>
                                 <button ref={closeBtnRef} type="button" id="close-btn">
@@ -133,6 +133,7 @@ const SubHeader = () => {
 
     // 헤더배너가 렌더링될 경로 설정
     const subHeaderPaths = [
+    '/check-up', 
     '/medicine', 
     '/first-aid/faq', 
     '/first-aid/solution', 
@@ -144,7 +145,10 @@ const SubHeader = () => {
     const [subInfo, setSubInfo] = useState("");
 
     useEffect(() => {
-        if (location.pathname === '/medicine') {
+        if (location.pathname === '/check-up') {
+            setSubTitle("건강검진기관 조회");
+            setSubInfo("건강검진기관 정보를 확인하실 수 있습니다.");
+        } else if (location.pathname === '/medicine') {
             setSubTitle("의약품 조회");
             setSubInfo("여러 의약품 정보들을 확인하실 수 있습니다.");
         } else if (location.pathname === '/first-aid/faq') {
@@ -171,9 +175,9 @@ const SubHeader = () => {
         return(
             <>
                 <div id="subHeader">
-                    <div class="inner">
-                        <div class="sub-title">{subTitle}</div>
-                        <p class="sub-info">{subInfo}</p>
+                    <div className="inner">
+                        <div className="sub-title">{subTitle}</div>
+                        <p className="sub-info">{subInfo}</p>
                     </div>
                 </div>
             </>
