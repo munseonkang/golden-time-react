@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { images } from '../../utils/images';
 
 const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
     const { Tmapv2 } = window;
@@ -6,10 +7,8 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
     const [markers, setMarkers] = useState([]);
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
-    // const [sido, setSido] = useState(null);
-    // const [sigungu, setSigungu] = useState(null);
-    // const [address, setAddress] = useState(null);
-
+    // const [latitude, setLatitude] = useState(37.297305);
+    // const [longitude, setLongitude] = useState(127.010610);
 
     
     // 사용자의 현재 위치(위도, 경도)를 가져오는 함수
@@ -52,7 +51,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
                 headers: { 'Accept': 'application/json' }
             });
             const data = await response.json();
-            // console.log("data:",data);
             if (data) {
                 const cityDo = data.addressInfo.city_do; // 시/도
                 const sigungu = data.addressInfo.gu_gun; // 시/군/구
@@ -69,7 +67,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
 
     // TMAP 초기화
     const initTmap = () => {
-        console.log("initTmap 함수 호출됨");
         const mapDiv = document.getElementById('map_div');
         if (!mapDiv.firstChild && latitude && longitude) {
             console.log("위도:", latitude, "경도:", longitude);
@@ -111,11 +108,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
     },[hospitalData])
 
     const createMarkers = () => {
-        // const hospitals = data?.response?.body?.items?.item;
-        // const hospitals = hospitalData;
-        console.log("병원데이터:",hospitalData)
-        
-        
         if (hospitalData) { 
             
             removeMarkers();
@@ -125,14 +117,14 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
                 const lat = hospital.wgs84Lat;
                 const lon = hospital.wgs84Lon;
                 const title = hospital.dutyName;
+                const markerImage = images['marker_hospital.png']; 
                 
                 if (lat && lon) {
                     const position = new Tmapv2.LatLng(lat, lon); // Tmapv3.LatLng으로 위치 설정
                     const marker = new Tmapv2.Marker({
                         position: position,
                         map: map, // 마커가 표시될 Map 객체
-                        // icon: "/resources/images/common/pin_car.png",
-                        // label: title // 마커 라벨로 약국 이름 설정
+                        icon: markerImage
                     });
 
                     marker.addListener("mouseenter", function(evt) {

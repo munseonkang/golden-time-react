@@ -9,6 +9,8 @@ body {
 /* 스크롤바 */
 #emergency .scroll {
     overflow: auto;
+    height: calc(100vh - 214px);
+    /* padding-right: 3px; */
 }
 #emergency .scroll::-webkit-scrollbar {
     width: 5px;
@@ -192,7 +194,7 @@ body {
 #emergency .map-background { position: absolute; width: 100%; height: 100vh; margin-top: 70px; margin-left: 400px; z-index: 1;}
 
 /* 왼쪽 사이드바 */
-#emergency .sidebar { float: left; width: 400px; height: 100vh; margin-top: 70px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); overflow-x: hidden; overflow-y: auto; background-color: #f7f7f7; z-index: 2;}
+#emergency .sidebar { float: left; width: 400px; height: 100vh; margin-top: 70px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); overflow: hidden; background-color: #f7f7f7; z-index: 2;}
 #emergency .sidebar .search-boxes { margin: 15px 15px 13px;} 
 #emergency .sidebar .search-boxes .select-boxs { display: flex; width: 370px; gap: 6px; margin-bottom: 10px;} 
 #emergency .sidebar .search-boxes .select-boxs select { width: 182px; height: 40px; border: 1px solid #154757; border-radius: 5px; padding: 11px 8px;} 
@@ -201,7 +203,7 @@ body {
 #emergency .sidebar .search-boxes .search-box .input::placeholder { font-family: 'Pretendard-Regular'; font-size: 15px; color: #ddd;}
 #emergency .sidebar .search-boxes .search-box .search-button { width: 40px; height: 40px; background-color: #154757; border: none; border-top-right-radius: 5px; border-bottom-right-radius: 5px; position: absolute; top: 0; right: 0;} 
 #emergency .sidebar .total-count { margin-left: 20px;}
-#emergency .sidebar .list { width: 360px; margin: 4px 20px 0 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background-color: #fff; cursor: pointer;}
+#emergency .sidebar .list { width: 360px; margin: 4px 4px 0 15px; padding: 10px; border-radius: 10px; margin-bottom: 10px; background-color: #fff; cursor: pointer;}
 #emergency .sidebar .list .title { display: flex; gap: 7px; margin-bottom: 2px;}
 #emergency .sidebar .list .acg9 { display: flex; align-items: center; gap: 9px; margin: 8px 0;}
 #emergency .sidebar .list .acg9 img { width: 15px; height: 15px;}
@@ -215,8 +217,7 @@ body {
 #emergency .sidebar .list .s-table thead tr th:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
 
 /* 종합상황판 */
-#emergency .simple-detail { height: calc(100vh - 110px); margin: 95px 10px 16px 22px; width: 200px; background-color: #fff; z-index: 2;}
-#emergency .situation-board { width: 720px; height: calc(100vh - 110px); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); padding: 14px 25px 20px 18px; margin: 95px 10px 16px 22px; overflow-x: hidden; overflow-y: auto; padding-bottom: 10px; position: relative; background-color: #fff; z-index: 2;}
+#emergency .situation-board { width: 720px; height: calc(100vh - 110px); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); padding: 14px 25px 20px 18px; margin: 85px 22px 16px 22px; overflow-x: hidden; overflow-y: auto; padding-bottom: 10px; position: relative; background-color: #fff; z-index: 2;}
 #emergency .situation-board .top-title { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #d9d9d9;}
 #emergency .situation-board .top-title .close-button { background-color: #fff; border: none; cursor: pointer;}
 #emergency .situation-board .top-title img { width: 16px; height: 16px;}
@@ -232,10 +233,100 @@ body {
 #emergency .situation-board .big-item .m-table td { width: 677px; text-align: left; padding-left: 10px; margin-bottom: 15px !important;}
 #emergency .situation-board .big-item .m-table td:first-child { width: 75%;}
 #emergency .situation-board .big-item .m-table td:nth-child(2) { width: 25%;}
-#emergency .situation-board .hospital-detail { display: flex; justify-content: center; position: absolute; width: 100%;}
-#emergency .situation-board .hospital-detail .button { width: 141px; height: 46px; border: none; border-radius: 25px; font-weight: normal; background-color: #FC7486; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); outline: none; cursor: pointer; position: fixed; bottom: 50px; z-index: 1000;}
+
+/* 병원 버튼 */
+#emergency .hospital-detail { display: flex; justify-content: center; position: relative; }
+#emergency .hospital-detail .button { width: 141px; height: 46px; border: none; border-radius: 25px; font-weight: normal; background-color: #FC7486; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); outline: none; cursor: pointer;}
+#emergency .hospital-detail .fixed-button { position: fixed; bottom: 50px; z-index: 100;}
+
+/* 종합상황판이 없는 경우 */
+#emergency .simple-detail { height: calc(100vh - 900px); margin: 85px 22px 22px 22px; width: 300px; background-color: #fff; z-index: 2; padding: 20px;}
+#emergency .simple-detail .non-title { display: flex; justify-content: space-between; margin-bottom: 20px;}
+/* #emergency .simple-detail .emergency-name { margin-bottom: 20px;} */
+#emergency .simple-detail .hospital-detail { position: relative; width: 100%; height: 120px; display: flex;}
+#emergency .simple-detail .hospital-detail .absolute-button { position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%)}
+
 
 /* 라인잡기 */
 div {
     /* outline: 1px solid black; */
 }
+
+#emergency .simple-detail,
+#emergency .situation-board {
+    position: relative;
+}
+#emergency .simple-detail + .detail{left:750px;}
+#emergency .situation-board + .detail{left:1150px;}
+
+/* 펼쳐지는 상세정보 */
+#emergency .detail{position:absolute; top:85px; left:750px; width:390px; height: calc(100% - 100px); box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; background: #fff; overflow: hidden; z-index: 999;}
+#emergency .detail .scroll{height:100%; padding:0 15px 10px 20px; }
+#emergency .detail .scroll>p{position:fixed; width:350px; margin-bottom:15px; padding-top:10px; border-bottom:1px solid #ddd; background: #fff; font-size: 17px; line-height: 45px; z-index: 100;}
+#emergency .detail .scroll>p span{float: right; cursor: pointer;}
+#emergency .detail .data>p{margin-top:65px; margin-bottom:5px; font-family: 'Pretendard-Bold'; font-size: 22px; color:#154757;}
+#emergency .detail .data>p a{float:right;}
+#emergency .detail .data>p a img{vertical-align: -2px;}
+#emergency .detail .data span{font-size: 17px; color:#888;}
+#emergency .detail .data .open{margin:5px 0 10px; font-size: 17px; }
+#emergency .detail .data .open p{display: inline-block; margin-right:5px; font-family: 'Pretendard-Regular';  font-size: 17px; }
+#emergency .detail .data .open p.green{color:#43AC52;}
+#emergency .detail .data .open p.red{color:#FF3C3C;}
+#emergency .detail .data table tr th{padding:3px 8px 3px 0px;}
+#emergency .detail .data table tr td{line-height: 18px; font-size: 15px;}
+#emergency .detail .data table tr.emergency{color:#FF3C3C}
+/* 상세정보-탭메뉴 */
+#emergency .detail .detail-tab{margin-top:15px; cursor: pointer;}
+#emergency .detail .detail-tab p{width:50%; height: 27px; text-align: center; font-size: 17px; height: 27px; border-bottom: 1px solid #ddd;}
+#emergency .detail .detail-tab p.on{border-bottom:3px solid #FC7486;}
+#emergency .detail .tab-container{position:relative;}
+#emergency .detail .tab-container .tab-con{position:absolute; top:0; left:0; width:100%; padding-bottom:20px; display: none;}
+#emergency .detail .tab-container .tab-con.show{display: block;}
+#emergency .detail .tab-container .tab-con.hide{display: none;}
+/* 상세정보-시간&진료과목 */
+#emergency .detail h4{margin:20px 0 7px; font-family: 'Pretendard-Bold'; font-size: 18px; }
+#emergency .detail .time table{width:100%; border-collapse: collapse;}
+#emergency .detail .time table tr{line-height: 40px;}
+#emergency .detail .time table tr th{width:100px; border:1px solid #ddd; background: #f4f4f4; font-weight: 400;}
+#emergency .detail .time table tr td{padding-left:10px; border:1px solid #ddd;}
+#emergency .detail .time table tr.holiday{color:#FF3C3C}
+#emergency .detail .subject ul li{list-style: disc; margin-left:25px; line-height: 25px;}
+
+
+/* 상세정보-평점&리뷰 */
+#emergency .detail .score table{width:100%;}
+#emergency .detail .score table th{padding-right:15px; font-weight: 400;}
+#emergency .detail .score table td{padding:7px 0;}
+#emergency .detail .score table td>div{width:220px; height:8px; border-radius: 4px; background: #ddd; }
+#emergency .detail .score table td>div p{width:170px; height:8px; border-radius: 4px; background: #FC7486; }
+#emergency .detail .score table td:nth-child(3){text-align: center;}
+#emergency .detail .score table td>p{font-family: 'Pretendard-Bold'; font-size: 50px; text-align: center;}
+#emergency .detail .score table td>span{display: block;}
+#emergency .detail .score table+a{display: block; width:110px; margin:20px auto; border:1px solid #FC7486; border-radius: 19px; line-height:38px; text-align: center; font-size: 15px; color:#FC7486; }
+#emergency .detail .review ul{margin-top:15px;}
+#emergency .detail .review ul li{margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ddd}
+#emergency .detail .review ul li:last-child{margin-bottom:0; padding-bottom:0; border:none;}
+#emergency .detail .review ul li .flex{justify-content: start; margin-bottom:8px;}
+#emergency .detail .review ul li .flex .img{width:40px; height:40px; margin-right:10px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;}
+#emergency .detail .review ul li .flex .img img{width:100%; height:100%;}
+#emergency .detail .review ul li .flex div{font-size: 17px;}
+#emergency .detail .review ul li .flex div p{margin-top:3px; font-size: 13px; color:#888;}
+#emergency .detail .review ul li>p{margin-top:5px; font-size: 15px;}
+
+
+/* 리뷰 모달창 */
+#emergency .review-modal{ position: fixed; top:0; left:0; display: flex; justify-content: center; align-items: center; width:100%; height:100vh; background: rgba(0, 0, 0, 0.7); z-index: 99999;}
+#emergency .review-modal .box{width:580px; height:352px; padding:40px 30px; border-radius: 10px; background: #fff; }
+#emergency .review-modal .box form>p{margin-bottom:20px; text-align: center; font-family: 'Pretendard-Bold'; font-size: 25px; color:#154757;}
+#emergency .review-modal .box .flex p{font-size: 22px;}
+#emergency .review-modal .box .flex .img{width:40px; height:40px; margin-right:10px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;}
+#emergency .review-modal .box .flex .img img{width:100%; height:100%;}
+#emergency .review-modal .box .grade{cursor: pointer;}
+#emergency .review-modal .box textarea{width:100%; height:100px; margin:20px 0; padding:10px; border:1px solid #ddd; border-radius: 5px;  resize: none; overflow-y: auto; outline: none;}
+#emergency .review-modal .box textarea::-webkit-scrollbar{width:5px; margin-left:5px; border-radius: 3px;}
+#emergency .review-modal .box textarea::-webkit-scrollbar-track{background: #ddd; border-radius: 3px;}
+#emergency .review-modal .box textarea::-webkit-scrollbar-thumb{background: #aaa; border-radius: 3px;}
+#emergency .review-modal .box .btn{justify-content: center}
+#emergency .review-modal .box .btn a{width:90px; margin:0 5px; border:1px solid #ddd; border-radius: 5px; line-height: 37px; text-align: center; color:#888; cursor: pointer;}
+#emergency .review-modal .box .btn a.review-btn{background: #FC7486; border-color: #FC7486; color:#fff;}
+

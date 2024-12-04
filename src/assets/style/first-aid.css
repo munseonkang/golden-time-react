@@ -575,7 +575,7 @@ input[id*="choice"]:checked+label>div p {
     border: 1px solid #dddddd;
     border-radius: 10px;
 }
-#yakgook .list>ul li .find{
+#yakgook .detail .find{
     font-family: 'Pretendard-Light';
     font-size: 17px;
     color: #154757;
@@ -593,7 +593,7 @@ input[id*="choice"]:checked+label>div p {
     bottom: 10px;
 }
 
-#yakgook .list>ul li .find:hover{
+#yakgook .detail .find:hover{
     color: white;
     transition: background-color 0.5s ease;
     background-color: #154757;

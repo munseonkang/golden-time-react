@@ -1,6 +1,17 @@
-import Header from "../../layout/Header";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 const Login = ()=>{
+
+    const loginSubmit = () => {
+
+    }
+
+    useEffect(()=>{
+        
+    })
+
     return (
         <>
             <div id="login" className="member">
@@ -15,9 +26,13 @@ const Login = ()=>{
                             <a href="#">아이디 찾기</a>
                             <a href="#">비밀번호 찾기</a>
                         </div>
-                        <button className="navy-box last-btn">로그인</button>
+                        <button 
+                            className="navy-box last-btn"
+                            onClick={loginSubmit}
+                            type="submit"
+                        >로그인</button>
                     </form>
-                    <p><a href="/member/join">골든타임 회원가입</a></p>
+                    <p><Link to="/member/join">골든타임 회원가입</Link></p>
                 </div>
             </div>
         </>
