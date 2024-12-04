@@ -25,7 +25,7 @@ const MemberInfo = () => {
                     </li>
                     <li>
                         <label className="b166aa"><strong>닉네임</strong></label>
-                        <input className="r15b" type="text" value="testNickName"/>
+                        <input className="r15b" type="text" defaultValue="testNickName"/>
                     </li>
                     <li>
                         <label className="b166aa"><strong>비밀번호</strong></label>
@@ -37,11 +37,11 @@ const MemberInfo = () => {
                     </li>
                     <li>
                         <label className="b166aa"><strong>이메일</strong></label>
-                        <input className="r15b" type="email" value="testEmail"/>
+                        <input className="r15b" type="email" defaultValue="testEmail"/>
                     </li>
                     <li>
                         <label className="b166aa"><strong>전화번호</strong></label>
-                        <input className="r15b" type="tel" value="testPhoneNumber"/>
+                        <input className="r15b" type="tel" defaultValue="testPhoneNumber"/>
                     </li>
                 </ul>
                 <div>

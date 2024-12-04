@@ -9,19 +9,19 @@ const Likes = () => {
             </div>
             <section>
                 <div>
-                    <label className="b153a7" for="likes_total">
+                    <label className="b153a7" htmlFor="likes_total">
                         전체
-                        <input className="hidden" type="radio" id="likes_total" name="likes_cls" value="전체" checked/>
+                        <input className="hidden" type="radio" id="likes_total" name="likes_cls" value="전체" defaultChecked/>
                     </label>
-                    <label className="b156aa" for="likes_hospital">
+                    <label className="b156aa" htmlFor="likes_hospital">
                         병원
                         <input className="hidden" type="radio" id="likes_hospital" name="likes_cls" value="병원"/>
                     </label>
-                    <label className="b156aa" for="likes_pharmacy">
+                    <label className="b156aa" htmlFor="likes_pharmacy">
                         약국
                         <input className="hidden" type="radio" id="likes_pharmacy" name="likes_cls" value="약국"/>
                     </label>
-                    <label className="b156aa" for="likes_check_up">
+                    <label className="b156aa" htmlFor="likes_check_up">
                         검진기관
                         <input className="hidden" type="radio" id="likes_check_up" name="likes_cls" value="검진기관"/>
                     </label>

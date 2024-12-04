@@ -10,33 +10,33 @@ const Reviews = () => {
             <section>
                 <div>
                     <div>
-                        <label className="b153a7 selected" for="reviews_date_today">
+                        <label className="b153a7 selected" htmlFor="reviews_date_today">
                             오늘
-                            <input className="hidden" type="radio" id="reviews_date_today" name="likes_cls" value="오늘" checked/>
+                            <input className="hidden" type="radio" id="reviews_date_today" name="likes_cls" value="오늘" defaultChecked/>
                         </label>
-                        <label className="b156aa" for="reviews_date_month">
+                        <label className="b156aa" htmlFor="reviews_date_month">
                             1개월
                             <input className="hidden" type="radio" id="reviews_date_month" name="likes_cls" value="1개월"/>
                         </label>
-                        <label className="b156aa" for="reviews_date_three_months">
+                        <label className="b156aa" htmlFor="reviews_date_three_months">
                             3개월
                             <input className="hidden" type="radio" id="reviews_date_three_months" name="likes_cls" value="3개월"/>
                         </label>
-                        <label className="b156aa" for="reviews_date_sixth_months">
+                        <label className="b156aa" htmlFor="reviews_date_sixth_months">
                             6개월
                             <input className="hidden" type="radio" id="reviews_date_sixth_months" name="likes_cls" value="6개월"/>
                         </label>
                     </div>
                     <div>
-                        <label className="b153a7 selected" for="reviews_total">
+                        <label className="b153a7 selected" htmlFor="reviews_total">
                             전체
-                            <input className="hidden" type="radio" id="reviews_total" name="likes_cls" value="전체" checked/>
+                            <input className="hidden" type="radio" id="reviews_total" name="likes_cls" value="전체" defaultChecked/>
                         </label>
-                        <label className="b156aa" for="reviews_hospital">
+                        <label className="b156aa" htmlFor="reviews_hospital">
                             병원
                             <input className="hidden" type="radio" id="reviews_hospital" name="likes_cls" value="병원"/>
                         </label>
-                        <label className="b156aa" for="reviews_pharmacy">
+                        <label className="b156aa" htmlFor="reviews_pharmacy">
                             약국
                             <input className="hidden" type="radio" id="reviews_pharmacy" name="likes_cls" value="약국"/>
                         </label>
@@ -69,7 +69,7 @@ const Reviews = () => {
                                 </div>
                             </div>
                             <h4>리뷰 첫번째줄</h4>
-                            <textarea className="r14444" name="" id="">리뷰 내용</textarea>
+                            <textarea className="r14444" name="" id="" defaultValue="리뷰 내용" readOnly/>
                         </article>
                     </li>
                 </ul>

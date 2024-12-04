@@ -1,6 +1,15 @@
+import { useEffect, useState } from 'react';
 import { images } from '../../../utils/images';
+import { getMemberInfo } from '../../../apis/services/goldentimeService';
 
 const DashBoard = () => {
+    const [memberInfo, setMemberInfo] = useState({memberId:"", nickname:""});
+    const [reviewList, setReviewList] = useState()
+
+    useEffect(()=>{
+        getMemberInfo(sessionStorage.getItem("loginMember"), setMemberInfo)
+    },[])
+
     return (
         <article className="dash-board">
             <section>
@@ -12,8 +21,8 @@ const DashBoard = () => {
                     </div>
                     <div>
                         <span className="r1285b">반갑습니다, 좋은 하루 되세요.</span>
-                        <span className="b24w">닉네임</span>
-                        <span className="b21b4d">아이디</span>
+                        <span className="b24w">{memberInfo.nickname}</span>
+                        <span className="b21b4d">{memberInfo.memberId}</span>
                     </div>
                     <div>
                         <div>
