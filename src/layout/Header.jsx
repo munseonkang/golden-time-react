@@ -9,7 +9,7 @@ const Header = () => {
     const headerRef = useRef(null);
     
     // 헤더 우측 검색창 관련 변수
-    const searchHiddenRef = useRef(null);
+    const searchHiddenRef = useRef(null);   
     const openBtnRef = useRef(null);
     const closeBtnRef = useRef(null);
 

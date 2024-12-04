@@ -35,112 +35,110 @@ const EmergencyList = ({results, onClick}) => {
 
     return (
         <>
-            {
-                results.map((item, index) => (
-                    <div className="list" key={`list-${index}`}>
-                        <div className="list-item" key={`list-item-${index}`} onClick={() => onClick(item)}>
-                            <div className="title">
-                                <div className="name r18mc">{item.dutyName}</div>
-                                <div className="gray-name r158">{item.dutyEmclsName || "응급실"}</div>
-                            </div>
-                            <div className="address-box acg9 r15b">
-                                <img src={images['main_icon_place.png']} alt="" />
-                                <div className="address">{cleanAddressName(item.dutyAddr) || "주소 정보 없음"}</div>
-                            </div>
-                            <div className="phone-box acg9 r15b">
-                                <img src={images['main_icon_tel.png']} alt="" />
-                                <div className="phone">{item.dutyTel3 || "전화번호 정보 없음"}</div>
-                            </div>
-                            {
-                                item.hvec && (
-                                    <div className="sickbed-box acg9 r15b">
-                                        <img src={images['sickbed15.png']} alt="" />
-                                        <div className="sickbed">병상수</div>
-                                        <div className="subsickbed r128">(가용병상수/기준병상수)</div>
-                                    </div>
-                                )
-                            }
+            {results.map((item, index) => (
+                <div className="list" key={`list-${index}`}>
+                    <div className="list-item" key={`list-item-${index}`} onClick={() => onClick(item)}>
+                        <div className="title">
+                            <div className="name r18mc">{item.dutyName}</div>
+                            <div className="gray-name r158">{item.dutyEmclsName || "응급실"}</div>
+                        </div>
+                        <div className="address-box acg9 r15b">
+                            <img src={images['main_icon_place.png']} alt="" />
+                            <div className="address">{cleanAddressName(item.dutyAddr) || "주소 정보 없음"}</div>
+                        </div>
+                        <div className="phone-box acg9 r15b">
+                            <img src={images['main_icon_tel.png']} alt="" />
+                            <div className="phone">{item.dutyTel3 || "전화번호 정보 없음"}</div>
                         </div>
                         {
                             item.hvec && (
-                            <>
-                                <table className="s-table">
-                                    <thead className="r13w">
-                                        <tr>
-                                            <th>일반</th>
-                                            <th>코호트 격리</th>
-                                            <th>음압격리</th>
-                                            <th>일반격리</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                {getImage(item.hvec, item.hvs01, "general") && (
-                                                    <img src={getImage(item.hvec, item.hvs01, "general")} alt="일반" />
-                                                )}
-                                                {formatField(item.hvec, item.hvs01)} 
-                                            </td>
-                                            <td>
-                                                {getImage(item.hv27, item.hvs59, "general") && (
-                                                    <img src={getImage(item.hv27, item.hvs59, "general")} alt="코호트 격리" />
-                                                )}
-                                                {formatField(item.hv27, item.hvs59)} 
-                                            </td>
-                                            <td>
-                                                {getImage(item.hv29, item.hvs03, "isolation") && (
-                                                    <img src={getImage(item.hv29, item.hvs03, "isolation")} alt="음압격리" />
-                                                )}
-                                                {formatField(item.hv29, item.hvs03)} 
-                                            </td>
-                                            <td>
-                                                {getImage(item.hv30, item.hvs04, "isolation") && (
-                                                    <img src={getImage(item.hv30, item.hvs04, "isolation")} alt="일반격리" />
-                                                )}
-                                                {formatField(item.hv30, item.hvs04)} 
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table className='s-table'>
-                                    <thead className="r13w">
-                                        <tr>
-                                            <th>외상소생실</th>
-                                            <th>소아</th>
-                                            <th>소아음압격리</th>
-                                            <th>소아일반격리</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="r13b">
-                                        <tr>
-                                            <td style={getStyleForText("정보없음")}>정보없음</td>
-                                            <td>
-                                                {getImage(item.hv28, item.hvs02, "general") && (
-                                                    <img src={getImage(item.hv28, item.hvs02, "general")} alt="소아" />
-                                                )}
-                                                {formatField(item.hv28, item.hvs02)} 
-                                            </td>
-                                            <td>
-                                                {getImage(item.hv15, item.hvs48, "isolation") && (
-                                                    <img src={getImage(item.hv15, item.hvs48, "isolation")} alt="소아음압격리" />
-                                                )}
-                                                {formatField(item.hv15, item.hvs48)} 
-                                            </td>
-                                            <td>
-                                                {getImage(item.hv16, item.hvs49, "isolation") && (
-                                                    <img src={getImage(item.hv16, item.hvs49, "isolation")} alt="소아일반격리" />
-                                                )}
-                                                {formatField(item.hv16, item.hvs49)} 
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </>
+                                <div className="sickbed-box acg9 r15b">
+                                    <img src={images['sickbed15.png']} alt="" />
+                                    <div className="sickbed">병상수</div>
+                                    <div className="subsickbed r128">(가용병상수/기준병상수)</div>
+                                </div>
                             )
                         }
                     </div>
-                ))
-            }
+                    {
+                        item.hvec && (
+                        <>
+                            <table className="s-table">
+                                <thead className="r13w">
+                                    <tr>
+                                        <th>일반</th>
+                                        <th>코호트 격리</th>
+                                        <th>음압격리</th>
+                                        <th>일반격리</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {getImage(item.hvec, item.hvs01, "general") && (
+                                                <img src={getImage(item.hvec, item.hvs01, "general")} alt="일반" />
+                                            )}
+                                            {formatField(item.hvec, item.hvs01)} 
+                                        </td>
+                                        <td>
+                                            {getImage(item.hv27, item.hvs59, "general") && (
+                                                <img src={getImage(item.hv27, item.hvs59, "general")} alt="코호트 격리" />
+                                            )}
+                                            {formatField(item.hv27, item.hvs59)} 
+                                        </td>
+                                        <td>
+                                            {getImage(item.hv29, item.hvs03, "isolation") && (
+                                                <img src={getImage(item.hv29, item.hvs03, "isolation")} alt="음압격리" />
+                                            )}
+                                            {formatField(item.hv29, item.hvs03)} 
+                                        </td>
+                                        <td>
+                                            {getImage(item.hv30, item.hvs04, "isolation") && (
+                                                <img src={getImage(item.hv30, item.hvs04, "isolation")} alt="일반격리" />
+                                            )}
+                                            {formatField(item.hv30, item.hvs04)} 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table className='s-table'>
+                                <thead className="r13w">
+                                    <tr>
+                                        <th>외상소생실</th>
+                                        <th>소아</th>
+                                        <th>소아음압격리</th>
+                                        <th>소아일반격리</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="r13b">
+                                    <tr>
+                                        <td style={getStyleForText("정보없음")}>정보없음</td>
+                                        <td>
+                                            {getImage(item.hv28, item.hvs02, "general") && (
+                                                <img src={getImage(item.hv28, item.hvs02, "general")} alt="소아" />
+                                            )}
+                                            {formatField(item.hv28, item.hvs02)} 
+                                        </td>
+                                        <td>
+                                            {getImage(item.hv15, item.hvs48, "isolation") && (
+                                                <img src={getImage(item.hv15, item.hvs48, "isolation")} alt="소아음압격리" />
+                                            )}
+                                            {formatField(item.hv15, item.hvs48)} 
+                                        </td>
+                                        <td>
+                                            {getImage(item.hv16, item.hvs49, "isolation") && (
+                                                <img src={getImage(item.hv16, item.hvs49, "isolation")} alt="소아일반격리" />
+                                            )}
+                                            {formatField(item.hv16, item.hvs49)} 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </>
+                        )
+                    }
+                </div>
+            ))}
         </>
     )   
 }
