@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { images } from '../utils/images';
+import { Link } from "react-router-dom";
 
 const Main = ()=>{
     return (
@@ -20,14 +21,16 @@ const Main = ()=>{
                                         <div>
                                             <p>현재 위치에서 <b>1.4km</b></p>
                                             <table>
-                                                <tr>
-                                                    <th><img src={images['main_icon_place.png']} alt=""/></th>
-                                                    <td>서울 강남구 언주로 211</td>
-                                                </tr>
-                                                <tr>
-                                                    <th><img src={images['main_icon_tel.png']} alt=""/></th>
-                                                    <td>02-2019-3333</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_place.png']} alt=""/></th>
+                                                        <td>서울 강남구 언주로 211</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_tel.png']} alt=""/></th>
+                                                        <td>02-2019-3333</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                         <p>1</p>
@@ -50,14 +53,16 @@ const Main = ()=>{
                                         <div>
                                             <p>현재 위치에서 <b>5.2km</b></p>
                                             <table>
-                                                <tr>
-                                                    <th><img src={images['main_icon_place.png']} alt=""/></th>
-                                                    <td>서울 강남구 언주로 211</td>
-                                                </tr>
-                                                <tr>
-                                                    <th><img src={images['main_icon_tel.png']} alt=""/></th>
-                                                    <td>02-2019-3333</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_place.png']} alt=""/></th>
+                                                        <td>서울 강남구 언주로 211</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_tel.png']} alt=""/></th>
+                                                        <td>02-2019-3333</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                         <p>2</p>
@@ -80,14 +85,16 @@ const Main = ()=>{
                                         <div>
                                             <p>현재 위치에서 <b>12.6km</b></p>
                                             <table>
-                                                <tr>
-                                                    <th><img src={images['main_icon_place.png']} alt=""/></th>
-                                                    <td>서울 강남구 언주로 211</td>
-                                                </tr>
-                                                <tr>
-                                                    <th><img src={images['main_icon_tel.png']} alt=""/></th>
-                                                    <td>02-2019-3333</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_place.png']} alt=""/></th>
+                                                        <td>서울 강남구 언주로 211</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_tel.png']} alt=""/></th>
+                                                        <td>02-2019-3333</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                         <p>3</p>
@@ -122,9 +129,9 @@ const Main = ()=>{
                         <div>
                             <form name="searchForm" id="searchForm" action="/plan/list">
                                 <input type="search" id="keyword" name="keyword" placeholder="예 ) 대학교병원, 내과, 골든타임약국, 타이레놀 "/>
-                                <a href="#" id="search-btn" className="btn">
+                                <Link to="#" id="search-btn" className="btn">
                                     <img src={images['search29_w.png']} alt=""/>
-                                </a>
+                                </Link>
                             </form>
                         </div>
                     </div>
@@ -134,46 +141,46 @@ const Main = ()=>{
                 <div className="con2">
                     <ul className="flex inner">
                         <li>
-                            <a href="/emergency">
+                            <Link to="/emergency">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>실시간응급실</p>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/hospital">
+                            <Link to="/hospital">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>병원 조회</p>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/pharmacy">
+                            <Link to="/pharmacy">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>약국 조회</p>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/check-up">
+                            <Link to="/check-up">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>건강검진기관</p>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/medicine">
+                            <Link to="/medicine">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>의약품정보</p>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/first-aid/faq">
+                            <Link to="/first-aid/faq">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>FAQ</p>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/first-aid/solution">
+                            <Link to="/first-aid/solution">
                                 <div><img src={images['main_con2_button1.png']} alt=""/></div>
                                 <p>대처방법</p>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -189,25 +196,25 @@ const Main = ()=>{
                         
                         <ul className="slider flex">
                             <li>
-                                <a href="#">
+                                <Link to="#">
                                     <img src={images['temp1.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#">
+                                <Link to="#">
                                     <img src={images['temp2.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#">
+                                <Link to="#">
                                     <img src={images['temp3.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
-                                </a>
+                                </Link>
                             </li>
                             
                         </ul>
@@ -230,7 +237,7 @@ const Main = ()=>{
                         </div>
                         <div className="box">
                             <div className="box1">
-                                <a href="/hospital">
+                                <Link to="/hospital">
                                     <div className="text">
                                         <span>병원 조회 </span>HOSPITAL
                                         <p>
@@ -238,10 +245,10 @@ const Main = ()=>{
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                             <div className="box2">
-                                <a href="/pharmacy">
+                                <Link to="/pharmacy">
                                     <div className="text">
                                         <span>약국 조회 </span>PHARMACY
                                         <p>
@@ -249,10 +256,10 @@ const Main = ()=>{
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                             <div className="box3">
-                                <a href="/check-up">
+                                <Link to="/check-up">
                                     <div className="text">
                                         <span>건강검진기관</span>
                                         <p>
@@ -260,10 +267,10 @@ const Main = ()=>{
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                             <div className="box4">
-                                <a href="/medicine">
+                                <Link to="/medicine">
                                     <div className="text">
                                         <span>의약품 정보</span>
                                         <p>
@@ -271,7 +278,7 @@ const Main = ()=>{
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

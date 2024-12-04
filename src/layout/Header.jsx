@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import axios from 'axios';
+import { mainContext } from "../App";
 
 const Header = () => {
+    const {loginMember, setLoginMember} = useContext(mainContext);
+
     // 현재 경로 변수
     const location = useLocation(); 
 
@@ -13,7 +17,21 @@ const Header = () => {
     const openBtnRef = useRef(null);
     const closeBtnRef = useRef(null);
 
-    
+
+    // 로그아웃 처리
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get('/api/member/logout'); // 로그아웃 처리 API 호출
+            // setIsLoggedIn(false); // 로그아웃 후 상태 변경
+            console.log("로그아웃 성공:", response.data);
+            setLoginMember(null);
+            // sessionStorage.removeItem("loginMember");
+        } catch (error) {
+            console.error("로그아웃 오류:", error);
+        }
+    };
+
+
     //헤더 사이즈 조정
     useEffect(() => {
         const header = headerRef.current;
@@ -41,7 +59,7 @@ const Header = () => {
     }, [location.pathname]);
 
 
-    // 헤더 우측 검색창
+    
     useEffect(() => {
         const searchHidden = searchHiddenRef.current;
         const openBtn = openBtnRef.current;
@@ -67,38 +85,47 @@ const Header = () => {
     return (
         <>
             <div ref={headerRef} id="header" className={`flex ${location.pathname == '/' ? 'short' : ''}`}>         
-                <h1><a href="/"><img src={require('../assets/images/logo.png')} alt=""/></a></h1>
+                <h1><Link to="/"><img src={require('../assets/images/logo.png')} alt=""/></Link></h1>
                 <ul className="flex">
                     <li>
-                        <a href="/emergency">응급실</a>
+                        <Link to="/emergency">응급실</Link>
                     </li>
                     <li>
-                        <a href="/hospital">의료·진료</a>
+                        <Link to="/hospital">의료·진료</Link>
                         <ul className="submenu">
-                            <li><a href="/hospital">병원 조회</a></li>
-                            <li><a href="/check-up">건강검진기관 조회</a></li>
+                            <li><Link to="/hospital">병원 조회</Link></li>
+                            <li><Link to="/check-up">건강검진기관 조회</Link></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/pharmacy">약국·의약</a>
+                        <Link to="/pharmacy">약국·의약</Link>
                         <ul className="submenu">
-                            <li><a href="/pharmacy">약국 조회</a></li>
-                            <li><a href="/medicine">의약품 정보 조회</a></li>
+                            <li><Link to="/pharmacy">약국 조회</Link></li>
+                            <li><Link to="/medicine">의약품 정보 조회</Link></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/first-aid/faq">응급처치</a>
+                        <Link to="/first-aid/faq">응급처치</Link>
                         <ul className="submenu">
-                            <li><a href="/first-aid/faq">FAQ</a></li>
-                            <li><a href="/first-aid/solution">상황별 대처방법</a></li>
-                            <li><a href="/first-aid/principle">응급상황시 행동원칙</a></li>
+                            <li><Link to="/first-aid/faq">FAQ</Link></li>
+                            <li><Link to="/first-aid/solution">상황별 대처방법</Link></li>
+                            <li><Link to="/first-aid/principle">응급상황시 행동원칙</Link></li>
                         </ul>
                     </li>
                 </ul>
-                <div ul className="flex">
+                <div className="flex">
                     <ul className="flex">
-                        <li><a href="/member/login">LOGIN</a></li>
-                        <li><a href="/member/join">JOIN</a></li>
+                        {loginMember ? (
+                            <>
+                                <li><Link to="/member/mypage">MYPAGE</Link></li>
+                                <li><Link to="/" onClick={handleLogout}>LOGOUT</Link></li>
+                            </>
+                        ) : (
+                            <>
+                                <li><Link to="/member/login">LOGIN</Link></li>
+                                <li><Link to="/member/join">JOIN</Link></li>
+                            </>
+                        )}
                     </ul>
                     <div className="search">
                         <button ref={openBtnRef} id="open-btn">
@@ -108,7 +135,7 @@ const Header = () => {
                         <div ref={searchHiddenRef} id="search-hidden">
                             <form name="searchForm" id="searchForm" action="/plan/list" className="flex">
                                 <input type="search" id="keyword" name="keyword" placeholder="검색어를 입력하세요"/>
-                                <a id="search_btn" className="btn" onClick="searchBtnHandler()">
+                                <a id="search_btn" className="btn">
                                     <img src={require('../assets/images/search16.png')} alt=""/>
                                 </a>
                                 <button ref={closeBtnRef} type="button" id="close-btn">

@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect, useState, createContext } from "react";
 import './assets/style/style.css';
 import Main from './pages/Main';
 import Emergency from './pages/emergency/Emergency';
@@ -15,25 +16,34 @@ import MyPage from './pages/member/mypage/MyPage';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 
+export const mainContext = createContext();
 function App() {
+  const [loginMember, setLoginMember] = useState(null);
+
+  useEffect(()=>{
+    sessionStorage.setItem("loginMember", loginMember);
+  },[loginMember])
+  
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/emergency" element={<Emergency />} />
-        <Route path="/hospital" element={<Hospital />} />
-        <Route path="/check-up" element={<CheckUp />} />
-        <Route path="/pharmacy" element={<Pharmacy />} />
-        <Route path="/medicine" element={<Medicine />} />
-        <Route path="/first-aid/faq" element={<Faq />} />
-        <Route path="/first-aid/solution" element={<Solution />} />
-        <Route path="/first-aid/principle" element={<Principle />} />
-        <Route path="/member/join" element={<Join />} />
-        <Route path="/member/login" element={<Login />} />
-        <Route path="/member/mypage" element={<MyPage />} />
-      </Routes>
-      <Footer />
+      <mainContext.Provider value={{loginMember:loginMember, setLoginMember:setLoginMember}}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/emergency" element={<Emergency />} />
+          <Route path="/hospital" element={<Hospital />} />
+          <Route path="/check-up" element={<CheckUp />} />
+          <Route path="/pharmacy" element={<Pharmacy />} />
+          <Route path="/medicine" element={<Medicine />} />
+          <Route path="/first-aid/faq" element={<Faq />} />
+          <Route path="/first-aid/solution" element={<Solution />} />
+          <Route path="/first-aid/principle" element={<Principle />} />
+          <Route path="/member/join" element={<Join />} />
+          <Route path="/member/login" element={<Login />} />
+          <Route path="/member/mypage" element={<MyPage />} />
+        </Routes>
+        <Footer />
+      </mainContext.Provider>
     </BrowserRouter>
   );
 }
