@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -20,14 +20,14 @@ const Footer = () => {
     if (footerPaths.includes(location.pathname)) {
         return (
             <div id="footer">
-                <div class="inner">
+                <div className="inner">
                     <h1>
-                        <a href="/"><img src={require('../assets/images/logo_w.png')} alt=""/></a>
+                        <Link to="/"><img src={require('../assets/images/logo_w.png')} alt=""/></Link>
                     </h1>
-                    <ul class="flex">
-                        <li><a href="#">개인정보취급방침</a></li>
-                        <li><a href="#">이메일무단수집거부</a></li>
-                        <li><a href="#">법적고지</a></li>
+                    <ul className="flex">
+                        <li><Link to="#">개인정보취급방침</Link></li>
+                        <li><Link to="#">이메일무단수집거부</Link></li>
+                        <li><Link to="#">법적고지</Link></li>
                     </ul>
                     Copyright &copy; GoldenTime. All Rights Reserved.
                 </div>

@@ -40,20 +40,22 @@ const HospitalDetail = ({ isDetailOpen, selectedHospital, onClose, getFormattedT
                                 {checkOpenStatus(selectedHospital).open && checkOpenStatus(selectedHospital).close ? `${checkOpenStatus(selectedHospital).open} ~ ${checkOpenStatus(selectedHospital).close}` : ""}
                             </div>
                             <table>
-                                <tr>
-                                    <th><img src={images['detail_icon_place.png']} alt=""/></th>
-                                    <td>({`${String(selectedHospital.postCdn1).trim()}${String(selectedHospital.postCdn2).trim()}`}) {selectedHospital.dutyAddr}</td>
-                                </tr>
-                                <tr>
-                                    <th><img src={images['detail_icon_tel.png']} alt=""/></th>
-                                    <td>{selectedHospital.dutyTel1}</td>
-                                </tr>
-                                {selectedHospital.emergency != "응급의료기관 이외" && (
-                                    <tr className="emergency">
-                                        <th><img src={images['detail_icon_emergency.png']} alt=""/></th>
-                                        <td>응급실 운영</td>
+                                <tbody>
+                                    <tr>
+                                        <th><img src={images['detail_icon_place.png']} alt=""/></th>
+                                        <td>({`${String(selectedHospital.postCdn1).trim()}${String(selectedHospital.postCdn2).trim()}`}) {selectedHospital.dutyAddr}</td>
                                     </tr>
-                                )}
+                                    <tr>
+                                        <th><img src={images['detail_icon_tel.png']} alt=""/></th>
+                                        <td>{selectedHospital.dutyTel1}</td>
+                                    </tr>
+                                    {selectedHospital.emergency != "응급의료기관 이외" && (
+                                        <tr className="emergency">
+                                            <th><img src={images['detail_icon_emergency.png']} alt=""/></th>
+                                            <td>응급실 운영</td>
+                                        </tr>
+                                    )}
+                                </tbody>
                             </table>
                         </div>
                         <div className="detail-tab flex">
@@ -65,38 +67,40 @@ const HospitalDetail = ({ isDetailOpen, selectedHospital, onClose, getFormattedT
                                 <div className="time">
                                     <h4>운영시간</h4>
                                     <table>
-                                        <tr>
-                                            <th>월요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime1s)} - {getFormattedTime(selectedHospital.dutyTime1c)}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>화요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime2s)} - {getFormattedTime(selectedHospital.dutyTime2c)}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>수요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime3s)} - {getFormattedTime(selectedHospital.dutyTime3c)}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>목요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime4s)} - {getFormattedTime(selectedHospital.dutyTime4c)}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>금요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime5s)} - {getFormattedTime(selectedHospital.dutyTime5c)}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>토요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime6s)} - {getFormattedTime(selectedHospital.dutyTime6c)}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>일요일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime7s)} - {getFormattedTime(selectedHospital.dutyTime7c)}</td>
-                                        </tr>
-                                        <tr className="holiday">
-                                            <th>공휴일</th>
-                                            <td>{getFormattedTime(selectedHospital.dutyTime8s)} - {getFormattedTime(selectedHospital.dutyTime8c)}</td>
-                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <th>월요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime1s)} - {getFormattedTime(selectedHospital.dutyTime1c)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>화요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime2s)} - {getFormattedTime(selectedHospital.dutyTime2c)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>수요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime3s)} - {getFormattedTime(selectedHospital.dutyTime3c)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>목요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime4s)} - {getFormattedTime(selectedHospital.dutyTime4c)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>금요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime5s)} - {getFormattedTime(selectedHospital.dutyTime5c)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>토요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime6s)} - {getFormattedTime(selectedHospital.dutyTime6c)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>일요일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime7s)} - {getFormattedTime(selectedHospital.dutyTime7c)}</td>
+                                            </tr>
+                                            <tr className="holiday">
+                                                <th>공휴일</th>
+                                                <td>{getFormattedTime(selectedHospital.dutyTime8s)} - {getFormattedTime(selectedHospital.dutyTime8c)}</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div className="subject">
@@ -116,41 +120,43 @@ const HospitalDetail = ({ isDetailOpen, selectedHospital, onClose, getFormattedT
                                 <div className="score">
                                     <h4>평점</h4>
                                     <table>
-                                        <tr>
-                                            <th>5</th>
-                                            <td>
-                                                <div><p></p></div>
-                                            </td>
-                                            <td rowspan="5">
-                                                <p>3.2</p>
-                                                <img src={images['grade3.png']} alt=""/>
-                                                <span>리뷰 19개</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>4</th>
-                                            <td>
-                                                <div><p></p></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>3</th>
-                                            <td>
-                                                <div><p></p></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>2</th>
-                                            <td>
-                                                <div><p></p></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <td>
-                                                <div><p></p></div>
-                                            </td>
-                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <th>5</th>
+                                                <td>
+                                                    <div><p></p></div>
+                                                </td>
+                                                <td rowspan="5">
+                                                    <p>3.2</p>
+                                                    <img src={images['grade3.png']} alt=""/>
+                                                    <span>리뷰 19개</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>4</th>
+                                                <td>
+                                                    <div><p></p></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>3</th>
+                                                <td>
+                                                    <div><p></p></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>2</th>
+                                                <td>
+                                                    <div><p></p></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>1</th>
+                                                <td>
+                                                    <div><p></p></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                     <a href="#" onClick={handleOpenModal}> 리뷰작성</a>
                                 </div>

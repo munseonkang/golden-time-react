@@ -31,6 +31,8 @@ const Hospital = ()=>{
     // 리스트 스크롤 초기화
     const ulRef = useRef(null);
 
+
+
     // @@ 병원 리스트 불러오기(axios) @@
     useEffect(() => {
         const fetchHospitalData = async () => {
@@ -193,7 +195,11 @@ const Hospital = ()=>{
 
 
     if (loading || !hospitalData) {
-        return <p>데이터를 불러오는 중입니다...</p>;
+        return (
+            <div id="hospital">
+                <p className="get-data">데이터를 불러오는 중입니다...</p>
+            </div>
+        )
     }
     if (error) {
         return <p>데이터를 불러오는 데 실패했습니다: {error.message}</p>;

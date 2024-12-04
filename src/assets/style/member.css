@@ -33,6 +33,7 @@
 #join form .email .certification input {width:100%; border-radius: 9px;}
 #join form .email .certification button.two{width:140px; margin-left:5px;}
 #join form .email .certification .check{position:absolute; top:0; width:100%; display: none;}
-#join form .email .certification .check.check-on{display: flex;}
+#join form .email .certification .check.check-on{display: block;}
 #join form .email .certification .check.check-off{display: none;}
+#join form .email .certification .check img{position:absolute; top:0; right:120px; transform: translateY(23px); opacity: 0;}
 

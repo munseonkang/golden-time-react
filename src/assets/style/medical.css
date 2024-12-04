@@ -18,11 +18,12 @@
 
 
 /* 검색결과(리스트) */
+#hospital .get-data{position:fixed; top:50%; left:50%; transform: translateX(-50%);}
 #hospital .list{margin-top:15px;}
 #hospital .list>div ul.sorting{justify-content: end;}
 #hospital .list>div ul.sorting li{margin-left: 5px; font-size: 13px;}
 #hospital .list>div ul.sorting li a{color:#555;}
-#hospital .list>ul{height: calc(100vh - 214px); margin-top:5px; padding-right:5px;}
+#hospital .list>ul{height: calc(100vh - 215px); margin-top:5px; padding-right:5px;}
 #hospital .list>ul li{margin-bottom:10px; padding:10px; border-radius: 10px; background: #fff; font-size: 15px; cursor: pointer;}
 #hospital .list>ul li .name{margin-bottom:7px; font-size: 18px; color:#154757;}
 #hospital .list>ul li .name span{font-size: 15px; color:#aaa; word-break:keep-all;}
