@@ -16,7 +16,8 @@ const MyPage = ()=>{
 
     const changeContent = (e)=>{
         let result;
-        switch(e.target.innerText) {
+        const title = e.target.innerText;
+        switch(title) {
             case "마이페이지":
                 result=(<DashBoard/>);
                 break;
@@ -30,6 +31,14 @@ const MyPage = ()=>{
                 result=(<Reviews/>);
                 break;
         }
+        navRef.current.map((el)=>{
+            if(el.innerText === title) {
+                el.cl
+            }
+            else {
+                el.current.classList.remove("nav-selected");
+            }
+        })
         setContent(result);
     }
 
@@ -39,7 +48,7 @@ const MyPage = ()=>{
             <section>
                 <aside>
                     <ul>
-                        <li className="nav-selected" ref={addNavRef} onClick={(e)=>{changeContent(e)}}>
+                        <li ref={addNavRef} onClick={(e)=>{changeContent(e)}}>
                             <img src={images['nav_memberInfo_clicked20.png']} alt=""/>
                             <h2>회원정보 관리</h2>
                         </li>
