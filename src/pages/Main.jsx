@@ -111,6 +111,38 @@ const Main = ()=>{
                                         </ul>
                                     </div>
                                 </li>
+                                <li className="block">
+                                    <p>강남세브란스병원 응급진료센터</p>
+                                    <div className="info flex">
+                                        <div>
+                                            <p>현재 위치에서 <b>12.6km</b></p>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_place.png']} alt=""/></th>
+                                                        <td>서울 강남구 언주로 211</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><img src={images['main_icon_tel.png']} alt=""/></th>
+                                                        <td>02-2019-3333</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <p>4</p>
+                                    </div>
+                                    <div className="bed">
+                                        <p>(가용 병상 수 / 기준 병상 수)</p>
+                                        <ul className="flex color">
+                                            <li className="red">
+                                                일반 <div><span>-7</span> / 15</div>
+                                            </li>
+                                            <li className="green">
+                                                소아 <div><span>0</span> / 2</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -216,13 +248,19 @@ const Main = ()=>{
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
                                 </Link>
                             </li>
-                            
+                            <li>
+                                <Link to="#">
+                                    <img src={images['temp3.jpg']} alt=""/>
+                                    <h4>질병관리청 아프지마TV</h4>
+                                    <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
+                                </Link>
+                            </li>
                         </ul>
 
-                        <div className="slide_btn">
+                        {/* <div className="slide_btn">
                             <a className="prev-btn"><img src={images['main_con3_prev.png']} alt="이전버튼"/></a>
                             <a className="next-btn"><img src={images['main_con3_next.png']} alt="다음버튼"/></a>
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>
