@@ -12,12 +12,21 @@ export const getSession = () => {
 export const getMember = (memberId) => {
     return instance.get(`member/${memberId}`);
 }
+// 멤버 프로필 확인
+export const getProfile = (memberId) => {
+    return instance.get(`member/${memberId}/profile`);
+}
 // 멤버 정보 수정
-export const modifyMember = (memberId, member) => {
-    return instance.put(`member/${memberId}`, member);
+export const updateMember = (memberId, member) => {
+    return instance.put(`member/${memberId}`, {
+        nickname: member.nickname,
+        password: member.password,
+        email: member.email,
+        phoneNumber: member.phoneNumber,
+    });
 }
 // 멤버 정보 삭제
-export const removeMember = (memberId) => {
+export const deleteMember = (memberId) => {
     return instance.delete(`member/${memberId}`);
 }
 

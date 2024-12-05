@@ -1,10 +1,21 @@
-import { getLikes, getLikesWithClassification, getLikesWithLimit, getMember, getReviews, getReviewsWithClassification, getReviewsWithMonth } from "../api/goldentimeAPI";
+import { Title } from "../../constants/mypage";
+import { deleteMember, getLikes, getLikesWithClassification, getLikesWithLimit, getMember, getProfile, getReviews, getReviewsWithClassification, getReviewsWithMonth, updateMember } from "../api/goldentimeAPI";
 
 
 export async function getMemberInfo(memberId, callback) {
     try{
         const response = await getMember(memberId);
         console.log("회원 정보", response.data.data);
+        callback({...response.data.data, password:"", passwordCheck:""});
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+export async function getMemberProfile(memberId, callback) {
+    try{
+        const response = await getProfile(memberId);
+        console.log("회원 프로필", response.data.data);
         callback(response.data.data);
     }
     catch(error) {
@@ -46,6 +57,30 @@ export async function getMemberReviews(param, callback) {
         }
         console.log("리뷰 정보", response);
         callback(response.data.data);
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+export async function modifyMember(param, changeContent) {
+    try{
+        const {memberId, member} = param;
+        const response = await updateMember(memberId, member);
+        if(response.data.data==="success") changeContent(Title.DASHBOARD);
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+export async function removeMember(memberId, setLoginMember, navigate) {
+    try{
+        const response = await deleteMember(memberId);
+        if(response.data.data==="success") {
+            setLoginMember(null);
+            navigate("/", true);
+        }
     }
     catch(error) {
         console.log(error);

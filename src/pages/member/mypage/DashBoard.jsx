@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import { getMemberInfo, getMemberLikes, getMemberReviews } from '../../../apis/services/goldentimeService';
+import { getMemberInfo, getMemberLikes, getMemberProfile, getMemberReviews } from '../../../apis/services/goldentimeService';
 import { setLikeDetail, setLikeIcon } from './Likes';
 import { setRatingImage } from './Reviews';
 import { Title } from '../../../constants/mypage';
@@ -18,13 +18,13 @@ const DashBoard = (props) => {
     }
 
     useEffect(()=>{
-        getMemberInfo(sessionStorage.getItem("loginMember"), setMemberInfo)
+        getMemberProfile(sessionStorage.getItem("loginMember"), setMemberInfo)
         getMemberLikes({memberId: sessionStorage.getItem("loginMember"), limit: 5}, setLikeList);
         getMemberReviews({memberId: sessionStorage.getItem("loginMember"), month: 1}, setReviewList);
     },[])
 
     useEffect(()=>{
-        if(reviewTextRef.current) {
+        if(reviewTextRef.current && reviewTextRef.current.length>0) {
             reviewTextRef.current.map((el)=>{
                 el.style.height = el.scrollHeight + "px";
             })
@@ -34,7 +34,7 @@ const DashBoard = (props) => {
     return (
         <article className="dash-board">
             <section>
-                <h3>내 계정</h3>
+                <h3>내 프로필</h3>
                 <div>
                     <div>
                         <img src={images['profile_image80.png']} alt=""/>
@@ -47,12 +47,12 @@ const DashBoard = (props) => {
                     </div>
                     <div>
                         <div>
-                            <span className="b14e3f">리뷰</span>
-                            <span className="b30e3f">{memberInfo.reviewCnt}</span>
+                            <span className="b14e3f" onClick={()=>{changeContent(Title.REVIEWS)}}>리뷰</span>
+                            <span className="b30e3f" onClick={()=>{changeContent(Title.REVIEWS)}}>{memberInfo.reviewCnt}</span>
                         </div>
                         <div>
-                            <span className="b14e3f">즐겨찾기</span>
-                            <span className="b30e3f">{memberInfo.likeCnt}</span>
+                            <span className="b14e3f" onClick={()=>{changeContent(Title.LIKES)}}>즐겨찾기</span>
+                            <span className="b30e3f" onClick={()=>{changeContent(Title.LIKES)}}>{memberInfo.likeCnt}</span>
                         </div>
                     </div>
                     <button className="b133a7" onClick={()=>{changeContent(Title.MEMBERINFO)}}>회원정보 수정</button>

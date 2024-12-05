@@ -9,7 +9,7 @@ import { Title } from "../../../constants/mypage";
 const MyPage = ()=>{
     const { DASHBOARD, MEMBERINFO, LIKES, REVIEWS } = Title;
 
-    const [content, setContent] = useState((<DashBoard/>));
+    const [content, setContent] = useState();
 
     const titleRef = useRef(DASHBOARD);
     const navRef = useRef([]);
@@ -25,7 +25,7 @@ const MyPage = ()=>{
                 result=(<DashBoard changeContent={changeContent}/>);
                 break;
             case MEMBERINFO:
-                result=(<MemberInfo/>);
+                result=(<MemberInfo changeContent={changeContent}/>);
                 break;
             case LIKES:
                 result=(<Likes/>);
@@ -59,6 +59,10 @@ const MyPage = ()=>{
                 else return "nav_review20.png";
         }
     }
+
+    useEffect(()=>{
+        changeContent(DASHBOARD);
+    },[])
 
     return (
         <div id="mypage" className="inner">

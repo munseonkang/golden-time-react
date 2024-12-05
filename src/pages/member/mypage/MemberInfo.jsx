@@ -1,24 +1,89 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import { getMemberInfo } from '../../../apis/services/goldentimeService';
+import { getMemberInfo, modifyMember, removeMember } from '../../../apis/services/goldentimeService';
+import { useNavigate } from 'react-router-dom';
+import { mainContext } from '../../../App';
 
-const MemberInfo = () => {
-    const [inputs, setInputs] = useState({memberId:"", nickname:"", password:"", passwordCheck:"",  email:"", phoneNumber:""});
+const MemberInfo = (props) => {
+    const { changeContent } = props;
+    const {setLoginMember} = useContext(mainContext);
+
+    const [inputs, setInputs] = useState({memberId:"", nickname:"", password:"", passwordCheck:"", email:"", phoneNumber:""});
+    const {nickname, password, passwordCheck, email, phoneNumber} = inputs;
 
     const inputsRef = useRef([]);
+    const descriptionsRef = useRef([]);
+
+    const navigate = useNavigate();
+
     const addInputsRef = (e)=>{
         inputsRef.current.push(e);
     }
+    const addDescriptionsRef = (e)=>{
+        descriptionsRef.current.push(e);
+    }
+
+    const checkPassword = (password)=>{
+        return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,20}$/.test(password);
+    }
+    const checkPhoneNumber = (phoneNumber)=>{
+        return /^[0-9]{11}$/.test(phoneNumber);
+    }
+
     const changeInputs = (e)=>{
         const {name, value} = e.target;
-        console.log(e.target);
         setInputs({...inputs, [name]:value});
 
         if(!value) {
-            e.target.classList.add('empty');
+            e.target.classList.add('empty-border');
         }
         else {
-            e.target.classList.remove('empty');
+            e.target.classList.remove('empty-border');
+        }
+        if(name==="password") {
+            if(checkPassword(value)) {
+                e.target.classList.remove('empty-border');
+                descriptionsRef.current[0].classList.remove('empty-text');
+            } else {
+                e.target.classList.add('empty-border');
+                descriptionsRef.current[0].classList.add('empty-text');
+            }
+        }
+        if(name==="passwordCheck") {
+            descriptionsRef.current[1].classList.remove('empty-text');
+            descriptionsRef.current[1].classList.add('hidden');
+        }
+        if(name==="phoneNumber") {
+            if(checkPhoneNumber(value)) {
+                e.target.classList.remove('empty-border');
+                descriptionsRef.current[2].classList.remove('empty-text');
+            } else {
+                e.target.classList.add('empty-border');
+                descriptionsRef.current[2].classList.add('empty-text');
+            }
+        }
+    }
+
+    const submit = ()=>{
+        if(!password) {
+            inputsRef.current[1].classList.add('empty-border');
+            descriptionsRef.current[0].classList.add('empty-text');
+        }
+        if(password!==passwordCheck) {
+            inputsRef.current[2].classList.add('empty-border');
+            descriptionsRef.current[1].classList.add('empty-text');
+            descriptionsRef.current[1].classList.remove('hidden');
+        }
+        if(!checkPhoneNumber(phoneNumber))
+        if(!email) inputsRef.current[3].focus();
+        if(password!==passwordCheck) inputsRef.current[2].focus();
+        if(!checkPassword(password)) inputsRef.current[1].focus();
+        if(!nickname) inputsRef.current[0].focus();
+        if(!nickname || !checkPassword(password) || password!==passwordCheck || !email || !checkPhoneNumber(phoneNumber)) {
+                return;
+        }
+        else{
+            modifyMember({memberId: sessionStorage.getItem("loginMember"), member: inputs}, changeContent);
         }
     }
 
@@ -49,31 +114,40 @@ const MemberInfo = () => {
                         <input className="r156aa" type="text" value={inputs.memberId} readOnly/>
                     </li>
                     <li>
-                        <label className="b166aa"><strong>닉네임</strong></label>
-                        <input className="r15b" name="nickname" ref={addInputsRef} type="text" defaultValue={inputs.nickname} onChange={(e)=>{changeInputs(e)}}/>
+                        <label className="b166aa" htmlFor="nickname"><strong>닉네임 *</strong></label>
+                        <input className="r15b" id="nickname" name="nickname" ref={addInputsRef} type="text" value={inputs.nickname} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
-                        <label className="b166aa"><strong>비밀번호</strong></label>
-                        <input className="r15b" name="password" ref={addInputsRef} type="password" onChange={(e)=>{changeInputs(e)}}/>
+                        <div>
+                            <label className="b166aa" htmlFor="password"><strong>비밀번호 *</strong></label>
+                            <span className="r126aa" ref={addDescriptionsRef}>영문,숫자,특수문자를 모두 조합하여 8~20자이내로 입력해주세요.</span>
+                        </div>
+                        <input className="r15b" id="password" name="password" ref={addInputsRef} type="password" onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
-                        <label className="b166aa"><strong>비밀번호 확인</strong></label>
-                        <input className="r15b" name="passwordCheck" ref={addInputsRef} type="password" onChange={(e)=>{changeInputs(e)}}/>
+                        <div>
+                            <label className="b166aa" htmlFor="passwordCheck"><strong>비밀번호 확인 *</strong></label>
+                            <span className="r12fc7 hidden" ref={addDescriptionsRef}>동일한 비밀번호를 작성해주세요.</span>
+                        </div>
+                        <input className="r15b" id="passwordCheck" name="passwordCheck" ref={addInputsRef} type="password" onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
-                        <label className="b166aa"><strong>이메일</strong></label>
-                        <input className="r15b" name="email" ref={addInputsRef} type="email" defaultValue={inputs.email} onChange={(e)=>{changeInputs(e)}}/>
+                        <label className="b166aa" htmlFor="email"><strong>이메일 *</strong></label>
+                        <input className="r15b" id="email" name="email" ref={addInputsRef} type="email" value={inputs.email} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
-                        <label className="b166aa"><strong>전화번호</strong></label>
-                        <input className="r15b" name="phoneNumber" ref={addInputsRef} type="tel" defaultValue={inputs.phoneNumber} onChange={(e)=>{changeInputs(e)}}/>
+                        <div>
+                            <label className="b166aa" htmlFor="phoneNumber"><strong>전화번호 *</strong></label>
+                            <span className="r126aa" ref={addDescriptionsRef}>( - ) 없이 입력해주세요.</span>
+                        </div>
+                        <input className="r15b" id="phoneNumber" name="phoneNumber" ref={addInputsRef} type="tel" value={inputs.phoneNumber} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                 </ul>
                 <div>
-                    <button className="b15ce1">회원 탈퇴</button>
+                    <button className="b15ce1" onClick={()=>{removeMember(sessionStorage.getItem("loginMember"), setLoginMember, navigate)}}>회원 탈퇴</button>
                     <div>
                         <button className="b15w">초기화</button>
-                        <button className="b15w">회원정보 변경</button>
+                        <button className="b15w" onClick={submit}>회원정보 변경</button>
                     </div>
                 </div>
             </section>

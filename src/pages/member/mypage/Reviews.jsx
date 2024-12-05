@@ -106,7 +106,7 @@ const Reviews = () => {
                                                 <div>
                                                     <img src={images[`${setRatingImage(review.rating)}`]} alt=""/>
                                                     <span className="b146aa">{review.rating}</span>
-                                                    <span className="r136aa">{review.updatedAt}</span>
+                                                    <span className="r126aa">{review.updatedAt}</span>
                                                 </div>
                                             </div>
                                             <div>
