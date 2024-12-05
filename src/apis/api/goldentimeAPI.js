@@ -20,3 +20,41 @@ export const modifyMember = (memberId, member) => {
 export const removeMember = (memberId) => {
     return instance.delete(`member/${memberId}`);
 }
+
+// 즐겨찾기 조회 - 멤버별
+export const getLikes = (memberId) => {
+    return instance.get(`member/${memberId}/likes`);
+}
+// 즐겨찾기 조회(개수 제한) - 멤버별
+export const getLikesWithLimit = (memberId, limit) => {
+    return instance.get(`member/${memberId}/likes/limit?limit=${limit}`);
+}
+// 즐겨찾기 조회(구분 제한) - 멤버별
+export const getLikesWithClassification = (memberId, classification) => {
+    return instance.get(`member/${memberId}/likes/classification?classification=${classification}`);
+}
+// 즐겨찾기 삭제
+export const removeLike = (memberId, likeId) => {
+    return instance.delete(`member/${memberId}/like/${likeId}`);
+}
+
+// 리뷰 조회 - 멤버별
+export const getReviews = (memberId) => {
+    return instance.get(`member/${memberId}/reviews`);
+}
+// 리뷰 조회(최근 기준 월별 제한) - 멤버별
+export const getReviewsWithMonth = (memberId, month) => {
+    return instance.get(`member/${memberId}/reviews/month?month=${month}`);
+}
+// 리뷰 조회(구분 제한) - 멤버별
+export const getReviewsWithClassification = (memberId, classification) => {
+    return instance.get(`member/${memberId}/reviews/classification?classification=${classification}`);
+}
+// 리뷰 삭제
+export const modifyReview = (memberId, reviewId) => {
+    return instance.put(`member/${memberId}/like/${reviewId}`);
+}
+// 리뷰 삭제
+export const removeReview = (memberId, reviewId) => {
+    return instance.delete(`member/${memberId}/like/${reviewId}`);
+}

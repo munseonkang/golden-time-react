@@ -18,10 +18,11 @@ import Footer from './layout/Footer';
 
 export const mainContext = createContext();
 function App() {
-  const [loginMember, setLoginMember] = useState(null);
+  const [loginMember, setLoginMember] = useState(sessionStorage.getItem("loginMember"));
 
   useEffect(()=>{
-    sessionStorage.setItem("loginMember", loginMember);
+    if(loginMember) sessionStorage.setItem("loginMember", loginMember);
+    else sessionStorage.removeItem("loginMember");
   },[loginMember])
   
   return (

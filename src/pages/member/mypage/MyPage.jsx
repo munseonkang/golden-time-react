@@ -4,32 +4,33 @@ import { images } from '../../../utils/images';
 import MemberInfo from "./MemberInfo";
 import Likes from "./Likes";
 import Reviews from "./Reviews";
+import { Title } from "../../../constants/mypage";
 
 const MyPage = ()=>{
+    const { DASHBOARD, MEMBERINFO, LIKES, REVIEWS } = Title;
+
     const [content, setContent] = useState((<DashBoard/>));
 
-    const titleRef = useRef("마이페이지");
+    const titleRef = useRef(DASHBOARD);
     const navRef = useRef([]);
 
     const addNavRef = (e)=>{
         navRef.current.push(e)
     }
 
-    const changeContent = (e)=>{
-        e.preventDefault();
+    const changeContent = (title)=>{
         let result;
-        const title = e.target.innerText;
         switch(title) {
-            case "마이페이지":
-                result=(<DashBoard/>);
+            case DASHBOARD:
+                result=(<DashBoard changeContent={changeContent}/>);
                 break;
-            case "회원정보 관리":
+            case MEMBERINFO:
                 result=(<MemberInfo/>);
                 break;
-            case "즐겨찾기 관리":
+            case LIKES:
                 result=(<Likes/>);
                 break;
-            case "리뷰 관리":
+            case REVIEWS:
                 result=(<Reviews/>);
                 break;
         }
@@ -47,13 +48,13 @@ const MyPage = ()=>{
 
     const changeIcon = (title)=>{
         switch(title) {
-            case "회원정보 관리":
+            case MEMBERINFO:
                 if(title===titleRef.current) return "nav_memberInfo_clicked20.png";
                 else return "nav_memberInfo20.png";
-            case "즐겨찾기 관리":
+            case LIKES:
                 if(title===titleRef.current) return "nav_like_clicked20.png";
                 else return "nav_like20.png";
-            case "리뷰 관리":
+            case REVIEWS:
                 if(title===titleRef.current) return "nav_review_clicked20.png";
                 else return "nav_review20.png";
         }
@@ -61,21 +62,21 @@ const MyPage = ()=>{
 
     return (
         <div id="mypage" className="inner">
-            <h1 onClick={(e)=>{changeContent(e)}}>마이페이지</h1>
+            <h1 onClick={()=>{changeContent(DASHBOARD)}}>{DASHBOARD}</h1>
             <section>
                 <aside>
                     <ul>
-                        <li ref={addNavRef} onClick={(e)=>{changeContent(e)}}>
-                            <img src={images[`${changeIcon("회원정보 관리")}`]} alt=""/>
-                            <h2>회원정보 관리</h2>
+                        <li ref={addNavRef} onClick={()=>{changeContent(MEMBERINFO)}}>
+                            <img src={images[`${changeIcon(MEMBERINFO)}`]} alt=""/>
+                            <h2>{MEMBERINFO}</h2>
                         </li>
-                        <li ref={addNavRef} onClick={(e)=>{changeContent(e)}}>
-                            <img src={images[`${changeIcon("즐겨찾기 관리")}`]} alt=""/>
-                            <h2>즐겨찾기 관리</h2>
+                        <li ref={addNavRef} onClick={()=>{changeContent(LIKES)}}>
+                            <img src={images[`${changeIcon(LIKES)}`]} alt=""/>
+                            <h2>{LIKES}</h2>
                         </li>
-                        <li ref={addNavRef} onClick={(e)=>{changeContent(e)}}>
-                            <img src={images[`${changeIcon("리뷰 관리")}`]} alt=""/>
-                            <h2>리뷰 관리</h2>
+                        <li ref={addNavRef} onClick={()=>{changeContent(REVIEWS)}}>
+                            <img src={images[`${changeIcon(REVIEWS)}`]} alt=""/>
+                            <h2>{REVIEWS}</h2>
                         </li>
                     </ul>
                 </aside>

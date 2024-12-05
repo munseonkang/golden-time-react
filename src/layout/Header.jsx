@@ -115,7 +115,7 @@ const Header = () => {
                 </ul>
                 <div className="flex">
                     <ul className="flex">
-                        {loginMember ? (
+                        {(loginMember) ? (
                             <>
                                 <li><Link to="/member/mypage">MYPAGE</Link></li>
                                 <li><Link to="/" onClick={handleLogout}>LOGOUT</Link></li>

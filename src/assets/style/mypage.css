@@ -15,7 +15,7 @@ table{
 }
 #mypage{
     padding-top: 81px;
-    padding-bottom: 300px;
+    padding-bottom: 250px;
 }
 
 #mypage h1{
@@ -297,6 +297,9 @@ table{
 #mypage .nav-selected h2{
     color: #154757;
 }
+#mypage .empty {
+    border: 2px solid #FC7486 !important;
+}
 
 main{
     width: 1200px;
@@ -385,6 +388,7 @@ main{
 }
 #mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(2){
     width: 363px;
+    padding-bottom: 1px;
     display: flex;
     flex-direction: column;
 }
@@ -428,10 +432,19 @@ main{
     margin-bottom: 16px;
 }
 
-
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul{
+    height: 433px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul::-webkit-scrollbar{
+    display:none;
+}
 #mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article{
     width: 411px;
-    height: 203px;
+    min-height: 203px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -452,8 +465,8 @@ main{
 }
 #mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >textarea{
     display: block;
-    height: 95px;
     text-align: start;
+    overflow-y: hidden;
 }
 #mypage .rbgc-h{
     background-color: #E3F3F8;
@@ -470,7 +483,11 @@ main{
     height: 492px;
     background-color: #eee;
 }
-
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul{
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+}
 #mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li{
     width: 403px;
     height: 53px;
@@ -503,6 +520,9 @@ main{
 }
 #mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1) >span:nth-of-type(1){
     max-width: 167px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 #mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >button{
     border-radius: 10px;
@@ -661,13 +681,18 @@ main{
 #mypage >section .likes >section >table >tbody >tr >td{
     text-align: left;
     padding-right: 15px;
+}
+#mypage >section .likes >section >table >thead >tr >th{
     height: 31px;
 }
+#mypage >section .likes >section >table >tbody >tr >td{
+    height: 46px;
+}
 #mypage >section .likes >section >table >tbody >tr:nth-of-type(1){
-    height: 9px;
+    height: 2px;
 }
 #mypage >section .likes >section >table >tbody >tr:last-of-type{
-    height: 20px;
+    height: 13px;
 }
 #mypage >section .likes >section >table >thead >tr >th{
     background-color: #E6F6FB;
@@ -704,6 +729,15 @@ main{
 #mypage >section .likes >section >table >tbody >tr >td:nth-of-type(5){
     width: 94px;
     padding-right: 10px;
+}
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(3){
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(5) >button{
+    border-radius: 8px;
+    padding: 7px 10px;
 }
 
 #mypage >section .reviews >section{
@@ -796,5 +830,6 @@ main{
 }
 #mypage >section .reviews >section >ul >li >article >textarea{
     margin-top: 11px;
-    height: 17px;
+    height: auto;
+    min-height: 17px;
 }
