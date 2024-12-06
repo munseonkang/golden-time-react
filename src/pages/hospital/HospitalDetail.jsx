@@ -1,8 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { images } from '../../utils/images';
 import HospitalModal from "./HospitalModal";
+import { getFormattedTime, checkOpenStatus, cleanHospitalName } from "./Hospital";
 
-const HospitalDetail = ({ isDetailOpen, selectedHospital, onClose, getFormattedTime, checkOpenStatus, cleanHospitalName, renameClassification })=>{
+const HospitalDetail = ({ 
+    isDetailOpen, 
+    selectedHospital, 
+    selectIndex,
+    isFavorite,
+    setIsFavorite,
+    onClose,
+    renameClassification,
+    favoriteStar,
+})=>{
     const [activeTab, setActiveTab] = useState('tab1'); // 기본 tab1 활성화
     const [isModalOpen, setIsModalOpen] = useState(false); // 리뷰 모달
 
@@ -19,9 +29,7 @@ const HospitalDetail = ({ isDetailOpen, selectedHospital, onClose, getFormattedT
         setIsModalOpen(false);
     };
 
-    
-    // console.log(selectedHospital.dutyDivNam, selectedHospital.dutyName);
-
+    console.log("가져온인덱스:",isFavorite);
 
     return (
         <>
@@ -31,7 +39,20 @@ const HospitalDetail = ({ isDetailOpen, selectedHospital, onClose, getFormattedT
                     <div className="scroll">
                         <p>병원상세<span><img src={images['close16.png']} alt="" onClick={onClose} /></span></p>
                         <div className="data">
-                            <p>{cleanHospitalName(selectedHospital.dutyName)}<a href="#"><img src={images['star25_off.png']} alt=""/></a></p>
+                            <p>{cleanHospitalName(selectedHospital.dutyName)}
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    favoriteStar(selectedHospital, selectIndex);
+                                    // setIsFavorite(prevState => !prevState);
+                                }}
+                            >
+                                <img
+                                    src={images[isFavorite ? 'star25_on.png' : 'star25_off.png']}
+                                />
+                            </a>
+                            </p>
                             <span>{renameClassification(selectedHospital.dutyDivNam, selectedHospital.dutyName)}</span>
                             <div className="open">
                                 <p className={checkOpenStatus(selectedHospital).status === "진료중" ? "green" : "red"}>

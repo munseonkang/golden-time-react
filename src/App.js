@@ -21,8 +21,12 @@ function App() {
   const [loginMember, setLoginMember] = useState(sessionStorage.getItem("loginMember"));
 
   useEffect(()=>{
-    if(loginMember) sessionStorage.setItem("loginMember", loginMember);
-    else sessionStorage.removeItem("loginMember");
+    if(loginMember){
+      sessionStorage.setItem("loginMember", loginMember);
+    }
+    else{
+      sessionStorage.removeItem("loginMember");
+    }
   },[loginMember])
   
   return (
