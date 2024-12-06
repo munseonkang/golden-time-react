@@ -3,9 +3,10 @@ import { images } from '../../../utils/images';
 import Pagination from './Pagination';
 import Result from './Result';
 import { CheckUpContext } from '../CheckUp';
+import { search } from '../../../apis/services/nhisService';
 
 const Results = () => {
-    const {results} = useContext(CheckUpContext);
+    const {results, setResults, searchTerms} = useContext(CheckUpContext);
 
     return (
         <div className="result">
@@ -38,7 +39,7 @@ const Results = () => {
                     }
                 </tbody>
             </table>
-            {(results && (<Pagination />))}
+            {(results && (<Pagination datas={results} paging={(pageNo)=>{search({...searchTerms.current, pageNo: pageNo}, setResults)}} />))}
         </div>
     )
 }

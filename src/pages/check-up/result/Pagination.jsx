@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { images } from '../../../utils/images';
-import { CheckUpContext } from '../CheckUp';
 import { search } from '../../../apis/services/nhisService';
 
-const Pagination = () => {
-    const {results, setResults, searchTerms} = useContext(CheckUpContext);
-    const {pageNo, totalCount, numOfRows} = results;
+const Pagination = (props) => {
+    const {datas, paging} = props;
+    const {pageNo, totalCount, numOfRows} = datas;
 
     const pagingWidth = 5;
     
@@ -43,21 +42,7 @@ const Pagination = () => {
                 next: pageNo<Math.floor(Math.ceil(totalCount/numOfRows)/pagingWidth)*pagingWidth+1
             })
         }
-    }, [results])
-
-    // useEffect(()=>{
-    //     setPageMaker({
-    //         ...pageMaker,
-    //         startPage: (currentPage+4)/5,
-    //         endPage: (endPage<lastPage)?((currentPage-1)/5+1)*5:lastPage,
-    //         prev: currentPage>pagingWidth,
-    //         next: lastPage/pagingWidth*pagingWidth+1>currentPage
-    //     })
-    // },[currentPage])
-
-    function paging(pageNo) {
-        search({...searchTerms.current, pageNo: pageNo}, setResults);
-    }
+    }, [datas])
 
     function setPagination() {
         const result = [];

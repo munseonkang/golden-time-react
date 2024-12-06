@@ -1,6 +1,13 @@
-input, button{
+input, button, textarea{
     background: none;
     border-width: 0;
+}
+textarea, input{
+    outline: none;
+    resize: none;
+}
+button{
+    cursor: pointer;
 }
 table{
     border-collapse: collapse;
@@ -8,25 +15,50 @@ table{
 }
 #mypage{
     padding-top: 81px;
+    padding-bottom: 250px;
 }
 
 #mypage h1{
     font-family: 'GangwonExtraBoldA';
     font-size: 27px;
     color: #154757;
-    text-align: center;
 }
 #mypage h2{
     font-family: 'Pretendard-Bold';
-    font-size: 21px;
+    font-size: 17px;
+    color: #6AA1B4;
+}
+#mypage h3{
+    font-family: 'Pretendard-Bold';
+    font-size: 17px;
     color: #154757;
+}
+#mypage h4{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #444;
+}
+#mypage .b30e3f{
+    font-family: 'Pretendard-Bold';
+    font-size: 30px;
+    color: #E3F3F8;
+}
+#mypage .b24w{
+    font-family: 'Pretendard-Bold';
+    font-size: 24px;
+    color: #fff;
 }
 #mypage .b22lg{
     font-family: 'Pretendard-Bold';
     font-size: 22px;
     color: #E3F3F8;
 }
-#mypage .b19dg{
+#mypage .b21b4d{
+    font-family: 'Pretendard-Bold';
+    font-size: 21px;
+    color: #B4D9E4;
+}
+#mypage .b193a7{
     font-family: 'Pretendard-Bold';
     font-size: 18px;
     color: #3A7A8F;
@@ -35,6 +67,11 @@ table{
     font-family: 'Pretendard-Bold';
     font-size: 18px;
     color: #154757;
+}
+#mypage .b173a7{
+    font-family: 'Pretendard-Bold';
+    font-size: 17px;
+    color: #3A7A8F;
 }
 #mypage .b17mc{
     font-family: 'Pretendard-Bold';
@@ -46,25 +83,90 @@ table{
     font-size: 17px;
     color: #7BB6CA;
 }
+#mypage .b176aa{
+    font-family: 'Pretendard-Bold';
+    font-size: 17px;
+    color: #6AA1B4;
+}
 #mypage .b16mc{
     font-family: 'Pretendard-Bold';
     font-size: 16px;
     color: #154757;
 }
-#mypage .b16dg{
+#mypage .b163a7{
     font-family: 'Pretendard-Bold';
     font-size: 16px;
     color: #3A7A8F;
 }
-#mypage .b14dg{
+#mypage .b166aa{
+    font-family: 'Pretendard-Bold';
+    font-size: 16px;
+    color: #6AA1B4;
+}
+#mypage .b15w{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #fff;
+}
+#mypage .b15ce1{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #CE1717;
+}
+#mypage .b153a7{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #3A7A8F;
+}
+#mypage .b156aa{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #6AA1B4;
+}
+#mypage .b15444{
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    color: #444;
+}
+#mypage .b143a7{
     font-family: 'Pretendard-Bold';
     font-size: 14px;
     color: #3A7A8F;
+}
+#mypage .b14w{
+    font-family: 'Pretendard-Bold';
+    font-size: 14px;
+    color: #fff;
+}
+#mypage .b14e3f{
+    font-family: 'Pretendard-Bold';
+    font-size: 14px;
+    color: #E3F3F8;
+}
+#mypage .b146aa{
+    font-family: 'Pretendard-Bold';
+    font-size: 14px;
+    color: #6AA1B4;
 }
 #mypage .b13dp{
     font-family: 'Pretendard-Bold';
     font-size: 13px;
     color: #F07F8E;
+}
+#mypage .b133a7{
+    font-family: 'Pretendard-Bold';
+    font-size: 13px;
+    color: #3A7A8F;
+}
+#mypage .b12w{
+    font-family: 'Pretendard-Bold';
+    font-size: 12px;
+    color: #fff;
+}
+#mypage .r183a7{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #3A7A8F;
 }
 #mypage .r17b{
     font-family: 'Pretendard-Regular';
@@ -96,7 +198,7 @@ table{
     font-size: 16px;
     color: #154757;
 }
-#mypage .r16dg{
+#mypage .r163a7{
     font-family: 'Pretendard-Regular';
     font-size: 16px;
     color: #3A7A8F;
@@ -106,20 +208,50 @@ table{
     font-size: 16px;
     color: #111;
 }
+#mypage .r16444{
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+    color: #444;
+}
 #mypage .r15mc{
     font-family: 'Pretendard-Regular';
     font-size: 15px;
     color: #154757;
 }
-#mypage .r15dg{
+#mypage .r153a7{
     font-family: 'Pretendard-Regular';
     font-size: 15px;
     color: #3A7A8F;
+}
+#mypage .r156aa{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #6AA1B4;
 }
 #mypage .r15w{
     font-family: 'Pretendard-Regular';
     font-size: 15px;
     color: #fff;
+}
+#mypage .r15b{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #111;
+}
+#mypage .r15888{
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #888;
+}
+#mypage .r14888{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #888;
+}
+#mypage .r14444{
+    font-family: 'Pretendard-Regular';
+    font-size: 14px;
+    color: #444;
 }
 #mypage .r14g{
     font-family: 'Pretendard-Regular';
@@ -131,11 +263,640 @@ table{
     font-size: 14px;
     color: #154757;
 }
+#mypage .r126aa{
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+    color: #6AA1B4;
+}
+#mypage .r12fc7{
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+    color: #FC7486;
+}
+#mypage .r13888{
+    font-family: 'Pretendard-Regular';
+    font-size: 13px;
+    color: #888;
+}
 #mypage .r12b{
     font-family: 'Pretendard-Regular';
     font-size: 12px;
 }
+#mypage .r1285b{
+    font-family: 'Pretendard-Regular';
+    font-size: 12px;
+    color: #85B2C1;
+}
 
 #mypage .hidden{
     display: none;
+}
+#mypage .clicked{
+    cursor: default;
+}
+#mypage .nav-selected{
+    cursor: default;
+    background-color: #E6F6FB;
+    border-right: 3px solid #3A7A8F;
+}
+#mypage .nav-selected h2{
+    color: #154757;
+}
+#mypage .empty-border {
+    border: 2px solid #FC7486 !important;
+}
+#mypage .empty-text {
+    color: #FC7486 !important;
+}
+
+main{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#mypage h1{
+    display: inline-block;
+    margin-left: 18px;
+    margin-bottom: 26px;
+    cursor: pointer;
+}
+
+#mypage >section{
+    width: 100%;
+    display: flex;
+}
+
+#mypage >section >aside{
+    width: 283px;
+    margin-top: 16px;
+}
+#mypage >section >aside ul li{
+    width: 100%;
+    height: 52px;
+    display: flex;
+    flex-direction: row;
+    gap: 17px;
+    align-items: center;
+    padding-left: 32px;
+    cursor: pointer;
+}
+#mypage >section >aside ul li:nth-of-type(3){
+    padding-left: 33px;
+    gap: 18px;
+    
+}
+#mypage >section >aside ul li h2{
+    margin-top: 1px;
+}
+
+#mypage >section >article{
+    border-left: 2px solid #eee;
+    padding-left: 48px;
+    padding-bottom: 30px;
+    padding-top: 17px;
+}
+
+#mypage >section .dash-board{
+    width: 917px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#mypage >section .dash-board >section:nth-of-type(1){
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div{
+    width: 867px;
+    height: 128px;
+    border-radius: 20px;
+    background-color: #3A7A8F;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1){
+    display: flex;
+    align-items: center;
+    margin-left: 9px;
+    position: relative;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img{
+    cursor: pointer;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img:nth-of-type(2){
+    display: inline-block;
+    position: absolute;
+    right: -2px;
+    bottom: 2px;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(2){
+    width: 363px;
+    padding-bottom: 1px;
+    display: flex;
+    flex-direction: column;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(2) >span:nth-of-type(1){
+    margin-bottom: 1px;
+}
+
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(3){
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(3) >div{
+    width: 94px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(3) >div >span{
+    display: inline-block;
+    width: fit-content;
+    max-width: 94px;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(3) >div >span{
+    display: inline-block;
+    width: fit-content;
+    max-width: 94px;
+    cursor: pointer;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >button{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border-radius: 8px;
+    background-color: #E3F3F8;
+    padding: 8px 13px 8px 13px;
+}
+
+#mypage >section .dash-board >section:nth-of-type(2){
+    display: flex;
+    flex-direction: row;
+    gap: 23px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) section{
+    display: flex;
+    flex-direction: column;
+}
+#mypage >section .dash-board >section:nth-of-type(2) section >:nth-child(1){
+    margin-bottom: 6px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) section >:nth-child(2){
+    margin-bottom: 16px;
+}
+
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul{
+    height: 433px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul::-webkit-scrollbar{
+    display:none;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article{
+    width: 411px;
+    min-height: 203px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 20px;
+    padding: 20px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >div:nth-of-type(1){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >div:nth-of-type(1) >div:nth-of-type(1){
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: baseline;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article >textarea{
+    display: block;
+    text-align: start;
+    overflow-y: hidden;
+}
+#mypage .rbgc-h{
+    background-color: #E3F3F8;
+}
+#mypage .rbgc-p{
+    background-color: #FFE9EC;
+}
+#mypage .rbgc-c{
+    background-color: #D3EBFF;
+}
+
+#mypage >section .dash-board >section:nth-of-type(2) >span{
+    width: 2px;
+    height: 492px;
+    background-color: #eee;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul{
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li{
+    width: 403px;
+    height: 53px;
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    align-items: center;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(1){
+    width: 53px;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid #d9d9d9;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2){
+    width: 225px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 1px;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1){
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: baseline;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >div:nth-of-type(2) >div:nth-of-type(1) >span:nth-of-type(1){
+    max-width: 167px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >ul >li >button{
+    border-radius: 10px;
+    padding: 8px 10px 8px 10px;
+}
+#mypage .bgc-3a7{
+    background-color: #3A7A8F;
+}
+#mypage .bgc-ddd{
+    background-color: #ddd;
+}
+#mypage .bgc-fc7{
+    background-color: #FC7486;
+}
+#mypage .lbgc-h{
+    background-color: #FB8796;
+}
+#mypage .lbgc-p{
+    background-color: #7BD0D0;
+}
+#mypage .lbgc-c{
+    background-color: #507CD9;
+}
+#mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(2) >button{
+    width: 157px;
+    height: 47px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: 2px solid #B3E0EE;
+    background-color: #E3F3F8;
+    margin: 0 auto;
+    margin-top: 35px;
+}
+
+#mypage >section .member-info{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+#mypage >section .member-info >div:nth-of-type(1),
+#mypage >section .likes >div:nth-of-type(1),
+#mypage >section .reviews >div:nth-of-type(1){
+    display: flex;
+    gap: 17px;
+    align-items: center;
+}
+#mypage >section .member-info >section >ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#mypage >section .member-info >section >ul >li{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+#mypage >section .member-info >section >ul >li >input{
+    width: 583px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid #E3F3F8;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#mypage >section .member-info >section >ul >li:first-of-type{
+    gap: 15px;
+}
+#mypage >section .member-info >section >ul >li:first-of-type >div{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+#mypage >section .member-info >section >ul >li:first-of-type >div >div{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+#mypage >section .member-info >section >ul >li:first-of-type >div >div >button{
+    width: 101px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#mypage >section .member-info >section >ul >li:first-of-type >div >div >button:nth-of-type(1){
+    background-color: #3A7A8F;
+}
+#mypage >section .member-info >section >ul >li:first-of-type >div >div >button:nth-of-type(2){
+    background-color: #ddd;
+}
+
+#mypage >section .member-info >section >ul >li:nth-of-type(2) >input{
+    background-color: #E6F6FB;   
+}
+
+#mypage >section .member-info >section >ul >li:nth-of-type(4) >div,
+#mypage >section .member-info >section >ul >li:nth-of-type(5) >div,
+#mypage >section .member-info >section >ul >li:nth-of-type(7) >div{
+    display: flex;
+    flex-direction: row;
+    gap: 9px;
+    align-items: baseline;
+}
+
+
+#mypage >section .member-info >section >div{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#mypage >section .member-info >section >div >button{
+    border-bottom: 2px solid #CE1717;
+}
+#mypage >section .member-info >section >div >div{
+    display: flex;
+    gap: 13px;
+}
+#mypage >section .member-info >section >div >div >button{
+    width: 114px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mypage >section .member-info >section >div >div >button:nth-of-type(1){
+    background-color: #FC7486;
+}
+#mypage >section .member-info >section >div >div >button:nth-of-type(2){
+    background-color: #3A7A8F;
+}
+
+#mypage >section .likes{
+    display: flex;
+    flex-direction: column;
+}
+#mypage >section .likes >section{
+    margin-top: 19px;
+    width: 702px;
+}
+#mypage >section .likes >section >div:nth-of-type(1){
+    display: flex;
+    gap: 8px;
+}
+#mypage >section .likes >section >div:nth-of-type(1) >label{
+    padding: 11px 10px;
+    cursor: pointer;
+}
+#mypage >section .likes >section >div:nth-of-type(1) >label.checked{
+    border-bottom: 2px solid #3A7A8F;
+}
+#mypage >section .likes >section >span{
+    display: block;
+    height: 2px;
+    background-color: #E6F6FB;
+}
+#mypage >section .likes >section >table{
+    width: 100%;
+    margin-top: 9px;
+}
+#mypage >section .likes >section >table >tbody{
+    border-bottom: 2px solid #3A7A8F;
+}
+#mypage >section .likes >section >table >thead >tr >th,
+#mypage >section .likes >section >table >tbody >tr >td{
+    text-align: left;
+    padding-right: 15px;
+}
+#mypage >section .likes >section >table >thead >tr >th{
+    height: 31px;
+}
+#mypage >section .likes >section >table >tbody >tr >td{
+    height: 46px;
+}
+#mypage >section .likes >section >table >tbody >tr:nth-of-type(1){
+    height: 2px;
+}
+#mypage >section .likes >section >table >tbody >tr:last-of-type{
+    height: 13px;
+}
+#mypage >section .likes >section >table >thead >tr >th{
+    background-color: #E6F6FB;
+}
+#mypage >section .likes >section >table >thead >tr >th:first-of-type{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#mypage >section .likes >section >table >thead >tr >th:last-of-type{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+#mypage >section .likes >section >table >thead >tr >th:first-of-type >img{
+    margin-top: 3px;
+}
+#mypage >section .likes >section >table >thead >tr >th:nth-of-type(1),
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(1){
+    padding-left: 10px;
+    width: 15px;
+}
+#mypage >section .likes >section >table >thead >tr >th:nth-of-type(2),
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(2){
+    width: 253px;
+}
+#mypage >section .likes >section >table >thead >tr >th:nth-of-type(3),
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(3){
+    width: 172px;
+}
+#mypage >section .likes >section >table >thead >tr >th:nth-of-type(4),
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(4){
+    width: 143px;
+}
+#mypage >section .likes >section >table >thead >tr >th:nth-of-type(5),
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(5){
+    width: 94px;
+    padding-right: 10px;
+}
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(3){
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+#mypage >section .likes >section >table >tbody >tr >td:nth-of-type(5) >button{
+    border-radius: 8px;
+    padding: 7px 10px;
+}
+
+#mypage >section .reviews >section{
+    width: 731px;
+    margin-top: 22px;
+}
+#mypage >section .reviews >section >div{
+    display: flex;
+    justify-content: space-between;
+}
+#mypage >section .reviews >section >div >div{
+    display: flex;
+    gap: 8px;
+}
+#mypage >section .reviews >section >div >div >label{
+    width: 46px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#mypage >section .reviews >section >div >div >label.selected{
+    background-color: #E6F6FB;
+    cursor: default;
+}
+
+#mypage >section .reviews >section >ul{
+    margin-top: 12px;
+    border-top: 2px solid #3A7A8F;
+    border-bottom: 2px solid #3A7A8F;
+    padding: 5px;
+}
+#mypage >section .reviews >section >ul >li >article{
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+#mypage >section .reviews >section >ul >li >article.separator{
+    border-top: 2px solid #E6F6FB;
+}
+#mypage >section .reviews >section >ul >li >article >div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(1){
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(1) >div:nth-of-type(1){
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: baseline;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(1) >div:nth-of-type(2){
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(1) >div:nth-of-type(2) >span{
+    margin-top: 1px;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(2){
+    display: flex;
+    flex-direction: row;
+    gap: 9px;
+    align-items: center;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(2) >button{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    align-items: center;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(2) >button:nth-of-type(1){
+    background-color: #3A7A8F;
+}
+#mypage >section .reviews >section >ul >li >article >div >div:nth-of-type(2) >button:nth-of-type(2){
+    background-color: #FC7486;
+}
+#mypage >section .reviews >section >ul >li >article >h4{
+    margin-top: 15px;
+}
+#mypage >section .reviews >section >ul >li >article >textarea{
+    margin-top: 11px;
+    height: auto;
+    min-height: 17px;
+}
+
+#mypage .pagination-box{
+    max-width: 480px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+#mypage .pagination-box ul{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+#mypage .pagination-box ul li button{
+    width: 37px;
+    height: 37px;
+    border-radius: 5px;
+}
+#mypage .pagination-box ul li button:first-of-type,
+#mypage .pagination-box ul li button:last-of-type{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mypage .pagination-box ul li .current-page{
+    background-color: #3A7A8F;
+}
+#mypage .pagination-box ul li .clickable{
+    cursor: pointer;
+}
+#mypage .pagination-box ul li .clickable-background{
+    background-color: #E3F3F8;
 }
