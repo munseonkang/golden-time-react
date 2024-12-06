@@ -34,6 +34,7 @@ const Join = () => {
     // 아이디 중복확인
     const handleCheckId = async () => {
         const idRegex = /^[a-z0-9]{6,15}$/; // 영문소문자+숫자, 6~15자 이내
+        console.log(inputs.memberId);
         if (!idRegex.test(inputs.memberId)) {
             alert('아이디는 영문 소문자와 숫자만 사용하여 6~15자 이내로 입력해주세요.');
             return;

@@ -28,6 +28,7 @@
 /* faq 시작 */
 #faq .box2 {
     min-height: 400px;
+    padding-bottom: 30px;
 }
 
 #faq .box2 .quest {
@@ -239,6 +240,7 @@ input[id*="answer"]:checked+label .quest .img-box img {
     border-radius: 5px;
     border-width: 0px;
     background: none;
+    cursor: pointer;
 }
 #youtube .pagination-box ul li .current-page{
     background-color: #3A7A8F;
@@ -277,9 +279,9 @@ input[id*="answer"]:checked+label .quest .img-box img {
     cursor: pointer;
 }
 
-#youtube .modal{
+/* #youtube .modal{
     display: none;
-}
+} */
 
 
 /* youtube 끝 */
@@ -463,6 +465,7 @@ input[id*="answer"]:checked+label .quest .img-box img {
     width: 1200px;
     height: 500px;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 #first-aid .box5 .aid01,
