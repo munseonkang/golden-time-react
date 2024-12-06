@@ -11,6 +11,8 @@ body {
     overflow: auto;
     height: calc(100vh - 214px);
     /* padding-right: 3px; */
+    height: calc(100vh - 214px);
+    /* padding-right: 3px; */
 }
 #emergency .scroll::-webkit-scrollbar {
     width: 5px;
@@ -191,7 +193,7 @@ body {
 #emergency { margin: 0 auto; position: relative; display: flex; overflow: hidden; height: 100vh;}
 
 /* 지도 */
-#emergency .map-background { position: absolute; width: 100%; height: 100vh; margin-top: 70px; margin-left: 400px; z-index: 1;}
+#emergency .map-background { position: absolute; width: 100%; height: 100vh; margin-top: 70px; margin-left: 200px; z-index: 1;}
 
 /* 왼쪽 사이드바 */
 #emergency .sidebar { float: left; width: 400px; height: 100vh; margin-top: 70px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); overflow: hidden; background-color: #f7f7f7; z-index: 2;}
@@ -217,11 +219,15 @@ body {
 #emergency .sidebar .list .s-table thead tr th:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
 
 /* 종합상황판 */
-#emergency .situation-board { width: 720px; height: calc(100vh - 110px); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); padding: 14px 25px 20px 18px; margin: 85px 22px 16px 22px; overflow-x: hidden; overflow-y: auto; padding-bottom: 10px; position: relative; background-color: #fff; z-index: 2;}
+#emergency .situation-board { width: 720px; height: calc(100vh - 110px); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); padding: 14px 25px 20px 18px; margin: 85px 22px 16px 22px; overflow-x: hidden; overflow-y: auto; padding-bottom: 10px; position: relative; background-color: #fff; z-index: 2; border-radius: 10px;}
 #emergency .situation-board .top-title { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #d9d9d9;}
 #emergency .situation-board .top-title .close-button { background-color: #fff; border: none; cursor: pointer;}
 #emergency .situation-board .top-title img { width: 16px; height: 16px;}
-#emergency .situation-board .emergency-name { margin: 16px 0 20px;}
+
+#emergency .situation-board .emergency-title { display: flex; align-items: center; justify-content: space-between; margin: 16px 0 20px;}
+#emergency .situation-board .emergency-title .emergency-name { }
+#emergency .situation-board .emergency-title .find { width: 75px; height: 30px; border: 1px solid #154757; border-radius: 20px; display: flex;align-items: center; justify-content: center; cursor: pointer;}
+#emergency .situation-board .emergency-title .find:hover { color: white; transition: background-color 0.5s ease; background-color: #154757;}
 #emergency .situation-board .big-item { margin-bottom: 25px; width: 677px; }
 #emergency .situation-board .big-item .title,
 #emergency .situation-board .big-item .sub-title { margin-bottom: 6px;}
@@ -240,11 +246,14 @@ body {
 #emergency .hospital-detail .fixed-button { position: fixed; bottom: 50px; z-index: 100;}
 
 /* 종합상황판이 없는 경우 */
-#emergency .simple-detail { height: calc(100vh - 900px); margin: 85px 22px 22px 22px; width: 300px; background-color: #fff; z-index: 2; padding: 20px;}
-#emergency .simple-detail .non-title { display: flex; justify-content: space-between; margin-bottom: 20px;}
-/* #emergency .simple-detail .emergency-name { margin-bottom: 20px;} */
-#emergency .simple-detail .hospital-detail { position: relative; width: 100%; height: 120px; display: flex;}
-#emergency .simple-detail .hospital-detail .absolute-button { position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%)}
+#emergency .simple-detail { position: relative; height: 250px; margin: 85px 22px 22px 22px; width: 310px; background-color: #fff; z-index: 2; padding: 14px 18px 20px; border-radius: 10px; }
+#emergency .simple-detail .non-title { display: flex; justify-content: space-between; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #d9d9d9;}
+#emergency .simple-detail .name-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+/* #emergency .simple-detail .name-title .emergency-name { margin-bottom: 20px;} */
+#emergency .simple-detail .name-title .find { width: 75px; height: 30px; border: 1px solid #154757; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; float:right }
+#emergency .simple-detail .name-title .find:hover { color: white; transition: background-color 0.5s ease; background-color: #154757;}
+#emergency .simple-detail .hospital-detail { position: absolute; display: flex; bottom: 20px; left: 27%;}
+#emergency .simple-detail .hospital-detail .absolute-button {}
 
 
 /* 라인잡기 */

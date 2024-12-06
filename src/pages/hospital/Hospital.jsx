@@ -23,6 +23,10 @@ const Hospital = ()=>{
     // 병원 상세정보
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [selectedHospital, setSelectedHospital] = useState("병원 미선택");
+    // 병원 즐겨찾기
+    const [favorites, setFavorites] = useState(
+        hospitalData.map(() => false)
+    );
     
     // 병원리스트에서 응급실정보
     const emergencyRef = useRef([]); 
@@ -30,8 +34,6 @@ const Hospital = ()=>{
     const classificationRef = useRef([]);
     // 리스트 스크롤 초기화
     const ulRef = useRef(null);
-
-
 
     // @@ 병원 리스트 불러오기(axios) @@
     useEffect(() => {
@@ -102,6 +104,34 @@ const Hospital = ()=>{
             ulRef.current.scrollTop = 0;
         }
     };
+
+    // 즐겨찾기
+    // const favoriteStar = async (index, hospitalId, classification) => {
+    //     const isFavorited = favorites[index];
+
+    //     try {
+    //         if (!isFavorited) {
+    //           // 즐겨찾기 추가
+    //           await axios.post('/api/hospital/like', {
+    //             member_id: memberId,
+    //             duty_id: hospitalId,
+    //             classification: "hospital",
+    //           });
+    //         } else {
+    //           // 즐겨찾기 삭제
+    //           await axios.delete(`/api/hospital/like`, {
+    //             data: { member_id: memberId, duty_id: hospitalId },
+    //           });
+    //         }
+      
+    //         // 즐겨찾기 상태 업데이트
+    //         setFavorites((prev) =>
+    //           prev.map((fav, i) => (i === index ? !fav : fav))
+    //         );
+    //     } catch (error) {
+    //         console.error('즐겨찾기 요청 중 오류 발생:', error);
+    //     }
+    // }
 
 
     // @@ 병원 상세정보 open/close @@
