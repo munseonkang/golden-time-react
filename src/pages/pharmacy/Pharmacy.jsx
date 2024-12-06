@@ -566,83 +566,121 @@ const Pharmacy = () => {
     //검색 기능
     const [keyword, setKeyword] = useState('');
 
-    //길찾기
-    const getRP = (pharmacy) => {
-        // 약국의 위치 가져오기
-        const e_latlng = new Tmapv2.LatLng(pharmacy.wgs84Lat, pharmacy.wgs84Lon);
 
-        // 현재 위치가 설정되어 있으면 경로 요청
-        if (latitude !== null && longitude !== null) {
-            const s_latlng = new Tmapv2.LatLng(latitude, longitude);
 
-            removeMarkers();
-
-            const optionObj = {
-                reqCoordType: "WGS84GEO",
-                resCoordType: "WGS84GEO",
-                trafficInfo: "Y"
-            };
-
-            const params = {
-                onComplete: onComplete,
-                onProgress: onProgress,
-                onError: onError
-            };
-
-            const tData = new Tmapv2.extension.TData();
-            tData.getRoutePlanJson(s_latlng, e_latlng, optionObj, params);
-
-            if (selectedPharm) {
-                const position = new Tmapv2.LatLng(selectedPharm.wgs84Lat, selectedPharm.wgs84Lon);
-                const marker = new Tmapv2.Marker({
-                    position: position,
-                    map: map,
-                    icon: markerImage,
-                    label: selectedPharm.dutyName // 약국 마커 아이콘 설정
-                });
-
-                marker.addListener("click", function (evt) {
-                    handleOpenDetail(selectedPharm);
-                    map.setCenter(position);
-                    map.setZoom(18);
-                });
-                // 마커 상태 업데이트
-                setMarkers([marker]);
-                map.setCenter(position);
-                map.setZoom(14);
-            }
-
-        } else {
-            alert("현재 위치 정보를 가져올 수 없습니다.");
+    // 길찾기
+    const [routeLayer, setRouteLayer] = useState(null);
+    // 경로 제거
+    const removeRouteLayer = () => {
+        if(routeLayer) {
+            routeLayer.setMap(null);
+            setRouteLayer(null);
         }
     };
 
-    // 기존 onComplete, onProgress, onError 함수 유지
-    function onComplete() {
-        console.log(this._responseData);
-        const jsonObject = new Tmapv2.extension.GeoJSON();
-        const jsonForm = jsonObject.rpTrafficRead(this._responseData);
+    //길찾기 함수
+    const getRP = async (pharmacy) => {
+        const e_latlog = pharmacy;
+        console.log(pharmacy);
 
-        const trafficColors = {
-            trafficDefaultColor: "#000000",
-            trafficType1Color: "#009900",
-            trafficType2Color: "#7A8E0A",
-            trafficType3Color: "#8E8111",
-            trafficType4Color: "#FF0000"
-        };
+        if(latitude !== null && longitude !== null) {
+            const startX = longitude;
+            const startY = latitude;
+            const endX = e_latlog.wgs84Lon;
+            const endY = e_latlog.wgs84Lat;
 
-        jsonObject.drawRouteByTraffic(map, jsonForm, trafficColors);
-        // map.setCenter(new Tmapv2.LatLng(37.55676159947993, 126.94734232774672));
-        map.setZoom(14);
-    }
+            const requestData = {
+                startX, 
+                startY, 
+                endX, 
+                endY, 
+                reqCoorType: "WGS84GEO", //내 요청에 제공하는 좌표형식
+                resCoordType: "EPSG3857",  //api가 응답으로 반환하는 좌표형식
+                searchOption: '0',
+                trafficInfo: "Y",
+            };
+        
+            const headers = {
+                appKey: process.env.REACT_APP_TMAP_APP_KEY
+            }
+        
+            try {
+                const response = await axios.post ("https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result", 
+                    requestData,
+                    { headers: headers }
 
-    function onProgress() {
-        // 로딩 중 동작
-    }
+                ); 
 
-    function onError() {
-        alert("경로 요청 중 오류가 발생했습니다.");
-    }
+                // 결과 데이터 처리
+                const resultData = response.data.features;
+
+                // 경로 표시
+                drawRoute(resultData);
+                
+            } catch (error) {
+                console.log("경로 요청 실패: ", error);
+            }
+        } else {
+            console.error("현재 위치 정보를 가져올 수 없습니다.");
+        }
+    };
+
+    // 경로 그리기
+    const drawRoute = (routeData) => {
+        const path = []; //경로 좌표 저장 배열
+
+        // 경로 데이터를 기반으로 Polyline 생성
+        routeData.forEach((item) => {
+            const geometry = item.geometry;
+            if(geometry.type === "LineString") {
+                geometry.coordinates.forEach((coord) => {
+                    // EPSG3857 좌표를 WGS84 좌표로 변환
+                    const point = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+                        new Tmapv2.Point(coord[0], coord[1])
+                    );
+                    path.push(new Tmapv2.LatLng(point._lat, point._lng));
+                });
+            }
+        });
+
+        // Polyline 생성
+        const polyline = new Tmapv2.Polyline({
+            path,
+            strokeColor: "#FF0000",
+            strokeWeight: 4,
+            map: map,
+        });
+
+        setRouteLayer(polyline);
+
+        // 지도 중심 좌표 설정
+        if(path.length > 0) {
+            map.setCenter(path[0]);
+            map.setZoom(14);
+        }
+
+        // 도착 마커
+        if(selectedPharm) {
+            const endPoint = new Tmapv2.LatLng(selectedPharm.wgs84Lat, selectedPharm.wgs84Lon);
+
+            const endMarker = new Tmapv2.Marker({
+                position: endPoint,
+                map: map,
+                icon: markerImage,
+                label: selectedPharm.dutyName,
+            });
+
+            setMarkers((prevMarkers) => [...prevMarkers, endMarker]);
+        }
+    };
+
+    // 길찾기 실행
+    const handleRP = () => {
+        removeMarkers(); //마커 삭제
+        removeRouteLayer(); //경로 삭제
+        getRP(selectedPharm); 
+    };
+
 
     //리뷰 작성
     const handlePostReview = async (selectedPharm) => {
@@ -907,7 +945,8 @@ const Pharmacy = () => {
 
                                         </table>
                                     </div>
-                                    <div className="find" onClick={() => getRP(selectedPharm)}>
+                                    <div className="find" onClick={handleRP}>
+                                    {/* <div className="find" onClick={() => getRP(selectedPharm)}> */}
                                         <p>길찾기</p>
                                     </div>
                                     <div className="detail-tab flex">

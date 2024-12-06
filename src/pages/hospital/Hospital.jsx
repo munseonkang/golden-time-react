@@ -35,8 +35,6 @@ const Hospital = ()=>{
     // 리스트 스크롤 초기화
     const ulRef = useRef(null);
 
-
-
     // @@ 병원 리스트 불러오기(axios) @@
     useEffect(() => {
         const fetchHospitalData = async () => {
