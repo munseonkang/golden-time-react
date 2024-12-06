@@ -9,18 +9,23 @@ const MemberInfo = (props) => {
     const {setLoginMember} = useContext(mainContext);
 
     const [inputs, setInputs] = useState({memberId:"", nickname:"", password:"", passwordCheck:"", email:"", phoneNumber:""});
-    const {nickname, password, passwordCheck, email, phoneNumber} = inputs;
+    const {memberId, nickname, password, passwordCheck, email, phoneNumber} = inputs;
 
     const inputsRef = useRef([]);
+    const initInfoRef = useRef({});
     const descriptionsRef = useRef([]);
 
     const navigate = useNavigate();
 
     const addInputsRef = (e)=>{
-        inputsRef.current.push(e);
+        if(e && !inputsRef.current.includes(e)) {
+            inputsRef.current.push(e);
+        }
     }
     const addDescriptionsRef = (e)=>{
-        descriptionsRef.current.push(e);
+        if(e && !descriptionsRef.current.includes(e)) {
+            descriptionsRef.current.push(e);
+        }
     }
 
     const checkPassword = (password)=>{
@@ -86,9 +91,20 @@ const MemberInfo = (props) => {
             modifyMember({memberId: sessionStorage.getItem("loginMember"), member: inputs}, changeContent);
         }
     }
+    
+    const initInfo = ()=>{
+        setInputs({...initInfoRef.current});
+        descriptionsRef.current.map((el)=>{
+            el.classList.remove('empty-text');
+        })
+        descriptionsRef.current[1].classList.add('hidden');
+        inputsRef.current.map((el)=>{
+            el.classList.remove('empty-border');
+        })
+    }
 
     useEffect(()=>{
-        getMemberInfo(sessionStorage.getItem("loginMember"), setInputs);
+        getMemberInfo(sessionStorage.getItem("loginMember"), setInputs, initInfoRef);
     }, [])
 
     return (
@@ -111,42 +127,42 @@ const MemberInfo = (props) => {
                     </li>
                     <li>
                         <label className="b166aa"><strong>아이디</strong></label>
-                        <input className="r156aa" type="text" value={inputs.memberId} readOnly/>
+                        <input className="r156aa" type="text" value={memberId} readOnly/>
                     </li>
                     <li>
                         <label className="b166aa" htmlFor="nickname"><strong>닉네임 *</strong></label>
-                        <input className="r15b" id="nickname" name="nickname" ref={addInputsRef} type="text" value={inputs.nickname} onChange={(e)=>{changeInputs(e)}}/>
+                        <input className="r15b" id="nickname" name="nickname" ref={addInputsRef} type="text" value={nickname} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
                         <div>
                             <label className="b166aa" htmlFor="password"><strong>비밀번호 *</strong></label>
                             <span className="r126aa" ref={addDescriptionsRef}>영문,숫자,특수문자를 모두 조합하여 8~20자이내로 입력해주세요.</span>
                         </div>
-                        <input className="r15b" id="password" name="password" ref={addInputsRef} type="password" onChange={(e)=>{changeInputs(e)}}/>
+                        <input className="r15b" id="password" name="password" ref={addInputsRef} type="password" value={password} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
                         <div>
                             <label className="b166aa" htmlFor="passwordCheck"><strong>비밀번호 확인 *</strong></label>
                             <span className="r12fc7 hidden" ref={addDescriptionsRef}>동일한 비밀번호를 작성해주세요.</span>
                         </div>
-                        <input className="r15b" id="passwordCheck" name="passwordCheck" ref={addInputsRef} type="password" onChange={(e)=>{changeInputs(e)}}/>
+                        <input className="r15b" id="passwordCheck" name="passwordCheck" ref={addInputsRef} type="password" value={passwordCheck} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
                         <label className="b166aa" htmlFor="email"><strong>이메일 *</strong></label>
-                        <input className="r15b" id="email" name="email" ref={addInputsRef} type="email" value={inputs.email} onChange={(e)=>{changeInputs(e)}}/>
+                        <input className="r15b" id="email" name="email" ref={addInputsRef} type="email" value={email} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                     <li>
                         <div>
                             <label className="b166aa" htmlFor="phoneNumber"><strong>전화번호 *</strong></label>
                             <span className="r126aa" ref={addDescriptionsRef}>( - ) 없이 입력해주세요.</span>
                         </div>
-                        <input className="r15b" id="phoneNumber" name="phoneNumber" ref={addInputsRef} type="tel" value={inputs.phoneNumber} onChange={(e)=>{changeInputs(e)}}/>
+                        <input className="r15b" id="phoneNumber" name="phoneNumber" ref={addInputsRef} type="tel" value={phoneNumber} onChange={(e)=>{changeInputs(e)}}/>
                     </li>
                 </ul>
                 <div>
                     <button className="b15ce1" onClick={()=>{removeMember(sessionStorage.getItem("loginMember"), setLoginMember, navigate)}}>회원 탈퇴</button>
                     <div>
-                        <button className="b15w">초기화</button>
+                        <button className="b15w" onClick={initInfo}>초기화</button>
                         <button className="b15w" onClick={submit}>회원정보 변경</button>
                     </div>
                 </div>

@@ -2,11 +2,12 @@ import { Title } from "../../constants/mypage";
 import { deleteMember, getLikes, getLikesWithClassification, getLikesWithLimit, getMember, getProfile, getReviews, getReviewsWithClassification, getReviewsWithMonth, updateMember } from "../api/goldentimeAPI";
 
 
-export async function getMemberInfo(memberId, callback) {
+export async function getMemberInfo(memberId, callback, ref) {
     try{
         const response = await getMember(memberId);
         console.log("회원 정보", response.data.data);
         callback({...response.data.data, password:"", passwordCheck:""});
+        ref.current = {...response.data.data, password:"", passwordCheck:""};
     }
     catch(error) {
         console.log(error);
@@ -24,19 +25,20 @@ export async function getMemberProfile(memberId, callback) {
 }
 export async function getMemberLikes(param, callback) {
     try{
-        const {memberId, limit, classification} = param;
+        const {memberId, limit, classification, pageNo, numOfRows} = param;
         let response;
         if(limit) {
             response = await getLikesWithLimit(memberId, limit);
+            callback(response.data.data);
         }
-        else if(classification) {
-            response = await getLikesWithClassification(memberId, classification);
-        }
+        // else if(classification) {
+        //     response = await getLikesWithClassification(memberId, classification);
+        // }
         else {
-            response = await getLikes(memberId);
+            response = await getLikes(memberId, param);
+            callback(response.data.data);
         }
         console.log("즐겨찾기 정보", response);
-        callback(response.data.data);
     }
     catch(error) {
         console.log(error);

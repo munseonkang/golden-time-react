@@ -315,6 +315,7 @@ main{
 }
 
 #mypage h1{
+    display: inline-block;
     margin-left: 18px;
     margin-bottom: 26px;
     cursor: pointer;
@@ -692,16 +693,22 @@ main{
 #mypage >section .likes >section >div:nth-of-type(1){
     display: flex;
     gap: 8px;
-    padding: 11px 0;
-    border-bottom: 2px solid #E6F6FB;
 }
 #mypage >section .likes >section >div:nth-of-type(1) >label{
-    padding: 0 10px;
+    padding: 11px 10px;
+    cursor: pointer;
 }
-
+#mypage >section .likes >section >div:nth-of-type(1) >label.checked{
+    border-bottom: 2px solid #3A7A8F;
+}
+#mypage >section .likes >section >span{
+    display: block;
+    height: 2px;
+    background-color: #E6F6FB;
+}
 #mypage >section .likes >section >table{
     width: 100%;
-    margin-top: 23px;
+    margin-top: 9px;
 }
 #mypage >section .likes >section >table >tbody{
     border-bottom: 2px solid #3A7A8F;
@@ -861,4 +868,35 @@ main{
     margin-top: 11px;
     height: auto;
     min-height: 17px;
+}
+
+#mypage .pagination-box{
+    max-width: 480px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+#mypage .pagination-box ul{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+#mypage .pagination-box ul li button{
+    width: 37px;
+    height: 37px;
+    border-radius: 5px;
+}
+#mypage .pagination-box ul li button:first-of-type,
+#mypage .pagination-box ul li button:last-of-type{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mypage .pagination-box ul li .current-page{
+    background-color: #3A7A8F;
+}
+#mypage .pagination-box ul li .clickable{
+    cursor: pointer;
+}
+#mypage .pagination-box ul li .clickable-background{
+    background-color: #E3F3F8;
 }

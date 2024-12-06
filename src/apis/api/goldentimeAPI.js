@@ -31,8 +31,19 @@ export const deleteMember = (memberId) => {
 }
 
 // 즐겨찾기 조회 - 멤버별
-export const getLikes = (memberId) => {
-    return instance.get(`member/${memberId}/likes`);
+// export const getLikes = (memberId) => {
+//     return instance.get(`member/${memberId}/likes`);
+// }
+// 즐겨찾기 조회 - 멤버별
+export const getLikes = (memberId, params) => {
+    return instance.get(`member/${memberId}/likes`, {
+        params: {
+            memberId: params.memberId,
+            classification: params.classification,
+            pageNo: params.pageNo,
+            numOfRows: params.numOfRows,
+        }
+    });
 }
 // 즐겨찾기 조회(개수 제한) - 멤버별
 export const getLikesWithLimit = (memberId, limit) => {
