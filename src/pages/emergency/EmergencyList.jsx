@@ -63,7 +63,7 @@ const EmergencyList = ({results, onClick}) => {
                     {
                         item.hvec && (
                         <>
-                            <table className="s-table">
+                            <table className="s-table" onClick={() => onClick(item)}>
                                 <thead className="r13w">
                                     <tr>
                                         <th>일반</th>

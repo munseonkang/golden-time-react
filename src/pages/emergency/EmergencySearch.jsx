@@ -9,13 +9,6 @@ const EmergencySearch = ({ onSearch }) => {
     const [keyword, setKeyword] = useState("");
     const [regions, setRegions] = useState([]);
 
-    // 지역 업데이트
-    useEffect(() => {
-        if(selectedSido) {
-            setRegions(regionMap.get(selectedSido) || []);
-        }
-    }, [selectedSido]);
-
     // 초기 렌더링 시 현재 위치 가져오기
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -51,34 +44,33 @@ const EmergencySearch = ({ onSearch }) => {
         );
     }, []);
 
-    // api 호출
+    // 시도 변경시 시군구 업데이트
+    useEffect(() => {
+        if(selectedSido) {
+            setRegions(regionMap.get(selectedSido) || []);
+        }
+    }, [selectedSido]);
+
+    // 시군구, 키워드 자동검색 - 상위로 전달
     useEffect(() => {
         if (selectedRegion) {
             onSearch({
                 region: { sido: selectedSido, sigungu: selectedRegion },
-                keyword,
+                keyword: keyword || null,
             });
         }
     }, [selectedSido, selectedRegion, keyword]);
 
-    // 상위로 전달
-    const handleSearch = () => {
-        onSearch({
-            region: { sido: selectedSido, sigungu: selectedRegion }, 
-            keyword: keyword || null
-        });
-    };
-
-    // 시구군 선택 시 api 호출
-    const handleRegionChange = (e) => {
-        setSelectedRegion(e.target.value)
-        
-        // 즉시 api 호출
-        onSearch({
-            region: { sido: selectedSido, sigungu: selectedRegion }, 
-            keyword: keyword || null
-        });
-    };
+     // 키워드 버튼검색 - 상위로 전달
+     const handleSearchClick = async () => {
+        if (!selectedRegion && keyword) {
+            await onSearch({
+                region: { sido: "", sigungu: "" }, 
+                keyword: keyword || null, // 키워드 없으면 전국검색
+            });
+        }
+        setKeyword("");
+    };   
 
     return (
         <div className="search-boxes">
@@ -91,7 +83,8 @@ const EmergencySearch = ({ onSearch }) => {
                         setSelectedSido(e.target.value);
                         setSelectedRegion(""); //sido 변경시 selectredRegion 초기화
                         setKeyword(""); //sido 변경시 keyword 초기화
-                        }}>
+                        }}
+                >
                     <option value="">시/도 선택</option>
                     {sido.map((sidoName, index) => (
                         <option key={index} value={sidoName}>{sidoName}</option>
@@ -101,7 +94,8 @@ const EmergencySearch = ({ onSearch }) => {
                     name="region" 
                     id="region" 
                     value={selectedRegion} 
-                    onChange={handleRegionChange}>
+                    onChange={(e) => setSelectedRegion(e.target.value)}
+                >
                     <option value="">시/구/군 선택</option>
                     {regions.map((regionName, index) => (
                         <option key={index} value={regionName}>{regionName}</option>
@@ -116,15 +110,10 @@ const EmergencySearch = ({ onSearch }) => {
                     id="emergencyName" 
                     value={keyword} 
                     onChange={(e) => setKeyword(e.target.value)}
-                    onKeyDown={(e) => {
-                        if(e.key === "Enter") {
-                            e.preventDefault();
-                            handleSearch();
-                        }
-                    }}
                 />
                 <button className="search-button" 
-                    onClick={handleSearch}>
+                    onClick={handleSearchClick}
+                >
                     <img src={images['search19_w.png']} alt="검색" />
                 </button>
             </div>
