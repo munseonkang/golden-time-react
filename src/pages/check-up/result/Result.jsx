@@ -1,12 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Detail from "./Detail";
+import { getCenterWorkInfo } from "../../../apis/api/nhisAPI";
+import { getCenterDistance } from "../../../apis/services/geolocation";
 
 const Result = ({item, addResultRef}) => {
     const [isDetail, setIsDetail] = useState(false);
+    const [workInfo, setWorkInfo] = useState(null);
+    const [distance, setDistance] = useState();
 
     const getDetail = () => {
         setIsDetail(isDetail?false:true);
     }
+
+    async function getWorkInfo(hmcNo) {
+        try{
+            const response = await getCenterWorkInfo(hmcNo);
+            // console.log(JSON.stringify(response.data.response.body.item));
+            setWorkInfo({...(response.data.response.body.item)});
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
+    const getWorkDayAndTime=()=>{
+        const dayIdx = new Date().getDay();
+        const dayArr = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        if(dayIdx%6>0) return (workInfo?.wkdayMcareFrTm)?`${dayArr[dayIdx]} ${getTime(workInfo?.wkdayMcareFrTm, workInfo?.wkdayMcareToTm)}`:"-";
+        else if(dayIdx===6) return (workInfo?.satMcareFrTm)?`${dayArr[dayIdx]} ${getTime(workInfo?.satMcareFrTm, workInfo?.satMcareToTm)}`:"-";
+        else return (workInfo?.dumMcareFrTm)?`${dayArr[dayIdx]} ${getTime(workInfo?.dumMcareFrTm, workInfo?.dumMcareToTm)}`:"-";
+    }
+
+    function getTime(from, to) {
+        if(from!==undefined&&to!==undefined) {
+            const fromStr = from.toString();
+            const toStr = to.toString();
+            return `${Number(fromStr.substring(0, 2))}:${fromStr.substring(2)} ~ ${Number(toStr.substring(0, 2))}:${toStr.substring(2)}`;
+        }
+        return "";
+    }
+
+    useEffect(()=>{
+        getWorkInfo(item?.hmcNo);
+        getCenterDistance(item?.cyVl, item?.cxVl, setDistance)
+    },[]);
     
     return (
         <>
@@ -46,14 +83,14 @@ const Result = ({item, addResultRef}) => {
                         {/* <li className="b13dp">폐암</li> */}
                     </ul>
                 </td>
-                <td className="r16b">목요일 9:00 ~ 19:00</td>
-                <td className="r16b">5km</td>
+                <td className="r16b">{getWorkDayAndTime()}</td>
+                <td className="r16b">{`${distance}km`}</td>
                 <td>
                     <input className="hidden" type="checkbox" />
                     <label className="toggle-btn b14dg" onClick={getDetail}>상세보기</label>
                 </td>
             </tr>
-            {(isDetail && (<Detail hmcNo={item?.hmcNo} lat={item?.cyVl} lon={item?.cxVl}/>))}
+            {(isDetail && (<Detail hmcNo={item?.hmcNo} lat={item?.cyVl} lon={item?.cxVl} workInfo={workInfo}/>))}
         </>
     )
 }

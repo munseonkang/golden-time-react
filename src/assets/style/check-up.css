@@ -399,8 +399,8 @@ table{
     width: 100%;
     margin-top: 24px;
 }
-#check-up .result table tr th .result table tr td, 
-#check-up .result table tr check-up .result table tr td{
+#check-up .result table tr th, 
+#check-up .result table tr td{
     text-align: left;
     padding-right: 35px;
 }

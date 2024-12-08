@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { images } from '../../../utils/images';
 import { getCenterBasicInfo, getCenterHolidayInfo, getCenterTransInfo, getCenterWorkInfo } from '../../../apis/api/nhisAPI';
 
-const Detail = ({hmcNo, lat, lon}) => {
+const Detail = ({hmcNo, lat, lon, workInfo}) => {
     const [basicInfo, setBasicInfo] = useState(null);
     const [holidayInfo, setHolidayInfo] = useState(null);
     const [transInfo, setTransInfo] = useState(null);
-    const [workInfo, setWorkInfo] = useState(null);
 
     async function getBasicInfo() {
         try{
@@ -38,26 +37,14 @@ const Detail = ({hmcNo, lat, lon}) => {
             console.log(error);
         }
     }
-    async function getWorkInfo() {
-        try{
-            const response = await getCenterWorkInfo(hmcNo);
-            // console.log(JSON.stringify(response.data.response.body.item));
-            setWorkInfo({...(response.data.response.body.item)});
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
 
     useEffect(()=>{
         getBasicInfo();
         getHolidayInfo();
         getTransInfo();
-        getWorkInfo();
     },[]);
 
     function getTime(from, to) {
-        console.log(from, to);
         if(from!==undefined&&to!==undefined) {
             const fromStr = from.toString();
             const toStr = to.toString();

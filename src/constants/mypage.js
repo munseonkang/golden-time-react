@@ -15,7 +15,7 @@ export const Classification = {
 Object.freeze(Classification)
 
 export const Month = {
-    FIRST: 0,
+    FIRST: -1,
     SECOND: 1,
     THIRD: 3,
     FOURTH: 6,

@@ -2,8 +2,8 @@ import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from
 import { CheckUpContext } from '../CheckUp';
 
 const CheckInputBox = forwardRef((props, ref) => {
-    const regularChecks = ["전체", "일반", "구강", "영유아", "학생", "학교 밖 청소년", "장애친화 검진기관"];
-    const cancerChecks = ["전체", "위암", "대장암", "자궁경부암", "유방암", "간암", "폐암"];
+    const regularChecks = ["전체", "일반", "구강", "영유아"]; // "학생", "학교 밖 청소년", "장애친화 검진기관"
+    const cancerChecks = ["전체", "위암", "대장암", "자궁경부암", "유방암", "간암"]; // "폐암"
 
     const {searchTerms} = useContext(CheckUpContext);
     const {id} = props;

@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import DashBoard from "./DashBoard";
 import { images } from '../../../utils/images';
 import MemberInfo from "./MemberInfo";
-import Likes from "./Likes";
 import Reviews from "./Reviews";
 import { Title } from "../../../constants/mypage";
+import Likes from "./like/Likes";
 
 const MyPage = ()=>{
     const { DASHBOARD, MEMBERINFO, LIKES, REVIEWS } = Title;
