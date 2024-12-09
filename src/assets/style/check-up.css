@@ -76,6 +76,11 @@ table{
     font-size: 17px;
     color: #111;
 }
+#check-up .r17888{
+    font-family: 'Pretendard-Regular';
+    font-size: 17px;
+    color: #777;
+}
 #check-up .r16mc{
     font-family: 'Pretendard-Regular';
     font-size: 16px;
@@ -204,6 +209,7 @@ table{
 }
 #check-up .search .top-box .item-box:nth-of-type(2) .input-box{
     width: 250px;
+    background-color: #f1f1f1;
 }
 /* #check-up .search .top-box .item-box:nth-of-type(3) .input-box{
     width: 210px;
@@ -218,10 +224,24 @@ table{
     width: 276px;
     height: 20px;
 }
-#check-up .search .top-box .item-box:nth-of-type(2) .input-box input{
+#check-up .search .top-box .item-box:nth-of-type(2) .input-box label{
+    width: 117px;
+    height: 41px;
+    border-radius: 7px;
+    background-color: #f1f1f1;
+    text-align: center;
+    line-height: 41px;
+    cursor: pointer;
+    pointer-events: none;
+}
+#check-up .search .top-box .item-box:nth-of-type(2) .input-box label.selected{
+    background-color: #fff;
+    outline: 1px solid #eee;
+}
+/* #check-up .search .top-box .item-box:nth-of-type(2) .input-box input{
     width: 175px;
     height: 20px;
-}
+} */
 /* #check-up .search .top-box .item-box:nth-of-type(3) .input-box input{
     width: 136px;
     height: 20px;
@@ -237,12 +257,12 @@ table{
     display: flex;
     align-items: center;
 }
-#check-up .search .top-box .item-box:nth-of-type(2) .input-box .icon-box{
+/* #check-up .search .top-box .item-box:nth-of-type(2) .input-box .icon-box{
     width: 15px;
     height: 15px;
     display: flex;
     align-items: center;
-}
+} */
 /* #check-up .search .top-box .item-box:nth-of-type(3) .input-box .icon-box{
     width: 14px;
     height: 14px;
@@ -283,14 +303,14 @@ table{
     width: 167px;
     padding-left: 5px;
 }
-#check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(1){
+/* #check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(1){
     width: 113px;
     padding-right: 5px;
 }
 #check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(2){
     width: 115px;
     padding-left: 5px;
-}
+} */
 /* #check-up .search .top-box .item-box:nth-of-type(3) .select-box section ul:nth-of-type(1){
     width: 188px;
 } */
@@ -306,12 +326,12 @@ table{
 #check-up .search .top-box .item-box:nth-of-type(1) .select-box section ul:nth-of-type(2) li{
     padding: 5px 5px 5px 15px;
 }
-#check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(1) li{
+/* #check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(1) li{
     padding: 5px 5px 5px 10px;
 }
 #check-up .search .top-box .item-box:nth-of-type(2) .select-box section ul:nth-of-type(2) li{
     padding: 5px 5px 5px 15px;
-}
+} */
 /* #check-up .search .top-box .item-box:nth-of-type(3) .select-box section ul li{
     padding: 4px 10px 4px 7px;
 } */
@@ -405,7 +425,7 @@ table{
 #check-up .result table tr th, 
 #check-up .result table tr td{
     text-align: left;
-    padding-right: 35px;
+    padding-right: 33px;
 }
 #check-up .result table thead tr th{
     height: 46px;
@@ -421,7 +441,7 @@ table{
 }
 #check-up .result table tr th:first-of-type,
 #check-up .result table tr td:first-of-type{
-    max-width: 221px;
+    max-width: 250px;
     padding-left: 15px;
 }
 #check-up .result table tr th:nth-of-type(2),
@@ -434,11 +454,11 @@ table{
 } */
 #check-up .result table tr th:nth-of-type(3), 
 #check-up .result table tr td:nth-of-type(3){
-    width: 401px;
+    width: 360px;
 }
 #check-up .result table tr th:nth-of-type(4),
 #check-up .result table tr td:nth-of-type(4){
-    width: 175px;
+    width: 180px;
 }
 #check-up .result table tr th:nth-of-type(5),
 #check-up .result table tr td:nth-of-type(5){
@@ -587,6 +607,9 @@ table{
 }
 #check-up .result .detail-box >div:nth-of-type(1) .parking-box >div:nth-of-type(2) ul li span{
     display: inline-block;
+}
+#check-up .result .detail-box >div:nth-of-type(1) .parking-box >div:nth-of-type(2) >span{
+    margin-bottom: 10px;
 }
 #check-up .result .detail-box >div:nth-of-type(2) .info-box{
     display: flex;

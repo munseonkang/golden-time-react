@@ -64,12 +64,13 @@ const Reviews = () => {
         if(reviewTextRef.current) {
             reviewTextRef.current.map((el)=>{
                 el.style.height = 'auto';
-                if(el.scrollHeight > 120) {
-                    el.style.height = el.scrollHeight + "px";
-                }
-                else {
-                    el.style.height = "120px";
-                }
+                // if(el.scrollHeight > 120) {
+                //     el.style.height = el.scrollHeight + "px";
+                // }
+                // else {
+                //     el.style.height = "110px";
+                // }
+                el.style.height = el.scrollHeight+50+"px";
             })
         }
     },[reviewList])
@@ -193,11 +194,11 @@ const Reviews = () => {
                     </div>
                 </div>
                 <ul>
-                    <li>
-                        {
-                            reviewList.items?.map((review)=>{
-                                return (
-                                    <article key={review.reviewId}>
+                    {
+                        reviewList.items?.map((review)=>{
+                            return (
+                                <li key={review.reviewId}>
+                                    <article>
                                         <div>
                                             <div>
                                                 <div>
@@ -224,10 +225,10 @@ const Reviews = () => {
                                         {/* <h4>리뷰 첫번째줄</h4> */}
                                         <textarea className="r14444" ref={addReviewTextRef} value={review.content} readOnly/>
                                     </article>
-                                )
-                            })
-                        }
-                    </li>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </section>
             {(reviewList && (<Pagination datas={reviewList} paging={(pageNo)=>{getMemberReviews({memberId: sessionStorage.getItem("loginMember"), month: Number(condition.month), classification: condition.classification, pageNo: pageNo, numOfRows:NUMOFROWS}, setReviewList)}}/>))}

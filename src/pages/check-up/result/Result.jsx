@@ -54,31 +54,31 @@ const Result = ({item, addResultRef}) => {
                 <td>
                     <ul>
                         {
-                            (item?.grenChrgTypeCd==1)?<li className="b13dp">일반</li>:""
+                            (item?.grenChrgTypeCd>0)?<li className="b13dp">일반</li>:""
                         }
                         {
-                            (item?.mchkChrgTypeCd==1)?<li className="b13dp">구강</li>:""
+                            (item?.mchkChrgTypeCd>0)?<li className="b13dp">구강</li>:""
                         }
                         {
-                            (item?.ichkChrgTypeCd==1)?<li className="b13dp">영유아</li>:""
+                            (item?.ichkChrgTypeCd>0)?<li className="b13dp">영유아</li>:""
                         }
                         {/* <li className="b13dp">학생</li>
                         <li className="b13dp">학교 밖 청소년s/li>
                         <li className="b13dp">장애친화 검진기관</li> */}
                         {
-                            (item?.stmcaExmdChrgTypeCd==1)?<li className="b13dp">위암</li>:""
+                            (item?.stmcaExmdChrgTypeCd>0)?<li className="b13dp">위암</li>:""
                         }
                         {
-                            (item?.ccExmdChrgTypeCd==1)?<li className="b13dp">대장암</li>:""
+                            (item?.ccExmdChrgTypeCd>0)?<li className="b13dp">대장암</li>:""
                         }
                         {
-                            (item?.cvxcaExmdChrgTypeCd==1)?<li className="b13dp">자궁경부암</li>:""
+                            (item?.cvxcaExmdChrgTypeCd>0)?<li className="b13dp">자궁경부암</li>:""
                         }
                         {
-                            (item?.bcExmdChrgTypeCd==1)?<li className="b13dp">유방암</li>:""
+                            (item?.bcExmdChrgTypeCd>0)?<li className="b13dp">유방암</li>:""
                         }
                         {
-                            (item?.lvcaExmdChrgTypeCd==1)?<li className="b13dp">간암</li>:""
+                            (item?.lvcaExmdChrgTypeCd>0)?<li className="b13dp">간암</li>:""
                         }
                         {/* <li className="b13dp">폐암</li> */}
                     </ul>

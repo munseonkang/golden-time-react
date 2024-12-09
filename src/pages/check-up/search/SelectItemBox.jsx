@@ -197,7 +197,7 @@ const SelectItemBox = forwardRef((props, ref) => {
             getCurrentPosition((city_do, gu_gun)=>{
                 setInputs({...inputs, sido:city_do, sigungu:gu_gun});
                 searchTerms.current = {...searchTerms.current, sido:city_do, sigungu:gu_gun};
-                search({sido: city_do, sigungu: gu_gun}, setResults);
+                search({...searchTerms.current, sido: city_do, sigungu: gu_gun}, setResults);
             });
         }
         // SelectBox 외 이벤트 등록

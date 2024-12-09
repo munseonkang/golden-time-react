@@ -58,10 +58,10 @@ const Likes = () => {
                         {PHARMACY}
                         <input className="hidden" type="radio" id="likes_pharmacy" name="likes_cls" value={PHARMACY} onChange={(e)=>{classificationHandler(e)}}/>
                     </label>
-                    <label className="b156aa" htmlFor="likes_check_up" ref={addClassificationsRef}>
+                    {/* <label className="b156aa" htmlFor="likes_check_up" ref={addClassificationsRef}>
                         {CENTER}
                         <input className="hidden" type="radio" id="likes_check_up" name="likes_cls" value={CENTER} onChange={(e)=>{classificationHandler(e)}}/>
-                    </label>
+                    </label> */}
                 </div>
                 <span></span>
                 <table>

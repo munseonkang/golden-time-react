@@ -819,15 +819,19 @@ main{
 }
 
 #mypage >section .reviews >section >ul{
-    margin-top: 12px;
+    margin-top: 5px;
     border-top: 2px solid #3A7A8F;
     border-bottom: 2px solid #3A7A8F;
     padding: 5px;
 }
+#mypage >section .reviews >section >ul >li:not(:first-of-type){
+    border-top: 1px solid #EEEEEE;
+}
 #mypage >section .reviews >section >ul >li >article{
     display: flex;
     flex-direction: column;
-    padding: 15px 0;
+    padding-top: 11px;
+    padding-bottom: 6px;
 }
 #mypage >section .reviews >section >ul >li >article.separator{
     border-top: 2px solid #E6F6FB;
