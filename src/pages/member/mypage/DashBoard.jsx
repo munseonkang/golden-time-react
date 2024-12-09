@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
 import { getMemberInfo, getMemberLikes, getMemberProfile, getMemberReviews } from '../../../apis/services/goldentimeService';
-import { setLikeDetail, setLikeIcon } from './Likes';
 import { setRatingImage } from './Reviews';
-import { Title } from '../../../constants/mypage';
+import { Title } from '../../../constants/constants';
+import { setLikeDetail, setLikeIcon } from './like/Like';
+import ProfileImage from './ProfileImage';
 
 const DashBoard = (props) => {
     const { changeContent } = props;
@@ -18,7 +19,7 @@ const DashBoard = (props) => {
     }
 
     useEffect(()=>{
-        getMemberProfile(sessionStorage.getItem("loginMember"), setMemberInfo)
+        getMemberProfile(sessionStorage.getItem("loginMember"), setMemberInfo);
         getMemberLikes({memberId: sessionStorage.getItem("loginMember"), limit: 5}, setLikeList);
         getMemberReviews({memberId: sessionStorage.getItem("loginMember"), month: 1}, setReviewList);
     },[])
@@ -27,6 +28,7 @@ const DashBoard = (props) => {
         if(reviewTextRef.current && reviewTextRef.current.length>0) {
             reviewTextRef.current.map((el)=>{
                 el.style.height = el.scrollHeight + "px";
+                el.parentElement.style.height = "auto";
             })
         }
     },[reviewList])
@@ -37,7 +39,7 @@ const DashBoard = (props) => {
                 <h3>내 프로필</h3>
                 <div>
                     <div>
-                        <img src={images['profile_image80.png']} alt=""/>
+                        <ProfileImage systemName={memberInfo.systemName} />
                         <img src={images['edit_image25.png']} alt=""/>
                     </div>
                     <div>

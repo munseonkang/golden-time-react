@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import DashBoard from "./DashBoard";
 import { images } from '../../../utils/images';
 import MemberInfo from "./MemberInfo";
-import Likes from "./Likes";
 import Reviews from "./Reviews";
-import { Title } from "../../../constants/mypage";
+import { Title } from "../../../constants/constants";
+import Likes from "./like/Likes";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = ()=>{
     const { DASHBOARD, MEMBERINFO, LIKES, REVIEWS } = Title;
@@ -13,6 +14,8 @@ const MyPage = ()=>{
 
     const titleRef = useRef(DASHBOARD);
     const navRef = useRef([]);
+    
+    const navigate = useNavigate();
 
     const addNavRef = (e)=>{
         navRef.current.push(e)
@@ -61,7 +64,8 @@ const MyPage = ()=>{
     }
 
     useEffect(()=>{
-        changeContent(DASHBOARD);
+        if(sessionStorage.getItem("loginMember")===null) navigate('/member/login', {replace: true});
+        else changeContent(DASHBOARD);
     },[])
 
     return (

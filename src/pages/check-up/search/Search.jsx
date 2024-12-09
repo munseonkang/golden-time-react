@@ -31,7 +31,7 @@ const Search = () => {
                         <span className="r14g">(선택)</span>
                     </div>
                     <CheckInputBox id="regular" ref={(child) => childRef.current[4] = child}/>
-                    <CheckInputBox id="cancer" ref={(child) => childRef.current[5] = child}/>
+                    {/* <CheckInputBox id="cancer" ref={(child) => childRef.current[5] = child}/> */}
                 </div>
                 <div className="btn-box">
                     <button className="r17w" onClick={reset}>초기화</button>

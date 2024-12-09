@@ -145,6 +145,9 @@ table{
 #check-up .scroll-y::-webkit-scrollbar{
     display: none;
 }
+#check-up .non-clickable{
+    cursor: default !important;
+}
 
 #check-up .search{
     margin-top: 57px;
@@ -399,8 +402,8 @@ table{
     width: 100%;
     margin-top: 24px;
 }
-#check-up .result table tr th .result table tr td, 
-#check-up .result table tr check-up .result table tr td{
+#check-up .result table tr th, 
+#check-up .result table tr td{
     text-align: left;
     padding-right: 35px;
 }
@@ -496,6 +499,7 @@ table{
     display: flex;
     flex-direction: row;
     gap: 16px;
+    justify-content: center;
 }
 #check-up .result .pagination-box ul li button{
     width: 37px;
@@ -511,9 +515,9 @@ table{
 #check-up .result .pagination-box ul li .current-page{
     background-color: #3A7A8F;
 }
-#check-up .result .pagination-box ul li .clickable{
+/* #check-up .result .pagination-box ul li .clickable{
     cursor: pointer;
-}
+} */
 #check-up .result .pagination-box ul li .clickable-background{
     background-color: #E3F3F8;
 }
@@ -614,6 +618,14 @@ table{
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+#check-up .result .detail-box >div:nth-of-type(2) >div:nth-of-type(2) >div:nth-of-type(1) >.info-box:nth-of-type(1) >span{
+    width: 100%;
+    height: 60px;
+    background-color: #E3F3F8;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 60px;
 }
 #check-up .result .detail-box >div:nth-of-type(2) >div:nth-of-type(2) >div:nth-of-type(1) >.info-box:nth-of-type(1) ul{
     display: flex;

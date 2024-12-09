@@ -6,7 +6,7 @@ export const CheckUpContext = createContext();
 
 export default function CheckUp() {
     const [results, setResults] = useState(null);
-    const searchTerms = useRef({ sido:"", sigungu:"", day:"평일", time:"09:00", center:"", regular:["전체"], cancer:["전체"]});
+    const searchTerms = useRef({ sido:"", sigungu:"", day:"평일", time:"09:00", center:"", type:"전체"});
 
     return (
         <CheckUpContext.Provider value={{results, setResults, searchTerms}}>

@@ -294,6 +294,9 @@ table{
 #mypage .clicked{
     cursor: default;
 }
+#mypage .non-clickable{
+    cursor: default !important;
+}
 #mypage .nav-selected{
     cursor: default;
     background-color: #E6F6FB;
@@ -381,6 +384,7 @@ main{
     position: relative;
 }
 #mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1){
+    width: 80px;
     display: flex;
     align-items: center;
     margin-left: 9px;
@@ -388,6 +392,12 @@ main{
 }
 #mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img{
     cursor: pointer;
+}
+#mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img:nth-of-type(1){
+    width: 80px;
+    height: 80px;
+    border-radius: 9999px;
+    object-fit: cover;
 }
 #mypage >section .dash-board >section:nth-of-type(1) >div >div:nth-of-type(1) >img:nth-of-type(2){
     display: inline-block;
@@ -464,7 +474,7 @@ main{
 }
 #mypage >section .dash-board >section:nth-of-type(2) >section:nth-of-type(1) >ul >li >article{
     width: 411px;
-    min-height: 203px;
+    min-height: 17px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -618,6 +628,12 @@ main{
     flex-direction: row;
     gap: 30px;
     align-items: center;
+}
+#mypage >section .member-info >section >ul >li:first-of-type >div >img{
+    width: 85px;
+    height: 85px;
+    border-radius: 9999px;
+    object-fit: cover;
 }
 #mypage >section .member-info >section >ul >li:first-of-type >div >div{
     display: flex;
@@ -879,6 +895,7 @@ main{
     display: flex;
     flex-direction: row;
     gap: 16px;
+    justify-content: center;
 }
 #mypage .pagination-box ul li button{
     width: 37px;
@@ -894,9 +911,25 @@ main{
 #mypage .pagination-box ul li .current-page{
     background-color: #3A7A8F;
 }
-#mypage .pagination-box ul li .clickable{
+/* #mypage .pagination-box ul li .clickable{
     cursor: pointer;
-}
+} */
 #mypage .pagination-box ul li .clickable-background{
     background-color: #E3F3F8;
 }
+
+/* 리뷰 모달창 */
+#mypage .review-modal{ position: fixed; top:0; left:0; display: flex; justify-content: center; align-items: center; width:100%; height:100vh; background: rgba(0, 0, 0, 0.7); z-index: 99999;}
+#mypage .review-modal .box{width:580px; height:352px; padding:40px 30px; border-radius: 10px; background: #fff; }
+#mypage .review-modal .box form>p{margin-bottom:20px; text-align: center; font-family: 'Pretendard-Bold'; font-size: 25px; color:#154757;}
+#mypage .review-modal .box .flex p{font-size: 22px;}
+#mypage .review-modal .box .flex .img{width:40px; height:40px; margin-right:10px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;}
+#mypage .review-modal .box .flex .img img{width:100%; height:100%;}
+#mypage .review-modal .box .grade{cursor: pointer;}
+#mypage .review-modal .box textarea{width:100%; height:100px; margin:20px 0; padding:10px; border:1px solid #ddd; border-radius: 5px;  resize: none; overflow-y: auto; outline: none;}
+#mypage .review-modal .box textarea::-webkit-scrollbar{width:5px; margin-left:5px; border-radius: 3px;}
+#mypage .review-modal .box textarea::-webkit-scrollbar-track{background: #ddd; border-radius: 3px;}
+#mypage .review-modal .box textarea::-webkit-scrollbar-thumb{background: #aaa; border-radius: 3px;}
+#mypage .review-modal .box .btn{justify-content: center}
+#mypage .review-modal .box .btn a{width:90px; margin:0 5px; border:1px solid #ddd; border-radius: 5px; line-height: 37px; text-align: center; color:#888; cursor: pointer;}
+#mypage .review-modal .box .btn a.review-btn{background: #FC7486; border-color: #FC7486; color:#fff;}

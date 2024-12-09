@@ -15,9 +15,23 @@ export const Classification = {
 Object.freeze(Classification)
 
 export const Month = {
-    FIRST: 0,
+    FIRST: -1,
     SECOND: 1,
     THIRD: 3,
     FOURTH: 6,
 }
 Object.freeze(Month)
+
+export const Regular = {
+    "일반": 1,
+    "구강": 2,
+    "영유아": 3
+}
+Object.freeze(Regular);
+
+export const Cancer = {
+    "일반": 1,
+    "구강": 2,
+    "영유아": 3
+}
+Object.freeze(Regular);

@@ -3,17 +3,20 @@ import { images } from '../../../utils/images';
 import { getMemberInfo, modifyMember, removeMember } from '../../../apis/services/goldentimeService';
 import { useNavigate } from 'react-router-dom';
 import { mainContext } from '../../../App';
+import ProfileImage from './ProfileImage';
 
 const MemberInfo = (props) => {
     const { changeContent } = props;
     const {setLoginMember} = useContext(mainContext);
 
-    const [inputs, setInputs] = useState({memberId:"", nickname:"", password:"", passwordCheck:"", email:"", phoneNumber:""});
-    const {memberId, nickname, password, passwordCheck, email, phoneNumber} = inputs;
+    const [inputs, setInputs] = useState({memberId:"", nickname:"", password:"", passwordCheck:"", email:"", phoneNumber:"", systemName:""});
+    const {memberId, nickname, password, passwordCheck, email, phoneNumber, systemName} = inputs;
 
     const inputsRef = useRef([]);
     const initInfoRef = useRef({});
     const descriptionsRef = useRef([]);
+    const uploadImageRef = useRef(null);
+    const deleteImageRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -88,12 +91,21 @@ const MemberInfo = (props) => {
                 return;
         }
         else{
-            modifyMember({memberId: sessionStorage.getItem("loginMember"), member: inputs}, changeContent);
+            const formData = new FormData();
+            if(uploadImageRef.current!==null) formData.append("file", uploadImageRef.current);
+            if(deleteImageRef.current!==null) formData.append("deleteFile", deleteImageRef.current);
+            formData.append("nickname", inputs.nickname);
+            formData.append("password", inputs.password);
+            formData.append("email", inputs.email);
+            formData.append("phoneNumber", inputs.phoneNumber);
+            modifyMember({memberId: sessionStorage.getItem("loginMember"), formData: formData}, changeContent);
         }
     }
     
     const initInfo = ()=>{
         setInputs({...initInfoRef.current});
+        uploadImageRef.current = null;
+        deleteImageRef.current = null;
         descriptionsRef.current.map((el)=>{
             el.classList.remove('empty-text');
         })
@@ -101,6 +113,31 @@ const MemberInfo = (props) => {
         inputsRef.current.map((el)=>{
             el.classList.remove('empty-border');
         })
+    }
+
+    const selectImage = (e)=>{
+        const fileTag = e.target;
+        const file = fileTag.files[0];
+
+        if(file) {
+            uploadImageRef.current = file;
+            if(!deleteImageRef.current) deleteImageRef.current = initInfoRef.current.systemName;
+            const reader = new FileReader();
+            reader.onload = (e)=>{
+                setInputs({...inputs, systemName: e.target.result})
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    const uploadImage = ()=>{
+        document.getElementById("profileImage").click();
+    }
+
+    const removeImage = ()=>{
+        uploadImageRef.current = null;
+        if(deleteImageRef.current!==null) deleteImageRef.current = initInfoRef.current.systemName;
+        setInputs({...inputs, systemName: ''})
     }
 
     useEffect(()=>{
@@ -118,10 +155,12 @@ const MemberInfo = (props) => {
                     <li>
                         <label className="b166aa"><strong>회원 이미지</strong></label>
                         <div>
-                            <img src={images['profile_image85.png']} alt=""/>
+                            <ProfileImage systemName={systemName} />
+                            <input type="file" name="profileImage" id="profileImage" style={{display: 'none'}}
+                                onChange={(e)=>{ selectImage(e) }}/>
                             <div>
-                                <button className="b15w">이미지 변경</button>
-                                <button className="b15ce1">이미지 삭제</button>
+                                <button className="b15w" onClick={uploadImage}>이미지 변경</button>
+                                <button className="b15ce1" onClick={removeImage}>이미지 삭제</button>
                             </div>
                         </div>
                     </li>
