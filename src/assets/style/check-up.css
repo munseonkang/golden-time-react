@@ -218,10 +218,18 @@ table{
     width: 276px;
     height: 20px;
 }
-#check-up .search .top-box .item-box:nth-of-type(2) .input-box input{
+#check-up .search .top-box .item-box:nth-of-type(2) .input-box label{
+    width: 118px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: #3A7A8F;
+    text-align: center;
+    line-height: 37px;
+}
+/* #check-up .search .top-box .item-box:nth-of-type(2) .input-box input{
     width: 175px;
     height: 20px;
-}
+} */
 /* #check-up .search .top-box .item-box:nth-of-type(3) .input-box input{
     width: 136px;
     height: 20px;
@@ -405,7 +413,7 @@ table{
 #check-up .result table tr th, 
 #check-up .result table tr td{
     text-align: left;
-    padding-right: 35px;
+    padding-right: 33px;
 }
 #check-up .result table thead tr th{
     height: 46px;
@@ -421,7 +429,7 @@ table{
 }
 #check-up .result table tr th:first-of-type,
 #check-up .result table tr td:first-of-type{
-    max-width: 221px;
+    max-width: 250px;
     padding-left: 15px;
 }
 #check-up .result table tr th:nth-of-type(2),
@@ -434,11 +442,11 @@ table{
 } */
 #check-up .result table tr th:nth-of-type(3), 
 #check-up .result table tr td:nth-of-type(3){
-    width: 401px;
+    width: 360px;
 }
 #check-up .result table tr th:nth-of-type(4),
 #check-up .result table tr td:nth-of-type(4){
-    width: 175px;
+    width: 180px;
 }
 #check-up .result table tr th:nth-of-type(5),
 #check-up .result table tr td:nth-of-type(5){
