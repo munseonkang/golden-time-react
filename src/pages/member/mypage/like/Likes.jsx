@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { getMemberLikes } from '../../../../apis/services/goldentimeService';
 import { images } from '../../../../utils/images';
-import { Classification } from '../../../../constants/mypage';
+import { Classification } from '../../../../constants/constants';
 import Pagination from '../../../check-up/result/Pagination';
 import Like from './Like';
 

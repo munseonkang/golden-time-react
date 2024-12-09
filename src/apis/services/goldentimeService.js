@@ -1,4 +1,4 @@
-import { Title } from "../../constants/mypage";
+import { Title } from "../../constants/constants";
 import { deleteLike, deleteMember, deleteReview, getLikes, getLikesWithClassification, getLikesWithLimit, getMember, getProfile, getReviews, getReviewsWithClassification, getReviewsWithConditions, getReviewsWithMonth, getReviewsWithMonths, registAgainLike, registLike, updateMember, updateReview } from "../api/goldentimeAPI";
 
 

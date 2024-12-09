@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
 import { getMemberProfile, getMemberReviews, modifyReview, removeReview } from '../../../apis/services/goldentimeService';
-import { Classification, Month } from '../../../constants/mypage';
+import { Classification, Month } from '../../../constants/constants';
 import Pagination from '../../check-up/result/Pagination';
 import ProfileImage from './ProfileImage';
 

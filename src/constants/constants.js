@@ -21,3 +21,17 @@ export const Month = {
     FOURTH: 6,
 }
 Object.freeze(Month)
+
+export const Regular = {
+    "일반": 1,
+    "구강": 2,
+    "영유아": 3
+}
+Object.freeze(Regular);
+
+export const Cancer = {
+    "일반": 1,
+    "구강": 2,
+    "영유아": 3
+}
+Object.freeze(Regular);

@@ -144,7 +144,8 @@ const Detail = ({hmcNo, lat, lon, workInfo}) => {
                             <div>
                                 <div className="info-box">
                                     <strong className="b16mc">공휴일 검진 항목</strong>
-                                    <ul>
+                                    <span class="b16dg">😅 현재 공휴일 검진 항목이 확인되지 않습니다.</span>
+                                    {/* <ul>
                                         <li>
                                             <span className="b16dg">공휴일</span>
                                             <div>
@@ -159,7 +160,7 @@ const Detail = ({hmcNo, lat, lon, workInfo}) => {
                                                 <span className="r16b">대장암, 간암, 자궁경부암, 위암, 유방암</span>
                                             </div>
                                         </li>
-                                    </ul>
+                                    </ul> */}
                                 </div>
                                 <div className="info-box">
                                     <strong className="b16mc">교통편 안내</strong>

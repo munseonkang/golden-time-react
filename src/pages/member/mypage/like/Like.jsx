@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Classification } from "../../../../constants/mypage";
+import { Classification } from "../../../../constants/constants";
 import { images } from "../../../../utils/images";
 import { addLike, removeLike } from "../../../../apis/services/goldentimeService";
 
