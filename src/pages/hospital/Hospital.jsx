@@ -1,8 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { images } from '../../utils/images';
-// import * as regions from '../../constants/regions';
 import axios from 'axios';
-// import { XMLParser } from "fast-xml-parser";
 import HospitalSearch from "./HospitalSearch";
 import HospitalDetail from "./HospitalDetail";
 import HospitalMap from "./HospitalMap.jsx";
@@ -14,7 +12,9 @@ const Hospital = ()=>{
     const { loginMember } = useContext(mainContext);
 
     // 병원 리스트 호출
-    const [hospitalData, setHospitalData] = useState([]);
+    const [allHospitalData, setAllHospitalData] = useState([]); //모든데이터
+    const [hospitalData, setHospitalData] = useState([]); //보이는데이터
+    const [itemsToShow, setItemsToShow] = useState(15); // 처음 보여줄 병원 수
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -27,13 +27,14 @@ const Hospital = ()=>{
 
     // 병원 상세정보
     const [isDetailOpen, setIsDetailOpen] = useState(false);
+    const [selectIndex, setSelectIndex] = useState("");
     const [selectedHospital, setSelectedHospital] = useState("병원 미선택");
 
     // 병원 즐겨찾기
     const [favorites, setFavorites] = useState([]);
-    const [selectIndex, setSelectIndex] = useState("");
+    const [favoriteIndex, setFavoriteIndex] = useState("");
     const [isFavorite, setIsFavorite] = useState(null);
-    
+
     // 병원리스트에서 응급실정보
     const emergencyRef = useRef([]); 
     // 병원리스트에서 병원 분류명
@@ -50,8 +51,6 @@ const Hospital = ()=>{
             const apiKey = process.env.REACT_APP_DATA_SERVICE_KEY;
             const { sido, sigungu } = region;
             const QN = searchKeyword.trim();
-            const pageNo = 1;
-            const numOfRows = 10;
  
             try {
                 let newSido = sido;
@@ -64,28 +63,30 @@ const Hospital = ()=>{
 
                 // axios를 사용하여 데이터 호출
                 const response = await axios.get(
-                    `${apiUrl}?serviceKey=${apiKey}&Q0=${newSido === "all" ? "" : newSido}&Q1=${newSigungu === "all" ? "" : newSigungu}&QN=${QN}&pageNo=${pageNo}&numOfRows=${numOfRows}`
+                    `${apiUrl}?serviceKey=${apiKey}&Q0=${newSido === "all" ? "" : newSido}&Q1=${newSigungu === "all" ? "" : newSigungu}&QN=${QN}&pageNo=1&numOfRows=3000`
                 );
                 
                 // 파싱된 데이터에서 병원 목록 추출
                 const item = response?.data?.response?.body?.items?.item || [];
                 const hospitals = Array.isArray(item) ? item : item ? [item] : [];
-                setHospitalData(hospitals); // 받아온 데이터 저장
+                setAllHospitalData(hospitals); // 받아온 데이터 저장
+                setHospitalData(hospitals.slice(0, itemsToShow)); // 초기 데이터 렌더링
 
                 // 응급실 여부 데이터를 useRef에 저장
                 emergencyRef.current = hospitals.map((hospital) => hospital.dutyEmclsName || "응급실 정보 없음");
                 // 병원 분류명 데이터를 useRef에 저장
                 classificationRef.current = hospitals.map((hospital) => hospital.dutyDivNam || "병원 분류명 없음");
 
-                setLoading(false);  // 로딩 종료
+                setLoading(false);
 
             } catch (error) {
-                setError(error);  // 에러 발생 시 에러 상태 설정
-                setLoading(false);  // 로딩 종료
+                setError(error);
+                setLoading(false);
             }
         };
 
-        if (region.sido !== "all" || searchKeyword) { // 키워드 또는 지역 조건 변경 시 트리거
+        // 키워드 또는 지역 조건 변경 시 트리거
+        if (region.sido !== "all" || searchKeyword) {
             fetchHospitalData();
         }
 
@@ -111,6 +112,22 @@ const Hospital = ()=>{
         }
     };
 
+    // 무한 스크롤 이벤트 핸들러
+    const handleScroll = () => {
+        if (
+            ulRef.current &&
+            ulRef.current.scrollTop + ulRef.current.clientHeight >= ulRef.current.scrollHeight - 10
+        ) {
+            setItemsToShow((prev) => prev + 15); // 추가 데이터 렌더링
+        }
+    };
+
+    // 보여줄 데이터 업데이트
+    useEffect(() => {
+        setHospitalData(allHospitalData.slice(0, itemsToShow));
+    }, [itemsToShow, allHospitalData]);
+
+    
     // 즐겨찾기 상태확인
     useEffect(() => {
         const fetchFavorites = async () => {
@@ -132,10 +149,7 @@ const Hospital = ()=>{
                         }
                     })
                 );
-        
                 setFavorites(updatedFavorites);
-                console.log("Favorites: ", updatedFavorites);
-        
             } catch (error) {
                 console.error('즐겨찾기 여부를 가져오는 중 오류 발생:', error);
             }
@@ -151,9 +165,7 @@ const Hospital = ()=>{
             return;
         }
         const isFavorited = favorites[index]; // 현재 즐겨찾기 상태
-        console.log("선택인덱스:", index);
-        console.log("isFavorited:", isFavorited);
-        setSelectIndex(index);
+        setFavoriteIndex(index);
         try {
             if (!isFavorited) {
                 // 즐겨찾기 추가
@@ -165,7 +177,6 @@ const Hospital = ()=>{
                     dutyDiv : hospital.dutyDivNam,
                     dutyTel : hospital.dutyTel1,
                 });
-                console.log("즐겨찾기 추가: ", response.data);
             } else {
                 // 즐겨찾기 삭제
                 const response = await axios({
@@ -176,7 +187,6 @@ const Hospital = ()=>{
                         dutyId: hospital.hpid,
                     },
                 });
-                console.log("즐겨찾기 삭제: ", response.data);
             }
       
             // 즐겨찾기 상태 업데이트
@@ -196,6 +206,7 @@ const Hospital = ()=>{
         fetchHospitalDetail(hospital.hpid, index); // 병원 상세 정보 불러오기
         setIsFavorite(favorites[index]);
         setIsDetailOpen(true);
+        setSelectIndex(index);
     };
     const handleCloseDetail = () => {
         setIsDetailOpen(false);
@@ -269,14 +280,14 @@ const Hospital = ()=>{
 
                         <div className="list">
                             <div className="flex">
-                                <p>총 {hospitalData.length}건</p> 
+                                <p>총 {allHospitalData.length == 3000 ? 0 : allHospitalData.length}건</p> 
                                 <ul className="sorting flex">
                                     <li><a href="#">거리순</a></li>
                                     <li><a href="#">평점순</a></li>
                                     <li><a href="#">방문자순</a></li>
                                 </ul>
                             </div>
-                            <ul className="scroll" ref={ulRef}>
+                            <ul className="scroll" ref={ulRef} onScroll={handleScroll}>
                                 {/* 병원 리스트 렌더링 */}
                                 {hospitalData.length > 0 ? (
                                     hospitalData.map((hospital, index) => {
@@ -286,10 +297,10 @@ const Hospital = ()=>{
                                                 hospital={hospital} 
                                                 index={index} 
                                                 handleOpenDetail={handleOpenDetail}
+                                                handleCloseDetail={handleCloseDetail}
                                                 renameClassification={renameClassification}
                                                 favoriteStar={favoriteStar}
                                                 favorites={favorites}
-                                                setIsFavorite={setIsFavorite}
                                             />
                                         );
                                     })
@@ -302,27 +313,24 @@ const Hospital = ()=>{
                         {/* 선택한 병원 상세정보 */}
                         <HospitalDetail 
                             isDetailOpen={isDetailOpen}
-                            selectedHospital={selectedHospital} 
                             selectIndex={selectIndex}
+                            selectedHospital={selectedHospital} 
                             isFavorite={isFavorite}
                             setIsFavorite={setIsFavorite}
                             onClose={handleCloseDetail}
                             renameClassification={renameClassification}
                             favoriteStar={favoriteStar}
                         />
-
                     </div>
 
                     {/* 오른쪽 지도 */}
                     <HospitalMap 
-                        region={region} 
                         setRegion={setRegion} 
                         hospitalData={hospitalData}
                         handleOpenDetail={handleOpenDetail}
+                        selectedHospital={selectedHospital}
                     />
-
                 </div>
-
             </div>
         </>
     );

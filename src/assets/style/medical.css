@@ -1,6 +1,15 @@
 /* @@@@@@@@@ 병원조회 @@@@@@@@@ */
 /* 지도 */
 #hospital .map{width:100%; height:100vh; padding-top:70px;}
+.custom-tooltip {
+    background-color: rgba(0, 0, 0, 0.7);  /* 배경색 */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;  /* 텍스트 색상 */
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);  /* 그림자 효과 */
+}
 
 
 /* 스크롤바(공통) */
@@ -78,7 +87,7 @@
 #hospital .detail .score table th{padding-right:15px; font-weight: 400;}
 #hospital .detail .score table td{padding:7px 0;}
 #hospital .detail .score table td>div{width:220px; height:8px; border-radius: 4px; background: #ddd; }
-#hospital .detail .score table td>div p{width:170px; height:8px; border-radius: 4px; background: #FC7486; }
+#hospital .detail .score table td>div p{width:0%; height:8px; border-radius: 4px; background: #FC7486; }
 #hospital .detail .score table td:nth-child(3){text-align: center;}
 #hospital .detail .score table td>p{font-family: 'Pretendard-Bold'; font-size: 50px; text-align: center;}
 #hospital .detail .score table td>span{display: block;}

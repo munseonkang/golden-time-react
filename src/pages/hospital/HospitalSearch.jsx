@@ -3,8 +3,6 @@ import { images } from '../../utils/images';
 import * as regions from '../../constants/regions';
 
 const HospitalSearch = ({ selectedRegion, onRegionChange, onSearch })=>{
-    // const [selectedSido, setSelectedSido] = useState('all');
-    // const [selectedArea, setSelectedArea] = useState('all');
     const { sido, sigungu } = selectedRegion;
     const [keyword, setKeyword] = useState("");
 
@@ -39,8 +37,8 @@ const HospitalSearch = ({ selectedRegion, onRegionChange, onSearch })=>{
     };
 
     const handleSearchClick = (e) => {
-        e.preventDefault(); // 기본 동작 방지
-        onSearch(keyword); // 부모 컴포넌트로 검색 키워드 전달
+        e.preventDefault();
+        onSearch(keyword);
     };
 
     return (

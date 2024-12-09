@@ -301,7 +301,7 @@ const Main = ()=>{
                                     <div className="text">
                                         <span>건강검진기관</span>
                                         <p>
-                                            건강검진기관의 주소, 운영시간 등<br/>
+                                            건강검진기관의 검진과목 등<br/>
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
