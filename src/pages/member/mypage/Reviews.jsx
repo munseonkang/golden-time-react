@@ -64,7 +64,13 @@ const Reviews = () => {
         if(reviewTextRef.current) {
             reviewTextRef.current.map((el)=>{
                 el.style.height = 'auto';
-                el.style.height = el.scrollHeight + "px";
+                // if(el.scrollHeight > 120) {
+                //     el.style.height = el.scrollHeight + "px";
+                // }
+                // else {
+                //     el.style.height = "110px";
+                // }
+                el.style.height = el.scrollHeight+50+"px";
             })
         }
     },[reviewList])
@@ -188,11 +194,11 @@ const Reviews = () => {
                     </div>
                 </div>
                 <ul>
-                    <li>
-                        {
-                            reviewList.map((review)=>{
-                                return (
-                                    <article key={review.reviewId}>
+                    {
+                        reviewList.items?.map((review)=>{
+                            return (
+                                <li key={review.reviewId}>
+                                    <article>
                                         <div>
                                             <div>
                                                 <div>
