@@ -9,8 +9,10 @@ const instance = axios.create({
 });
 
 // 공휴일 검진기관 검색
-export const searchHolidaysCenter = () => {
-    return instance.get('HmcSearchService/getHolidaysHmcList');
+export const searchHolidaysCenter = (params) => {
+    return instance.get('HmcSearchService/getHolidaysHmcList', {
+        params: params
+    });
 }
 // 검진기관 통합조건 검색
 export const searchIntegrated = (params) => {
