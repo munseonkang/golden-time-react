@@ -35,8 +35,18 @@ const MedicineDetailSearch = ({ onSearch }) => {
                 <div className="dform-row">
                     <label>회사명</label>
                     <input type="text" name="company" id="" />
-                    <label>효능효과</label>
-                    <input type="text" name="effect" id="" />
+                    {/* <label>효능효과</label>
+                    <input type="text" name="effect" id="" /> */}
+                    <label>제형</label>
+                    <select name="form" id="">
+                        <option value="전체">전체</option>
+                        <option value="정제">정제</option>
+                        <option value="액상">액상</option>
+                        <option value="산제">산제</option>
+                        <option value="다층정">다층정</option>
+                        <option value="경질캡슐제">경질캡슐제</option>
+                        <option value="필름코팅정">필름코팅정</option>
+                    </select>
                 </div>
                 <div className="dform-row checkbox">
                     <label>구분</label>
@@ -48,16 +58,6 @@ const MedicineDetailSearch = ({ onSearch }) => {
                         <input type="radio" name="type" id="전문" value="전문의약품" />
                         <label htmlFor="전문">전문</label>
                     </div>
-                    <label>제형</label>
-                    <select name="form" id="">
-                        <option value="전체">전체</option>
-                        <option value="정제">정제</option>
-                        <option value="액상">액상</option>
-                        <option value="산제">산제</option>
-                        <option value="다층정">다층정</option>
-                        <option value="경질캡슐제">경질캡슐제</option>
-                        <option value="필름코팅정">필름코팅정</option>
-                    </select>
                 </div>
                 <div className="dbutton-row">
                     <button type="reset" className="dreset-button">초기화</button>

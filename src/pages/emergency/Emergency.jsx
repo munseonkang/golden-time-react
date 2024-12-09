@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { images } from '../../utils/images';
 import EmergencySearch from './EmergencySearch';
 import EmergencyList from './EmergencyList';
 import EmergencyDetail from './EmergencyDetail';
 import axios from 'axios';
 import HospitalDetail from '../hospital/HospitalDetail';
+
 import FindRoute from '../../components/FindRoute';
+import { mainContext } from '../../App';
 
 const Emergency = ()=>{
     const {Tmapv2} = window;
@@ -21,9 +23,16 @@ const Emergency = ()=>{
     const [region, setRegion] = useState({sido:"", sigungu:""});
     const [searchKeyword, setSearchKeyword] = useState("");
     const [isBoardDetailOpen, setIsBoardDetailOpen] = useState(false); //종합상황판 열림 여부
-    const [isDetailOpen, setIsDetailOpen] = useState(false); //병원 상세보기 열림 여부
-    const [selectedHospital, setSelectedHospital] = useState(null);
     const [isBoardDetailVisible, setIsBoardDetailVisible] = useState(true); // 초기값: 보이도록 설정
+    
+    // 병원
+    const { loginMember } = useContext(mainContext);
+    const [isDetailOpen, setIsDetailOpen] = useState(false); //병원 상세보기 열림 여부
+    const [selectIndex, setSelectIndex] = useState("");
+    const [selectedHospital, setSelectedHospital] = useState(null);
+    const [favorites, setFavorites] = useState([]);
+    const [favoriteIndex, setFavoriteIndex] = useState("");
+    const [isFavorite, setIsFavorite] = useState(null);
 
     const API_BASE_URL = "https://apis.data.go.kr/B552657/ErmctInfoInqireService";
 
@@ -325,6 +334,7 @@ const Emergency = ()=>{
         setSelectedEmergency(null);
         setIsBoardDetailOpen(false);
         setIsBoardDetailOpen(false);
+        setIsDetailOpen(false);
     };
 
     // onSearch 핸들러 - 지역/키워드 업데이트
@@ -338,35 +348,6 @@ const Emergency = ()=>{
     }; 
 
     // 병원에 관한 것
-    const getFormattedTime = (time) => {
-        if (!time) return null;
-        const timeStr = time.toString().padStart(4, '0');
-        return `${timeStr.slice(0, 2)}:${timeStr.slice(2)}`;
-    };
-    const checkOpenStatus = (hospital) => {
-        const today = new Date();
-        const currentDay = today.getDay() === 0 ? 7 : today.getDay();
-        const currentTime = `${today.getHours().toString().padStart(2, '0')}${today.getMinutes().toString().padStart(2, '0')}`; // 현재 시간 'HHmm' 포맷
-
-        const openTime = hospital[`dutyTime${currentDay}s`];
-        const closeTime = hospital[`dutyTime${currentDay}c`];
-
-        if (!openTime || !closeTime) {
-            return { status: "오늘 휴무", open: null, close: null };
-        }
-
-        const isOpen = currentTime >= openTime && currentTime <= closeTime;
-
-        return {
-            status: isOpen ? "진료중" : "진료 종료",
-            open: getFormattedTime(openTime),
-            close: getFormattedTime(closeTime),
-        };
-    }
-    const cleanHospitalName = (name) => {
-        // (사), (의), "사", "의", &#40;사&#41;, &#40;의&#41; 등을 제거
-        return name ? name.replace(/(\(사\)|\(의\)|"사"|"의"|&#40;사&#41;|&#40;의&#41;)/g, "").trim() : "";
-    };
     const renameClassification = (dutyDivNam, dutyName) => {
         if (dutyDivNam === '의원') {
             const departmentMap = {
@@ -423,6 +404,46 @@ const Emergency = ()=>{
             console.error("api 요청 실패한 이유: ", error);
         }
     };
+    const favoriteStar = async (hospital, index) => {
+        if(!loginMember){
+            alert("즐겨찾기는 로그인 이후 설정 가능합니다. ")
+            return;
+        }
+        const isFavorited = favorites[index]; // 현재 즐겨찾기 상태
+        setFavoriteIndex(index);
+        try {
+            if (!isFavorited) {
+                // 즐겨찾기 추가
+                const response = await axios.post('/api/hospital/favorite', {
+                    classification : hospital.dutyDivNam,
+                    memberId : loginMember,
+                    dutyId : hospital.hpid,
+                    dutyName : hospital.dutyName,
+                    dutyDiv : hospital.dutyDivNam,
+                    dutyTel : hospital.dutyTel1,
+                });
+            } else {
+                // 즐겨찾기 삭제
+                const response = await axios({
+                    method: 'delete',
+                    url: `/api/hospital/favorite`,
+                    data: {
+                        memberId: loginMember,
+                        dutyId: hospital.hpid,
+                    },
+                });
+            }
+      
+            // 즐겨찾기 상태 업데이트
+            setFavorites((prevFavorites) => 
+                prevFavorites.map((fav, i) => (i === index ? !fav : fav))
+            );
+            
+        } catch (error) {
+            console.error('즐겨찾기 요청 중 오류 발생:', error);
+            console.log(error.response?.data); 
+        }
+    }
 
     const handleEmergencyList = (emergency) => {
         handleOpenBoardDetail(emergency) //상황종합판 열림
@@ -492,12 +513,13 @@ const Emergency = ()=>{
             {isDetailOpen && selectedHospital && (
                 <HospitalDetail
                     isDetailOpen={isDetailOpen}
-                    selectedHospital={selectedHospital}
+                    selectIndex={selectIndex}
+                    selectedHospital={selectedHospital} 
+                    isFavorite={isFavorite}
+                    setIsFavorite={setIsFavorite}
                     onClose={handleCloseDetail}
-                    getFormattedTime={getFormattedTime}
-                    checkOpenStatus={checkOpenStatus}
-                    cleanHospitalName={cleanHospitalName}
                     renameClassification={renameClassification}
+                    favoriteStar={favoriteStar}
                 />
             )}
         </div>
