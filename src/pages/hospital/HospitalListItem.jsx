@@ -1,18 +1,45 @@
 import { useEffect, useRef, useState } from "react";
 import { images } from '../../utils/images';
+import axios from 'axios';
 import { checkOpenStatus, cleanHospitalName } from "./Hospital";
 
 const HospitalListItem = ({ 
     hospital, 
     index,
     handleOpenDetail,
+    handleCloseDetail,
     renameClassification,
     favoriteStar,
     favorites,
-    setIsFavorite
 }) => {
     // 오픈 유/무
     const { status, open, close } = checkOpenStatus(hospital);
+
+    // 평점 및 리뷰수 상태
+    const [ratingReview, setRatingReview] = useState({
+        rating: 0,
+        reviewCount: 0,
+    });
+
+    // 병원의 평점 및 리뷰 요청
+    const fetchHospitalData = async (hpid) => {
+        try {
+            const response = await axios.get(`/api/review/${hpid}/reviews`);
+            const { rating, reviewCount } = response.data;
+
+            setRatingReview({
+                rating: rating || 0,
+                reviewCount: reviewCount || 0,
+            });
+        } catch (error) {
+            console.error("Failed to fetch hospital data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchHospitalData(hospital.hpid);
+    }, [hospital.hpid]);
+
 
     return (
         <li key={index} onClick={() => handleOpenDetail(hospital, index)}>
@@ -25,7 +52,7 @@ const HospitalListItem = ({
                         e.preventDefault();
                         e.stopPropagation(); 
                         favoriteStar(hospital, index);
-                        
+                        handleCloseDetail();
                     }}
                 >
                     <img
@@ -35,13 +62,16 @@ const HospitalListItem = ({
             </div>
             <span>{hospital.dutyAddr}</span>
             <div className="open"><p className={status === "진료중" ? "green" : "red"}>{status}</p>{open && close ? `${open} ~ ${close}` : ""}</div>
+
+            {ratingReview.reviewCount > 0 &&
             <div className="grade flex">
-                <span>3.2</span>
+                <span>{ratingReview.rating.toFixed(1)}</span>
                 <div className="img" >
-                    <img src={images['grade3.png']} alt=""/>
+                    <img src={images[`grade${Math.round(ratingReview.rating)}.png`]} alt=""/>
                 </div>
-                리뷰 19건
+                리뷰 {ratingReview.reviewCount}건
             </div>
+            }
         </li>
     );
 };

@@ -7,7 +7,6 @@ import MedicineHistory from './MedicineHistory';
 import MedicineDetailSearch from './MedicineDetailSearch';
 
 const Medicine = () => {
-    const [data, setData] = useState([]); //원본 데이터
     const [filteredData, setFilteredData] = useState([]); //필터링 데이터
     const [expand, setExpand] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,6 +19,8 @@ const Medicine = () => {
     const API_BASE_URL = "https://apis.data.go.kr/1471000";
 
     useEffect(() => {
+        console.log("filteredData", filteredData);
+        setExpand(null); //아코디언 초기화
     }, [filteredData]);
 
     // 의약품 api
@@ -61,6 +62,15 @@ const Medicine = () => {
                     : {...medi1Item, isMatched: false};
             });
 
+            // 두 api 에서 공통데이터 확인 콘솔
+            // console.log("medi1 데이터:", medi1);
+            // console.log("medi2 데이터:", medi2);
+
+            // // 공통 속성 확인
+            // const commonItems = medi1.filter(medi1Item =>
+            //     medi2.some(medi2Item => String(medi1Item.ITEM_SEQ) === String(medi2Item.itemSeq))
+            // );
+            // console.log("공통 데이터:", commonItems);
             return medicineData;
 
         } catch (error) {
@@ -68,14 +78,13 @@ const Medicine = () => {
         }
     };
 
-    // 검색
+    // 검색어 저장
     const handleSearch = async (query) => {
         if(query.trim() === "") {
             alert("검색어를 입력하세요!");
             return;
         }
         const medicineData = await getMedicines(query);
-        setData(medicineData);
         setFilteredData(medicineData);
     };
 
@@ -94,7 +103,6 @@ const Medicine = () => {
             return matchesIngredient && matchesEffect && matchesType && matchesForm;
         });
 
-        setData(medicineData);
         setFilteredData(filtered);
     };
 
@@ -132,10 +140,10 @@ const Medicine = () => {
                     <tbody className="r15b">
                         {currentData.length > 0 ? (
                             currentData.map((item, index) => {
-                                // ITEM_NAME 기준으로 분리
-                                const parts = item.ITEM_NAME ? item.ITEM_NAME.split(/\(|\)/) : [];
+                                // ITEM_NAME 기준으로 분리 - (첫번째 괄호와 마지막 괄호 기준)
+                                const parts = item.ITEM_NAME ? item.ITEM_NAME.split(/\((.*?)\)/) : [];
                                 const name = parts[0]?.trim() || "";
-                                const ingredient = parts[1]?.trim() || "";
+                                const ingredient = parts.length > 2 ? parts.slice(1, -1).join(" ").trim() : ""; // 첫 번째 괄호와 마지막 괄호 사이의 내용을 모두 합침
 
                                 return (
                                     <React.Fragment key={index}>

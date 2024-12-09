@@ -1,5 +1,5 @@
 /* member 공통 */
-.member{display: flex; justify-content: center; align-items: center; height:100vh; min-height: 800px;}
+.member{display: flex; justify-content: center; align-items: center; width:100%; min-width: 400px; height:100vh; min-height: 800px;}
 .member>div{width:400px; padding-top:70px; font-size: 17px;}
 .member .title{margin-bottom:15px; text-align: center; font-family: 'GangwonExtraBoldA';  font-size: 40px; color:#154757;}
 
@@ -10,6 +10,21 @@
 .member form+p a{border-bottom:1px solid #154757; font-size: 13px; color:#154757;}
 .member form button{margin-top: 5px; border: 1px solid #154757; border-radius: 10px; line-height: 50px; font-family: 'Pretendard-Bold'; background: #154757; font-size: 17px; color:#fff; cursor: pointer; }
 .member form button.last-btn{width:100%; margin-top:30px;}
+
+
+/* @@@@@@@@@ 메일인증 컴포넌트 @@@@@@@@@ */
+#MailCertification{position:relative;}
+#MailCertification input, #MailCertification select{width:47%;}
+#MailCertification input.custom-email{position:absolute; top:20px; right:21px; width:42%; border-radius: 10px 0 0 10px; border-right: none;}
+#MailCertification .certification {position:relative; height:53px;}
+#MailCertification .certification button{width:100%; height:48px; border:none;}
+#MailCertification .certification button.one{ position:absolute; top:0; width:150px;}
+#MailCertification .certification input {width:100%; border-radius: 9px;}
+#MailCertification .certification button.two{width:140px; margin-left:5px;}
+#MailCertification .certification .check{position:absolute; top:0; width:100%; display: none;}
+#MailCertification .certification .check.check-on{display: block;}
+#MailCertification .certification .check.check-off{display: none;}
+#MailCertification .certification .check img{position:absolute; top:0; right:120px; transform: translateY(23px); opacity: 0;}
 
  
 /* @@@@@@@@@ 로그인 @@@@@@@@@ */
@@ -25,15 +40,42 @@
 #join form .id button{width:130px; margin-left:5px;}
 #join form .pw{position:relative;}
 #join form .pw img{position:absolute; right:14px; transform: translateY(23px); opacity: 0;}
-#join form .email{position:relative;}
-#join form .email input, #join form .email select{width:47%;}
-#join form .email input.custom-email{position:absolute; top:20px; right:21px; width:42%; border-radius: 10px 0 0 10px; border-right: none;}
-#join form .email .certification {position:relative; height:53px;}
-#join form .email .certification button.one{ position:absolute; top:0; width:150px;}
-#join form .email .certification input {width:100%; border-radius: 9px;}
-#join form .email .certification button.two{width:140px; margin-left:5px;}
-#join form .email .certification .check{position:absolute; top:0; width:100%; display: none;}
-#join form .email .certification .check.check-on{display: block;}
-#join form .email .certification .check.check-off{display: none;}
-#join form .email .certification .check img{position:absolute; top:0; right:120px; transform: translateY(23px); opacity: 0;}
 
+
+/* @@@@@@@@@ 아이디 찾기 @@@@@@@@@ */
+#idInquiry>div{position:relative}
+#idInquiry h5{margin-left:5px; font-size: 17px;}
+#idInquiry h5+p{margin:10px 0 0 5px; font-size: 15px;}
+#idInquiry #findResult{position:absolute; bottom:-30px; width:100%; max-width: 400px; text-align: center; display: none;}
+#idInquiry #findResult p{margin-bottom:10px; border-radius: 9px; background: #FC7486; line-height: 52px; color:#fff; font-size: 18px;}
+#idInquiry #findResult a{border-bottom:1px solid #154757; font-size: 13px; color:#154757;}
+
+
+/* @@@@@@@@@ 비밀번호 찾기 @@@@@@@@@ */
+#PwInquiry>div{position:relative; }
+#PwInquiry h5{margin-left:5px; font-size: 17px;}
+#PwInquiry h5+p{margin:10px 0 0 5px; font-size: 15px;}
+#PwInquiry #findResult{position:absolute; bottom:-30px; width:100%; max-width: 400px; height: 448px; background: #fff; display: none;}
+#PwInquiry #findResult form span{display: block; margin:5px 0 0 5px; font-size: 13px; color:#aaa;}
+#PwInquiry #findResult form .pw{position:relative;}
+#PwInquiry #findResult form .pw img{position:absolute; right:14px; transform: translateY(23px); opacity: 0;}
+/* #PwInquiry #findResult p{margin-bottom:10px; border-radius: 9px; background: #FC7486; line-height: 52px; color:#fff; font-size: 18px;}
+#PwInquiry #findResult a{border-bottom:1px solid #154757; font-size: 13px; color:#154757;} */
+
+
+
+
+/* ------------------------------반응형------------------------------ */
+/* Tablet : 768px ~ 1200px */
+@media (max-width: 1200px) {
+    /* member 공통 */
+
+}
+
+
+
+/* Mobile : 320px ~ 768px */
+@media (max-width: 768px) {
+    /* member 공통 */
+
+}

@@ -1,8 +1,9 @@
 import { images } from "../../utils/images";
 import Header from "../../layout/Header";
-import { useEffect, useRef, useState } from "react";
+import { useContext,useEffect, useRef, useState } from "react";
 import * as regions from "../../constants/regions";
 import axios from "axios";
+import { mainContext } from "../../App";
 
 const URL = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire";
 
@@ -27,6 +28,7 @@ const Pharmacy = () => {
     const handleOpenModal = () => {
         setRating(3);
         setIsModalOpen(true);
+        getMemberNickName(loginMember);
     };
 
     const handleCloseModal = () => {
@@ -697,7 +699,30 @@ const Pharmacy = () => {
         getRP(selectedPharm); 
     };
 
+    //유저 아이디 체크
+    const { loginMember } = useContext(mainContext);
 
+    const [memberNickname, setMemberNickname] = useState([]);
+
+    //닉네임 받아오기
+    const getMemberNickName = async (loginMember) => {
+        try {
+            // hpid 리스트를 쿼리 파라미터로 전송
+            const response = await axios.get(`/api/review/getnickname`, {
+                params: {
+                    memberId: loginMember
+                }
+            });
+            // console.log('HPIDs sent to Spring Boot, status:', response.status);
+            console.log('받은 값:', response.data);
+
+            const NickName = response.data;
+            setMemberNickname(NickName);
+
+        } catch (error) {
+            // console.error('Error sending hpid to Spring Boot:', error);
+        }
+    };
 
     //리뷰 작성
     const handlePostReview = async (selectedPharm) => {
@@ -706,17 +731,18 @@ const Pharmacy = () => {
         const pharmacyName = selectedPharm.dutyName;
         const pharmacyCall = selectedPharm.dutyTel1;
         const ratingValue = rating;
+        const memberId = loginMember;
 
         // if (!reviewContent || !pharmacyId) {
         //     alert("리뷰 내용을 입력해주세요.");
         //     return;
         // }
 
-        // 로그인 체크
-        // if (!memberId) {
-        //     alert("로그인을 해주세요.");
-        //     return;
-        // }
+        //로그인 체크
+        if (!memberId) {
+            alert("로그인을 해주세요.");
+            return;
+        }
 
         if (!reviewContent) {
             alert("리뷰 내용을 입력해주세요.");
@@ -734,7 +760,8 @@ const Pharmacy = () => {
                 content: reviewContent,
                 dutyName: pharmacyName,
                 dutyTel: pharmacyCall,
-                rating: ratingValue
+                rating: ratingValue,
+                memberId: memberId
             });
 
             if (response.status === 200) {
@@ -1038,7 +1065,7 @@ const Pharmacy = () => {
                                                 <h4>평점</h4>
                                                 <table>
                                                     <tr>
-                                                        <th>5는{ratingCounts[5]}개</th>
+                                                        <th>5</th>
                                                         <td>
                                                             <div><p className="five" style={{ width: `${fiveStarWidth}%` }}></p></div>
                                                         </td>
@@ -1049,25 +1076,25 @@ const Pharmacy = () => {
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>4는{ratingCounts[4]}개</th>
+                                                        <th>4</th>
                                                         <td>
                                                             <div><p className="four" style={{ width: `${fourStarWidth}%` }}></p></div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>3는{ratingCounts[3]}개</th>
+                                                        <th>3</th>
                                                         <td>
                                                             <div><p className="three" style={{ width: `${threeStarWidth}%` }}></p></div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>2는{ratingCounts[2]}개</th>
+                                                        <th>2</th>
                                                         <td>
                                                             <div><p className="two" style={{ width: `${twoStarWidth}%` }}></p></div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>1는{ratingCounts[1]}개</th>
+                                                        <th>1</th>
                                                         <td>
                                                             <div><p className="one" style={{ width: `${oneStarWidth}%` }}></p></div>
                                                         </td>
@@ -1137,7 +1164,7 @@ const Pharmacy = () => {
                                         <div className="img">
                                             <img src={images['default_image.jpg']} alt="" />
                                         </div>
-                                        <p>애플이</p>
+                                        <p>{memberNickname}</p>
                                     </div>
                                     <div className="grade">
                                         {renderStars()} {/* 별 이미지 렌더링 */}

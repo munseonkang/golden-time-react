@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { images } from '../../utils/images';
 
-const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
+const HospitalMap = ({ 
+    setRegion, 
+    hospitalData, 
+    handleOpenDetail,
+    selectedHospital
+ }) => {
     const { Tmapv2 } = window;
     const [map, setMap] = useState(null);
     const [markers, setMarkers] = useState([]);
@@ -9,7 +14,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
     const [longitude, setLongitude] = useState(null);
     // const [latitude, setLatitude] = useState(37.297305);
     // const [longitude, setLongitude] = useState(127.010610);
-
     
     // 사용자의 현재 위치(위도, 경도)를 가져오는 함수
     const getLocation = async () => {
@@ -21,7 +25,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
                         setLatitude(position.coords.latitude);
                         setLongitude(position.coords.longitude);
                         resolve({ latitude, longitude });
-                        // console.log("1.위도:", latitude, "/ 경도:", longitude);
 
                         getAddress(latitude, longitude);
                     },
@@ -36,8 +39,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
             }
         });
     };
-    
-    
     
     // TMAP API를 사용해서 위도,경도를 주소로 변환
     const getAddress = async (latitude, longitude) => {
@@ -64,7 +65,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
         }
     };
 
-
     // TMAP 초기화
     const initTmap = () => {
         const mapDiv = document.getElementById('map_div');
@@ -79,7 +79,6 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
             setMap(tmap);
         }
     };
-
 
     // 컴포넌트가 마운트될 때 위치를 가져오고 지도 초기화
     useEffect(() => {
@@ -101,15 +100,29 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
         }
     }, [latitude, longitude]);
     
-
-
     useEffect(()=>{
         createMarkers();
     },[hospitalData])
 
+    // 병원 리스트 클릭시 해당병원을 중심으로 이동
+    const focusOnHospital = (selectedHospital) => {
+        const { wgs84Lat, wgs84Lon } = selectedHospital;
+
+        if (map && wgs84Lat && wgs84Lon) {
+            const position = new Tmapv2.LatLng(wgs84Lat, wgs84Lon);
+            map.setCenter(position);
+            map.setZoom(16);
+        }
+    };
+    useEffect(() => {
+        if (selectedHospital) {
+            focusOnHospital(selectedHospital);
+        }
+    }, [selectedHospital]);
+    
+
     const createMarkers = () => {
         if (hospitalData) { 
-            
             removeMarkers();
     
             // hospitalData 배열을 순회하며 마커를 생성
@@ -120,23 +133,23 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
                 const markerImage = images['marker_hospital.png']; 
                 
                 if (lat && lon) {
-                    const position = new Tmapv2.LatLng(lat, lon); // Tmapv3.LatLng으로 위치 설정
+                    const position = new Tmapv2.LatLng(lat, lon);
                     const marker = new Tmapv2.Marker({
                         position: position,
                         map: map, // 마커가 표시될 Map 객체
-                        icon: markerImage
+                        icon: markerImage,
                     });
 
+                    // label(병원 이름) hover효과
                     marker.addListener("mouseenter", function(evt) {
-                        marker.setLabel(title);  // 마우스 오버 시 label을 표시
+                        marker.setLabel('<span style="position:relative; display:inline-block; padding:3px 5px; border-radius:3px; background-color: #fc7486; color:white; z-index:1000;">'+title+'</span>');
                     });
-
                     marker.addListener("mouseleave", function(evt) {
-                        marker.setLabel('');  // 마우스 벗어날 때 label 숨기기
+                        marker.setLabel(''); 
                     });
 
                     marker.addListener("click", function(evt) {
-                        handleOpenDetail(hospital);  // hospital 객체를 전달하여 handleOpenDetail 호출
+                        handleOpenDetail(hospital, hospital.rnum-1);  // hospital 객체를 전달하여 handleOpenDetail 호출
                     });
     
                     // 상태에 마커 추가
@@ -152,7 +165,7 @@ const HospitalMap = ({ region, setRegion, hospitalData, handleOpenDetail }) => {
         markers.forEach(marker => {
             marker.setMap(null);
         });
-        setMarkers([]); // 상태 초기화
+        setMarkers([]);
     };
 
     return (

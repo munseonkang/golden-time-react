@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { images } from '../../utils/images';
-import HospitalModal from "./HospitalModal";
+import axios from 'axios';
+import HospitalReviewModal from "./HospitalReviewModal";
+import { mainContext } from "../../App";
 import { getFormattedTime, checkOpenStatus, cleanHospitalName } from "./Hospital";
 
 const HospitalDetail = ({ 
@@ -13,23 +15,46 @@ const HospitalDetail = ({
     renameClassification,
     favoriteStar,
 })=>{
-    const [activeTab, setActiveTab] = useState('tab1'); // 기본 tab1 활성화
-    const [isModalOpen, setIsModalOpen] = useState(false); // 리뷰 모달
+    // 로그인 확인(아이디 or null)
+    const { loginMember } = useContext(mainContext);
+
+    // 기본 tab1 활성화
+    const [activeTab, setActiveTab] = useState('tab1');
+    // 리뷰 모달
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // 탭메뉴
-    const handleTabClick = (tab) => {
-        setActiveTab(tab);
+    const handleTabClick = (tab) => setActiveTab(tab);
+
+    // 평점 및 리뷰수 상태
+    const [ratingReview, setRatingReview] = useState({
+        reviews: [],
+        rating: 0,
+        reviewCount: 0,
+        ratingCounts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+    });
+
+    // 병원의 평점 및 리뷰 요청
+    const fetchHospitalData = async (hpid) => {
+        try {
+            const response = await axios.get(`/api/review/${hpid}/reviews`);
+            const { reviews, rating, reviewCount, ratingCounts } = response.data;
+
+            setRatingReview({
+                reviews: reviews || [],
+                rating: rating || 0,
+                reviewCount: reviewCount || 0,
+                ratingCounts: ratingCounts || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, 
+            });
+        } catch (error) {
+            console.error("Failed to fetch hospital data:", error);
+        }
     };
 
-    // 리뷰 모달창
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+    useEffect(() => {
+        fetchHospitalData(selectedHospital.hpid);
+    }, [selectedHospital.hpid]);
 
-    console.log("가져온인덱스:",isFavorite);
 
     return (
         <>
@@ -45,7 +70,7 @@ const HospitalDetail = ({
                                 onClick={(e) => {
                                     e.preventDefault();
                                     favoriteStar(selectedHospital, selectIndex);
-                                    // setIsFavorite(prevState => !prevState);
+                                    setIsFavorite(prevState => !prevState);
                                 }}
                             >
                                 <img
@@ -145,60 +170,82 @@ const HospitalDetail = ({
                                             <tr>
                                                 <th>5</th>
                                                 <td>
-                                                    <div><p></p></div>
+                                                    <div>
+                                                        <p style={{ width: `${ratingReview.reviewCount === 0 ? 0 : (ratingReview.ratingCounts[5] / ratingReview.reviewCount) * 100}%` }}></p>
+                                                    </div>
                                                 </td>
                                                 <td rowspan="5">
-                                                    <p>3.2</p>
-                                                    <img src={images['grade3.png']} alt=""/>
-                                                    <span>리뷰 19개</span>
+                                                    <p>{ratingReview.rating.toFixed(1)}</p>
+                                                    <img src={images[`grade${Math.round(ratingReview.rating)}.png`]} alt=""/>
+                                                    <span>리뷰 {ratingReview.reviewCount}개</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>4</th>
                                                 <td>
-                                                    <div><p></p></div>
+                                                    <div>
+                                                        <p style={{ width: `${ratingReview.reviewCount === 0 ? 0 : (ratingReview.ratingCounts[4] / ratingReview.reviewCount) * 100}%` }}></p>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>3</th>
                                                 <td>
-                                                    <div><p></p></div>
+                                                    <div>
+                                                        <p style={{ width: `${ratingReview.reviewCount === 0 ? 0 : (ratingReview.ratingCounts[3] / ratingReview.reviewCount) * 100}%` }}></p>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>2</th>
                                                 <td>
-                                                    <div><p></p></div>
+                                                    <div>
+                                                        <p style={{ width: `${ratingReview.reviewCount === 0 ? 0 : (ratingReview.ratingCounts[2] / ratingReview.reviewCount) * 100}%` }}></p>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>1</th>
                                                 <td>
-                                                    <div><p></p></div>
+                                                    <div>
+                                                        <p style={{ width: `${ratingReview.reviewCount === 0 ? 0 : (ratingReview.ratingCounts[1] / ratingReview.reviewCount) * 100}%` }}></p>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a href="#" onClick={handleOpenModal}> 리뷰작성</a>
+                                    <a href="#" 
+                                        onClick={() => {
+                                            if (loginMember) {
+                                                setIsModalOpen(true);
+                                            } else {
+                                                alert('로그인이 필요합니다.');
+                                            }
+                                        }}
+                                    > 리뷰작성</a>
                                 </div>
                                 <div className="review">
                                     <h4>리뷰</h4>
                                     <ul>
-                                        <li>
-                                            <div className="flex">
-                                                <div className="img">
-                                                    <img src={images['default_image.jpg']} alt=""/>
-                                                </div>
-                                                <div>
-                                                    애플이
-                                                    <p>2024년 11월 12일</p>
-                                                </div>
-                                            </div>
-                                            <img src={images['grade3.png']} alt=""/>
-                                            <p>
-                                                리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.
-                                            </p>
-                                        </li>
+                                        {ratingReview.reviews.length > 0 ? (
+                                            ratingReview.reviews.map((review, index) => (
+                                                <li key={index}>
+                                                    <div className="flex">
+                                                        <div className="img">
+                                                            <img src={images['default_image.jpg']} alt=""/>
+                                                        </div>
+                                                        <div>
+                                                            {review.memberId.slice(0, 4) + '*'.repeat(review.memberId.length - 4)}
+                                                            <p>{review.createdAt}</p>
+                                                        </div>
+                                                    </div>
+                                                    <img src={images[`grade${review.rating}.png`]} alt=""/>
+                                                    <p>{review.content}</p>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <p>리뷰가 없습니다.</p>
+                                        )}
                                     </ul>
                                 </div>
                             </div>
@@ -208,10 +255,11 @@ const HospitalDetail = ({
             )}
 
             {/* 리뷰 모달 */}
-            <HospitalModal 
+            <HospitalReviewModal 
                 isModalOpen={isModalOpen} 
-                onCloseModal={handleCloseModal} 
-                hpName={cleanHospitalName(selectedHospital.dutyName)} 
+                setIsModalOpen={setIsModalOpen}
+                selectedHospital={selectedHospital}
+                hpName={cleanHospitalName(selectedHospital.dutyName)}
             />
         </>
     );
