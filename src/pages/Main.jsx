@@ -210,37 +210,37 @@ const Main = ()=>{
                         </li>
                         <li>
                             <Link to="/hospital">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button2.png']} alt=""/></div>
                                 <p>병원 조회</p>
                             </Link>
                         </li>
                         <li>
                             <Link to="/pharmacy">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button3.png']} alt=""/></div>
                                 <p>약국 조회</p>
                             </Link>
                         </li>
                         <li>
                             <Link to="/check-up">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button4.png']} alt=""/></div>
                                 <p>건강검진기관</p>
                             </Link>
                         </li>
                         <li>
                             <Link to="/medicine">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button5.png']} alt=""/></div>
                                 <p>의약품정보</p>
                             </Link>
                         </li>
                         <li>
                             <Link to="/first-aid/faq">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button6.png']} alt=""/></div>
                                 <p>FAQ</p>
                             </Link>
                         </li>
                         <li>
                             <Link to="/first-aid/solution">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button7.png']} alt=""/></div>
                                 <p>대처방법</p>
                             </Link>
                         </li>

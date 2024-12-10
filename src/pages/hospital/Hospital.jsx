@@ -327,6 +327,7 @@ const Hospital = ()=>{
                     <HospitalMap 
                         setRegion={setRegion} 
                         hospitalData={hospitalData}
+                        isDetailOpen={isDetailOpen}
                         handleOpenDetail={handleOpenDetail}
                         selectedHospital={selectedHospital}
                     />

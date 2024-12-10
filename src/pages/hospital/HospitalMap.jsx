@@ -4,6 +4,7 @@ import { images } from '../../utils/images';
 const HospitalMap = ({ 
     setRegion, 
     hospitalData, 
+    isDetailOpen,
     handleOpenDetail,
     selectedHospital
  }) => {
@@ -120,12 +121,11 @@ const HospitalMap = ({
         }
     }, [selectedHospital]);
     
-
+    // 병원 배열 받아서 위치값 기준으로 마커 생성
     const createMarkers = () => {
         if (hospitalData) { 
             removeMarkers();
     
-            // hospitalData 배열을 순회하며 마커를 생성
             hospitalData.forEach((hospital) => {
                 const lat = hospital.wgs84Lat;
                 const lon = hospital.wgs84Lon;
@@ -160,7 +160,7 @@ const HospitalMap = ({
         }
     };
     
-    // 모든 마커를 제거하는 함수
+    // 모든 마커를 제거
     const removeMarkers = () => {
         markers.forEach(marker => {
             marker.setMap(null);
@@ -171,6 +171,11 @@ const HospitalMap = ({
     return (
         <div className="map">
             <div id="map_div"></div>
+            {isDetailOpen  &&
+                <button id="naviButton">
+                    <img src={images['navi_icon.png']} />
+                </button>
+            }
         </div>
     );
 };
