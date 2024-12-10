@@ -396,9 +396,10 @@ input[id*="answer"]:checked+label .quest .img-box img {
 #first-aid .box3 .aid08 .big,
 #first-aid .box3 .aid09 .big {
     font-family: 'GangwonExtraBoldA';
-    font-size: 35px;
+    font-size: 28px;
     margin-left: 8px;
     margin-top: 20px;
+    color: #154757;
 }
 
 #first-aid .box3 .aid01 .small,
@@ -411,7 +412,7 @@ input[id*="answer"]:checked+label .quest .img-box img {
 #first-aid .box3 .aid08 .small,
 #first-aid .box3 .aid09 .small {
     font-family: 'GangwonExtraBoldA';
-    font-size: 20px;
+    font-size: 18px;
     margin-left: 12px;
     margin-top: 32px;
     color: #888888;
@@ -427,7 +428,7 @@ input[id*="answer"]:checked+label .quest .img-box img {
     background-color: #F7F7F7;
     border: 1px solid #DDDDDD;
     border-radius: 15px;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.8;
 }
 
@@ -458,12 +459,12 @@ input[id*="answer"]:checked+label .quest .img-box img {
 #first-aid .box4 .aid07.active,
 #first-aid .box4 .aid08.active,
 #first-aid .box4 .aid09.active {
-    height: 155px;
+    height: 135px;
 }
 
 #first-aid .box5 {
     width: 1200px;
-    height: 500px;
+    height: auto;
     margin-top: 30px;
     margin-bottom: 100px;
 }
@@ -481,6 +482,7 @@ input[id*="answer"]:checked+label .quest .img-box img {
     overflow: hidden;
     width: 1200px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -493,7 +495,7 @@ input[id*="answer"]:checked+label .quest .img-box img {
 #first-aid .box5 .aid07.active,
 #first-aid .box5 .aid08.active,
 #first-aid .box5 .aid09.active {
-    height: 500px;
+    height: auto;
 }
 
 #first-aid .box2 .aid01:hover,
@@ -508,6 +510,19 @@ input[id*="answer"]:checked+label .quest .img-box img {
     background-color: #154757;
     color: white;
     transition: all 0.5s ease;
+}
+
+#first-aid .box5 .aid01>img,
+#first-aid .box5 .aid02>img,
+#first-aid .box5 .aid03>img,
+#first-aid .box5 .aid04>img,
+#first-aid .box5 .aid05>img,
+#first-aid .box5 .aid06>img,
+#first-aid .box5 .aid07>img,
+#first-aid .box5 .aid08>img,
+#first-aid .box5 .aid09>img{
+    width: 50%;
+    height: auto;
 }
 
 
@@ -585,13 +600,13 @@ input[id*="choice"]:checked+label>div p {
     width: 75px;
     height: 30px;
     border: 1px solid #154757;
-    border-radius: 10px;
+    border-radius: 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    position: absolute;
+
     right: 10px;
     bottom: 10px;
 }

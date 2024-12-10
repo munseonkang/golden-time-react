@@ -220,34 +220,39 @@ const Principle = () => {
                     <div className="aid02">
                         <img src={images['aid_3.png']} className="img1" />
                         <img src={images['aid_4.png']} className="img2" />
+                        <img src={images['aid_5.png']} className="img3" />
+                        <img src={images['aid_6.png']} className="img4" />
+                        <img src={images['aid_7.png']} className="img5" />
+                        <img src={images['aid_8.png']} className="img6" />
                     </div>
                     <div className="aid03">
-                        <img src={images['aid_5.png']} className="img1" />
-                        <img src={images['aid_6.png']} className="img2" />
+                        <img src={images['aid_9.png']} className="img1" />
+                        <img src={images['aid_10.png']} className="img2" />
                     </div>
                     <div className="aid04">
-                        <img src={images['aid_7.png']} className="img1" />
-                        <img src={images['aid_8.jpg']} className="img2" />
+                        <img src={images['aid_11.png']} className="img1" />
+                        <img src={images['aid_12.png']} className="img2" />
                     </div>
                     <div className="aid05">
-                        <img src={images['aid_9.jpg']} className="img1" />
-                        <img src={images['aid_8.jpg']} className="img2" />
+                        <img src={images['aid_13.png']} className="img1" />
+                        <img src={images['aid_14.png']} className="img2" />
                     </div>
                     <div className="aid06">
-                        <img src={images['aid_3.png']} className="img1" />
-                        <img src={images['aid_1.png']} className="img2" />
+                        <img src={images['aid_15.png']} className="img1" />
+                        <img src={images['aid_16.png']} className="img2" />
                     </div>
                     <div className="aid07">
-                        <img src={images['aid_4.png']} className="img1" />
-                        <img src={images['aid_2.png']} className="img2" />
+                        <img src={images['aid_17.png']} className="img1" />
+                        <img src={images['aid_18.png']} className="img2" />
+                        <img src={images['aid_19.png']} className="img3" />
                     </div>
                     <div className="aid08">
-                        <img src={images['aid_7.png']} className="img1" />
-                        <img src={images['aid_5.png']} className="img2" />
+                        <img src={images['aid_20.png']} className="img1" />
+                        <img src={images['aid_21.png']} className="img2" />
                     </div>
                     <div className="aid09">
-                        <img src={images['aid_8.jpg']} className="img1" />
-                        <img src={images['aid_6.png']} className="img2" />
+                        <img src={images['aid_22.png']} className="img1" />
+                        <img src={images['aid_23.png']} className="img2" />
                     </div>
                 </div>
             </div>
