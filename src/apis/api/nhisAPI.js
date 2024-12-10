@@ -19,9 +19,6 @@ export const searchIntegrated = (params) => {
     return instance.get('HmcSearchService/getHmcList', {
         params: params
     });
-    // return {data:{response:{body:{items: {item: [{
-    //         hmcNo: 11396245
-    //     },{hmcNo: 11396244}]}}}}};
 }
 // 검진기관 기본정보
 export const getCenterBasicInfo = (hmcNo) => {

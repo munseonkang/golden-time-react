@@ -3,7 +3,32 @@ import { getMemberLikes } from '../../../../apis/services/goldentimeService';
 import { images } from '../../../../utils/images';
 import { Classification } from '../../../../constants/constants';
 import Pagination from '../../../check-up/result/Pagination';
-import Like from './Like';
+import LikeBtn from '../../../check-up/result/LikeBtn';
+
+export const setLikeDetail = (cls)=>{
+    switch(cls) {
+        case Classification.HOSPITAL:
+            return "lbgc-h";
+        case Classification.PHARMACY:
+            return "lbgc-p";
+        case Classification.CENTER:
+            return "lbgc-c";
+    }
+}
+
+export const setLikeIcon = (cls, size)=>{
+    switch(cls) {
+        case Classification.HOSPITAL:
+            if(size===28) return `icon_hospital28.png`;
+            if(size===21) return `icon_hospital21.png`;
+        case Classification.PHARMACY:
+            if(size===28) return `icon_pharmacy28.png`;
+            if(size===21) return `icon_pharmacy21.png`;
+        case Classification.CENTER:
+            if(size===28) return `icon_center28.png`;
+            if(size===21) return `icon_center21.png`;
+    }
+}
 
 const Likes = () => {
     const NUMOFROWS = 8;
@@ -68,7 +93,7 @@ const Likes = () => {
                     <thead>
                         <tr>
                             <th>
-                                <img src={images['like13.png']} alt=""/>
+                                <img src={images['nav_like_clicked20.png']} alt=""/>
                             </th>
                             <th className="b143a7">기관명</th>
                             <th className="b143a7">구분</th>
@@ -81,7 +106,20 @@ const Likes = () => {
                         {
                             likeList?.items?.map((like)=>{
                                 return (
-                                    <Like like={like} key={like.likeId}/>
+                                    <tr key={like.likeId}>
+                                        <td>
+                                            <LikeBtn hmcNo={like.duty.dutyId} hmcNm={like.duty.dutyName} ykindnm={like.duty.dutyDiv} hmcTel={like.duty.dutyTel} likeId={like.likeId} classification={like.classification}/>
+                                        </td>
+                                        <td className="r163a7">{like.duty.dutyName}</td>
+                                        <td className="r163a7">
+                                            <img src={images[`${setLikeIcon(like.classification, 21)}`]} alt=""/>
+                                            {like.duty.dutyDiv}
+                                        </td>
+                                        <td className="r163a7">{like.duty.dutyTel}</td>
+                                        <td>
+                                            <button className={`b14w ${setLikeDetail(like.classification)}`}>자세히 보기</button>
+                                        </td>
+                                    </tr>
                                 )
                             })
                         }

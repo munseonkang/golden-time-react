@@ -3,7 +3,7 @@ import { images } from '../../../utils/images';
 import { getMemberInfo, getMemberLikes, getMemberProfile, getMemberReviews } from '../../../apis/services/goldentimeService';
 import { setRatingImage } from './Reviews';
 import { Title } from '../../../constants/constants';
-import { setLikeDetail, setLikeIcon } from './like/Like';
+import { setLikeDetail, setLikeIcon } from './like/Likes';
 import ProfileImage from './ProfileImage';
 
 const DashBoard = (props) => {
