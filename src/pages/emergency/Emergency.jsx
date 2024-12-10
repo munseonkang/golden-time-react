@@ -24,6 +24,8 @@ const Emergency = ()=>{
     const [searchKeyword, setSearchKeyword] = useState("");
     const [isBoardDetailOpen, setIsBoardDetailOpen] = useState(false); //종합상황판 열림 여부
     const [isBoardDetailVisible, setIsBoardDetailVisible] = useState(true); // 초기값: 보이도록 설정
+    const [sortedResults, setSortedResults] = useState([]);
+    const [isDistanceSorted, setIsDistanceSorted] = useState(false); //거리순 정렬상태
     
     // 병원
     const { loginMember } = useContext(mainContext);
@@ -60,6 +62,8 @@ const Emergency = ()=>{
     useEffect(() => {
         if (region.sigungu) {
             removeMarkers();
+            setSortedResults([]);
+            setIsDistanceSorted(false);
             getSearchResults({ region, keyword: searchKeyword });
         }
     }, [region.sigungu, searchKeyword]);
@@ -68,6 +72,8 @@ const Emergency = ()=>{
     useEffect(() => {
         if (!region.sigungu && searchKeyword.trim()) {
             removeMarkers();
+            setSortedResults([]);
+            setIsDistanceSorted(false);
             getSearchResults({ region: { sido: "", sigungu: "" }, keyword: searchKeyword });
         }
     }, [region, searchKeyword]);
@@ -450,15 +456,59 @@ const Emergency = ()=>{
         handleMarkerClick(emergency)  //마커 클릭 처리
     }
 
+    // 거리 계산
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371;
+        const dLat = ((lat2 - lat1) * Math.PI) / 180;
+        const dLon = ((lon2 - lon1) * Math.PI) / 180;
+        const a = 
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos((lat1 * Math.PI) / 180) *
+            Math.cos((lat2 * Math.PI) / 180) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    };
+
+    // 거리 정보
+    const enrichedData = (data) => {
+        return data.map((item) => {
+            const distance = calculateDistance(
+                currentPosition.latitude,
+                currentPosition.longitude,
+                item.wgs84Lat,
+                item.wgs84Lon
+            );
+            return { ...item, distance };
+        });
+    };
+
+    // 거리순 정렬
+    const sortByDistance = () => {
+        const enrichedSortedData = enrichedData(realResults);
+        const sorted = enrichedSortedData.sort((a, b) => a.distance - b.distance);
+        setSortedResults(sorted);
+        setIsDistanceSorted(true);
+    };
+
+    // EmergencyList 에 전달한 데이터 선택
+    const resultsToShow = isDistanceSorted ? sortedResults : realResults;
+
     return (
         <div id="emergency" className="emergency-container">
             <div id="map_div" className="map-background" ></div>
             <div className="sidebar">
                 <EmergencySearch onSearch={handleSearch} />
-                <div className="total-count r15b">총 {realResults.length} 건</div>
+                <div className="flex">
+                    <div className="total-count r16b">총 {realResults.length} 건</div>
+                    <ul className="sorting">
+                        <li onClick={sortByDistance}>거리순</li>
+                    </ul>
+                </div>
                 <div className="scroll">
                     <EmergencyList 
-                        results={realResults} 
+                        results={resultsToShow} 
                         onClick={handleEmergencyList}
                     />
                 </div>
