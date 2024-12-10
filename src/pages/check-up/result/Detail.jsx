@@ -1,48 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
-import { getCenterBasicInfo, getCenterHolidayInfo, getCenterTransInfo, getCenterWorkInfo } from '../../../apis/api/nhisAPI';
+import { getCenterBasicInfo, getCenterHolidayInfo, getCenterTransInfo } from '../../../apis/api/nhisAPI';
+import LikeBtn from './LikeBtn';
+import { getBasicInfo, getHolidayInfo, getLikeId, getMemberLikeId, getTransInfo } from '../../../apis/services/goldentimeService';
 
-const Detail = ({hmcNo, lat, lon, workInfo}) => {
+const Detail = ({hmcNo, lat, lon, ykindnm, workInfo}) => {
     const [basicInfo, setBasicInfo] = useState(null);
     const [holidayInfo, setHolidayInfo] = useState(null);
     const [transInfo, setTransInfo] = useState(null);
 
-    async function getBasicInfo() {
-        try{
-            const response = await getCenterBasicInfo(hmcNo);
-            setBasicInfo({...(response.data.response.body.item)});
-            console.log(JSON.stringify(response.data.response));
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
-    async function getHolidayInfo() {
-        try{
-            const response = await getCenterHolidayInfo(hmcNo);
-            // console.log(JSON.stringify(response.data.response));
-            setHolidayInfo({...(response.data.response.body.item)});
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
-    async function getTransInfo() {
-        try{
-            const response = await getCenterTransInfo(hmcNo);
-            // console.log(JSON.stringify(response.data.response.body.item));
-            setTransInfo({...(response.data.response.body.item)});
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(()=>{
-        getBasicInfo();
-        getHolidayInfo();
-        getTransInfo();
-    },[]);
+    const likeIdRef = useRef(-1);
 
     function getTime(from, to) {
         if(from!==undefined&&to!==undefined) {
@@ -70,7 +37,14 @@ const Detail = ({hmcNo, lat, lon, workInfo}) => {
 			position: new window.Tmapv2.LatLng(lat, lon), //Marker의 중심좌표 설정.
 			map: map //Marker가 표시될 Map 설정..
 		});
-	} 
+	}
+
+    useEffect(()=>{
+        getBasicInfo(hmcNo, setBasicInfo);
+        getHolidayInfo(hmcNo, setHolidayInfo);
+        getTransInfo(hmcNo, setTransInfo);
+        getMemberLikeId(sessionStorage.getItem("loginMember"), hmcNo, likeIdRef);
+    },[]);
 
     useEffect(()=>{
         if(document.getElementById(`map_div${hmcNo}`)) {
@@ -120,7 +94,10 @@ const Detail = ({hmcNo, lat, lon, workInfo}) => {
                     </div>
                     <div>
                         <div className="info-box">
-                            <strong className="b18mc">{basicInfo?.gjca01YoyangNm}</strong>
+                            <div>
+                                <strong className="b18mc">{basicInfo?.gjca01YoyangNm}</strong>
+                                <LikeBtn hmcNo={hmcNo} hmcNm={basicInfo?.gjca01YoyangNm} ykindnm={ykindnm} hmcTel={basicInfo?.gjca01TelNo} likeId={likeIdRef.current} classification="검진기관"/>
+                            </div>
                             <ul>
                                 <li>
                                     <span className="b16dg">주소</span>
@@ -144,7 +121,7 @@ const Detail = ({hmcNo, lat, lon, workInfo}) => {
                             <div>
                                 <div className="info-box">
                                     <strong className="b16mc">공휴일 검진 항목</strong>
-                                    <span class="b16dg">😅 현재 공휴일 검진 항목이 확인되지 않습니다.</span>
+                                    <span className="b16dg">😅 현재 공휴일 검진 항목이 확인되지 않습니다.</span>
                                     {/* <ul>
                                         <li>
                                             <span className="b16dg">공휴일</span>

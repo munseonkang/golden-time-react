@@ -54,11 +54,18 @@ export const getLikesWithClassification = (memberId, params) => {
         }
     });
 }
+export const getLikeId = (memberId, dutyId)=>{
+    return instance.get(`member/${memberId}/like`, {
+        params: {
+            dutyId: dutyId
+        }
+    })
+}
 export const registLike = (memberId, params)=>{
     return instance.post(`member/${memberId}/like`, {
         memberId: memberId,
-        classification: params.cls,
-        dutyId: params.dutyId,
+        classification: params.classification,
+        duty: params.duty,
     });
 }
 export const registAgainLike = (memberId, likeId, params)=>{
