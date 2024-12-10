@@ -1,13 +1,19 @@
 import { images } from "../../utils/images";
 import Header from "../../layout/Header";
-import { useContext,useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import * as regions from "../../constants/regions";
 import axios from "axios";
 import { mainContext } from "../../App";
+import { Toggle } from "./Toggle";
 
 const URL = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire";
 
 const Pharmacy = () => {
+
+    //유저 아이디 체크
+    const { loginMember } = useContext(mainContext);
+
+
 
     // @@ 탭메뉴 @@
     // 기본적으로 'tab1'을 활성화
@@ -121,6 +127,14 @@ const Pharmacy = () => {
             if (Array.isArray(response.data?.response?.body?.items?.item)) {
                 const hpidList = response.data.response.body.items.item.map(pharmacy => pharmacy.hpid);
                 sendHpidsToSpringBoot(hpidList);
+                fetchlikeData(hpidList);
+            }
+
+            if (!Array.isArray(response.data?.response?.body?.items?.item)) {
+                const hpid = response.data?.response?.body?.items?.item?.hpid;
+                if (hpid) {
+                    fetchlikeDataOne(hpid);
+                }
             }
 
             createMarkers(response.data);
@@ -155,7 +169,7 @@ const Pharmacy = () => {
                 }
             });
             // console.log('HPIDs sent to Spring Boot, status:', response.status);
-            console.log('받은 값:', response.data);
+            // console.log('받은 값:', response.data);
 
             const reviewCounts = response.data;
             setReviewCounts(reviewCounts);
@@ -166,6 +180,120 @@ const Pharmacy = () => {
     };
 
     const [reviewCounts, setReviewCounts] = useState([]);
+
+    const fetchlikeData = async (hpidList) => {
+        try {
+            // hpid 리스트를 쿼리 파라미터로 전송
+            // console.log('난로그인멤버', loginMember);
+            const response = await axios.get(`/api/review/pharmlike`, {
+                params: {
+                    memberId: loginMember,
+                    hpid: hpidList.join(',')
+                }
+            });
+            // console.log('HPIDs sent to Spring Boot, status:', response.status);
+            // console.log('받은 값:', response.data);
+
+            const likelist = response.data;
+            setShowlikes(likelist);
+
+        } catch (error) {
+            // console.error('Error sending hpid to Spring Boot:', error);
+        }
+    };
+
+    const [showlikes, setShowlikes] = useState([]);
+
+
+    //단일객체 좋아요
+    const fetchlikeDataOne = async (hpid) => {
+        try {
+            // hpid 리스트를 쿼리 파라미터로 전송
+            const response = await axios.get(`/api/review/pharmlikeone`, {
+                params: {
+                    memberId: loginMember,
+                    hpid: hpid
+                }
+            });
+            // console.log('HPIDs sent to Spring Boot, status:', response.status);
+            // console.log('단일 받은 값:', response.data);
+
+            const likeone = response.data;
+            setShowlikeone(likeone);
+
+        } catch (error) {
+            // console.error('Error sending hpid to Spring Boot:', error);
+        }
+    };
+
+    const [showlikeone, setShowlikeone] = useState([]);
+
+    const toggleFavorite = (selectedPharm) => {
+
+        const memberId = loginMember;
+        if (!memberId) {
+            alert("로그인을 해주세요.");
+            return;
+        }
+
+        setShowlikeone(prevState => prevState === 1 ? 0 : 1); // 1이면 0으로, 0이면 1로 반전
+
+        addlikeone(selectedPharm);
+
+        let index = -1;
+
+        // pharm.response.body.items.item이 배열일 경우
+        if (Array.isArray(pharm.response.body.items.item)) {
+            index = pharm.response.body.items.item.findIndex(pharmacy => pharmacy.hpid === selectedPharm.hpid);
+        }
+        // pharm.response.body.items.item이 객체일 경우
+        else if (pharm.response.body.items.item && pharm.response.body.items.item.hpid === selectedPharm.hpid) {
+            // 객체일 경우에는 인덱스가 0인 것처럼 처리
+            index = 0;
+        }
+
+        if (index !== -1) {
+            // showlikes 배열에서 해당 인덱스를 찾아 0과 1을 토글
+            const newShowlikes = [...showlikes];
+            newShowlikes[index] = newShowlikes[index] === 1 ? 0 : 1;
+            setShowlikes(newShowlikes);
+        }
+    };
+
+    const addlikeone = async (selectedPharm, sido, area) => {
+        const pharmacyId = selectedPharm.hpid;  // 해당 약국의 hpid
+        const pharmacyName = selectedPharm.dutyName;
+        const pharmacyCall = selectedPharm.dutyTel1;
+
+        const memberId = loginMember;
+
+        //로그인 체크
+
+
+        if (!pharmacyId) {
+            alert("약국을 선택해 주세요.");
+            return;
+        }
+
+        try {
+            const response = await axios.post('/api/review/likeadd', {
+                dutyId: pharmacyId,
+                dutyName: pharmacyName,
+                dutyTel: pharmacyCall,
+                memberId: memberId
+            });
+
+            if (response.status === 200) {
+
+                //리뷰 정보 다시 불러오기
+                // rerenderpharm(sido, area);
+
+            }
+        } catch (error) {
+            console.error("리뷰 등록 실패:", error);
+            alert("리뷰 등록에 실패했습니다.");
+        }
+    };
 
     // useEffect(() => {
     //     fetchpharm();
@@ -514,6 +642,7 @@ const Pharmacy = () => {
 
     };
 
+
     // 리뷰 데이터를 받아오는 함수
     const fetchReviewData = async (hpid) => {
         try {
@@ -521,7 +650,7 @@ const Pharmacy = () => {
                 params: { hpid }
             });
 
-            console.log('받은 값:', response.data);
+            // console.log('받은 값:', response.data);
 
             // 받은 리뷰 카운트 데이터를 상태로 저장
             setShowReviews(response.data);
@@ -579,6 +708,8 @@ const Pharmacy = () => {
     const handleOpenDetail = (pharmacy) => {
         setSelectedPharm(pharmacy);
         setIsDetailOpen(true);
+
+        fetchlikeDataOne(pharmacy.hpid);
     };
 
     //검색 기능
@@ -590,7 +721,7 @@ const Pharmacy = () => {
     const [routeLayer, setRouteLayer] = useState(null);
     // 경로 제거
     const removeRouteLayer = () => {
-        if(routeLayer) {
+        if (routeLayer) {
             routeLayer.setMap(null);
             setRouteLayer(null);
         }
@@ -599,42 +730,42 @@ const Pharmacy = () => {
     //길찾기 함수
     const getRP = async (pharmacy) => {
         const e_latlog = pharmacy;
-        console.log(pharmacy);
+        // console.log(pharmacy);
 
-        if(latitude !== null && longitude !== null) {
+        if (latitude !== null && longitude !== null) {
             const startX = longitude;
             const startY = latitude;
             const endX = e_latlog.wgs84Lon;
             const endY = e_latlog.wgs84Lat;
 
             const requestData = {
-                startX, 
-                startY, 
-                endX, 
-                endY, 
+                startX,
+                startY,
+                endX,
+                endY,
                 reqCoorType: "WGS84GEO", //내 요청에 제공하는 좌표형식
                 resCoordType: "EPSG3857",  //api가 응답으로 반환하는 좌표형식
                 searchOption: '0',
                 trafficInfo: "Y",
             };
-        
+
             const headers = {
                 appKey: process.env.REACT_APP_TMAP_APP_KEY
             }
-        
+
             try {
-                const response = await axios.post ("https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result", 
+                const response = await axios.post("https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result",
                     requestData,
                     { headers: headers }
 
-                ); 
+                );
 
                 // 결과 데이터 처리
                 const resultData = response.data.features;
 
                 // 경로 표시
                 drawRoute(resultData);
-                
+
             } catch (error) {
                 console.log("경로 요청 실패: ", error);
             }
@@ -650,7 +781,7 @@ const Pharmacy = () => {
         // 경로 데이터를 기반으로 Polyline 생성
         routeData.forEach((item) => {
             const geometry = item.geometry;
-            if(geometry.type === "LineString") {
+            if (geometry.type === "LineString") {
                 geometry.coordinates.forEach((coord) => {
                     // EPSG3857 좌표를 WGS84 좌표로 변환
                     const point = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
@@ -672,13 +803,13 @@ const Pharmacy = () => {
         setRouteLayer(polyline);
 
         // 지도 중심 좌표 설정
-        if(path.length > 0) {
+        if (path.length > 0) {
             map.setCenter(path[0]);
             map.setZoom(14);
         }
 
         // 도착 마커
-        if(selectedPharm) {
+        if (selectedPharm) {
             const endPoint = new Tmapv2.LatLng(selectedPharm.wgs84Lat, selectedPharm.wgs84Lon);
 
             const endMarker = new Tmapv2.Marker({
@@ -696,11 +827,12 @@ const Pharmacy = () => {
     const handleRP = () => {
         removeMarkers(); //마커 삭제
         removeRouteLayer(); //경로 삭제
-        getRP(selectedPharm); 
+        getRP(selectedPharm);
     };
 
     //유저 아이디 체크
-    const { loginMember } = useContext(mainContext);
+
+
 
     const [memberNickname, setMemberNickname] = useState([]);
 
@@ -714,7 +846,7 @@ const Pharmacy = () => {
                 }
             });
             // console.log('HPIDs sent to Spring Boot, status:', response.status);
-            console.log('받은 값:', response.data);
+            // console.log('받은 값:', response.data);
 
             const NickName = response.data;
             setMemberNickname(NickName);
@@ -796,6 +928,36 @@ const Pharmacy = () => {
         ));
     };
 
+    const [isFiltered, setIsFiltered] = useState(false);
+
+    // '운영중인 약국만 보기' 버튼 클릭 시 토글
+    const handleToggleFilter = () => {
+        setIsFiltered(!isFiltered);  // 토글 상태 변경
+        setIsDetailOpen(false);
+    };
+
+    useEffect(() => {
+        if (pharm) {
+            // 약국 데이터가 배열인지 객체인지 확인
+            const pharmacies = Array.isArray(pharm.response?.body?.items?.item)
+                ? pharm.response.body.items.item
+                : pharm.response?.body?.items?.item ? [pharm.response.body.items.item] : [];
+
+            // 필터링된 약국 목록 가져오기
+            const filteredPharmacies = pharmacies.filter((pharmacy) => {
+                if (isFiltered) {
+                    const timeStart = pharmacy?.[`dutyTime${currentDay}s`];
+                    const timeEnd = pharmacy?.[`dutyTime${currentDay}c`];
+                    const status = checkBusinessStatus(timeStart, timeEnd);
+                    return status === '영업중';  // '영업중'인 약국만 필터링
+                }
+                return true;  // isFiltered가 false일 경우 모든 약국을 표시
+            });
+
+            // 필터링된 약국 목록으로 마커 재생성
+            createMarkers({ response: { body: { items: { item: filteredPharmacies } } } });
+        }
+    }, [isFiltered, pharm]);
 
     return (
         <>
@@ -845,11 +1007,22 @@ const Pharmacy = () => {
                             <div class="flex">
                                 <p>총 {
                                     Array.isArray(pharm?.response?.body?.items?.item)
-                                        ? pharm.response.body.items.item.length >= 2
-                                            ? pharm.response.body.items.item.length
-                                            : 1
-                                        : pharm?.response?.body?.items?.item
-                                            ? 1
+                                        ? pharm.response.body.items.item.filter(pharmacy => {
+                                            const timeStart = pharmacy?.[`dutyTime${currentDay}s`];
+                                            const timeEnd = pharmacy?.[`dutyTime${currentDay}c`];
+                                            const status = checkBusinessStatus(timeStart, timeEnd);
+                                            return !isFiltered || status === '영업중';  // 영업중일 경우만 포함
+                                        }).length
+                                        : // 약국 목록이 객체일 경우
+                                        pharm?.response?.body?.items?.item
+                                            ? (() => {
+                                                const pharmacy = pharm.response.body.items.item;
+                                                const timeStart = pharmacy?.[`dutyTime${currentDay}s`];
+                                                const timeEnd = pharmacy?.[`dutyTime${currentDay}c`];
+                                                const status = checkBusinessStatus(timeStart, timeEnd);
+                                                // 영업중인 경우에만 카운트 1
+                                                return !isFiltered || status === '영업중' ? 1 : 0;
+                                            })()
                                             : 0
                                 }건</p>
                                 {/* <ul class="sorting flex">
@@ -857,54 +1030,74 @@ const Pharmacy = () => {
                                     <li><a href="#">평점순</a></li>
                                     <li><a href="#">방문자순</a></li>
                                 </ul> */}
+                                <div className="sorting flex">
+                                    <p>
+                                        운영중인 약국만 보기&nbsp;&nbsp;
+                                    </p>
+                                    <div><Toggle onToggle={handleToggleFilter}></Toggle></div>
+                                </div>
+
                             </div>
                             <ul class="scroll">
 
                                 {Array.isArray(pharm?.response?.body?.items?.item) && pharm.response.body.items.item.length > 0 ? (
-                                    pharm.response.body.items.item.map((pharmacy, index) => {
+                                    pharm.response.body.items.item
+                                        .filter((pharmacy) => {
+                                            if (isFiltered) {
+                                                const timeStart = pharmacy?.[`dutyTime${currentDay}s`];
+                                                const timeEnd = pharmacy?.[`dutyTime${currentDay}c`];
+                                                const status = checkBusinessStatus(timeStart, timeEnd);
+                                                return status === '영업중';  // '영업중' 상태인 약국만 필터링
+                                            }
+                                            return true;  // isFiltered가 false일 경우 모든 약국을 표시
+                                        })
+                                        .map((pharmacy, index) => {
+                                            const timeStart = pharmacy?.[`dutyTime${currentDay}s`];
+                                            const timeEnd = pharmacy?.[`dutyTime${currentDay}c`];
+                                            const status = checkBusinessStatus(timeStart, timeEnd);
 
-                                        const timeStart = pharmacy?.[`dutyTime${currentDay}s`];
-                                        const timeEnd = pharmacy?.[`dutyTime${currentDay}c`];
-                                        // {formatTime(pharmacy?.[`dutyTime${currentDay}c`])}
+                                            const review = reviewCounts.find(item => item.hpid === pharmacy.hpid);
+                                            const reviewCount = review ? review.count : 0;
+                                            const average = review ? review.averageRating : 0;
 
-                                        const status = checkBusinessStatus(timeStart, timeEnd);
+                                            // 즐겨찾기 여부 확인 (showlikes 배열에 hpid가 존재하는지 체크)
+                                            const favoriteStatus = showlikes[index] === 1 ? "즐겨찾기" : "즐겨찾기 아님";
 
-                                        const review = reviewCounts.find(item => item.hpid === pharmacy.hpid);
-                                        const reviewCount = review ? review.count : 0;
-                                        const average = review ? review.averageRating : 0;
-
-                                        return (
-                                            <li key={index} onClick={() => handlePharmacyClick(pharmacy)}>
-                                                <div className="name">
-                                                    {pharmacy.dutyName}
-                                                    <a href="#">
-                                                        <img src={images['star20_off.png']} alt="별점 이미지" />
-                                                    </a>
-                                                </div>
-                                                <span>{pharmacy.dutyAddr}</span>
-                                                <div className="call">
-                                                    <img src={images['detail_icon_tel.png']} alt="전화 아이콘" />
-                                                    <div className="white">
-                                                        <p>{pharmacy.dutyTel1}</p>
+                                            return (
+                                                <li key={index} onClick={() => handlePharmacyClick(pharmacy)}>
+                                                    <div className="name">
+                                                        {pharmacy.dutyName}
+                                                        <a href="#">
+                                                            <img
+                                                                src={showlikes[index] === 1 ? images['star20_on.png'] : images['star20_off.png']}
+                                                            />
+                                                        </a>
                                                     </div>
-                                                </div>
-                                                <div className="open">
-                                                    <p className={status === '영업중' ? 'green' : status === '휴무' ? 'gray' : 'red'}>{status}</p>
-                                                    {/* <p className="green">영업중</p> */}
-                                                    {timeStart ? `${formatTime(timeStart)} ~ ${formatTime(timeEnd)}` : "정보 없음"}
-                                                </div>
-                                                {reviewCount !== 0 && (
-                                                    <div className="grade flex">
-                                                        <span>{average}</span>
-                                                        <div className="img">
-                                                            <img src={images[`grade${Math.round(average)}.png`]} alt="별점" />
+                                                    <span>{pharmacy.dutyAddr}</span>
+                                                    <div className="call">
+                                                        <img src={images['detail_icon_tel.png']} alt="전화 아이콘" />
+                                                        <div className="white">
+                                                            <p>{pharmacy.dutyTel1}</p>
                                                         </div>
-                                                        리뷰 {reviewCount}건
                                                     </div>
-                                                )}
-                                            </li>
-                                        )
-                                    })
+                                                    <div className="open">
+                                                        <p className={status === '영업중' ? 'green' : status === '휴무' ? 'gray' : 'red'}>{status}</p>
+                                                        {/* <p className="green">영업중</p> */}
+                                                        {timeStart ? `${formatTime(timeStart)} ~ ${formatTime(timeEnd)}` : "정보 없음"}
+                                                    </div>
+                                                    {reviewCount !== 0 && (
+                                                        <div className="grade flex">
+                                                            <span>{average}</span>
+                                                            <div className="img">
+                                                                <img src={images[`grade${Math.round(average)}.png`]} alt="별점" />
+                                                            </div>
+                                                            리뷰 {reviewCount}건
+                                                        </div>
+                                                    )}
+
+                                                </li>
+                                            )
+                                        })
                                 ) : (
                                     // 만약 배열이 아니라 객체일 경우, 이를 배열처럼 처리하여 하나의 항목을 렌더링
                                     pharm?.response?.body?.items?.item ? (
@@ -919,12 +1112,20 @@ const Pharmacy = () => {
                                             const reviewCount = review ? review.count : 0;
                                             const average = review ? review.averageRating : 0;
 
+                                            const favoriteStatus = showlikeone === 1 ? "즐겨찾기" : "즐겨찾기 아님";
+
+                                            if (isFiltered && status !== '영업중') {
+                                                return null;  // '운영중인 약국만 보기' 상태일 때, 영업중이 아닌 약국은 렌더링하지 않음
+                                            }
+
                                             return (
                                                 <li onClick={() => handlePharmacyClick(pharmacy)}>
                                                     <div className="name">
                                                         {pharmacy.dutyName}
                                                         <a href="#">
-                                                            <img src={images['star20_off.png']} alt="별점 이미지" />
+                                                            <img
+                                                                src={showlikeone === 1 ? images['star20_on.png'] : images['star20_off.png']}
+                                                            />
                                                         </a>
                                                     </div>
                                                     <span>{pharmacy.dutyAddr}</span>
@@ -935,7 +1136,7 @@ const Pharmacy = () => {
                                                         </div>
                                                     </div>
                                                     <div className="open">
-                                                        <p className="green">영업중</p>
+                                                        <p className={status === '영업중' ? 'green' : status === '휴무' ? 'gray' : 'red'}>{status}</p>
                                                         {timeStart ? `${formatTime(timeStart)} ~ ${formatTime(timeEnd)}` : "정보 없음"}
                                                     </div>
                                                     {reviewCount !== 0 && (
@@ -947,38 +1148,11 @@ const Pharmacy = () => {
                                                             리뷰 {reviewCount}건
                                                         </div>
                                                     )}
+
                                                 </li>
                                             );
                                         })()
                                     )
-                                        // pharm?.response?.body?.items?.item ? (
-                                        //     <li onClick={() => handlePharmacyClick(pharm.response.body.items.item)}>
-                                        //         <div className="name">
-                                        //             {pharm?.response?.body?.items?.item?.dutyName}
-                                        //             <a href="#">
-                                        //                 <img src={images['star20_off.png']} alt="별점 이미지" />
-                                        //             </a>
-                                        //         </div>
-                                        //         <span>{pharm?.response?.body?.items?.item?.dutyAddr}</span>
-                                        //         <div className="call">
-                                        //             <img src={images['detail_icon_tel.png']} alt="전화 아이콘" />
-                                        //             <div className="white">
-                                        //                 <p>{pharm?.response?.body?.items?.item?.dutyTel1}</p>
-                                        //             </div>
-                                        //         </div>
-                                        //         <div className="open">
-                                        //             <p className="green">영업중</p>
-                                        //             {formatTime(timeStartsol)} ~ {formatTime(timeEndsol)}
-                                        //         </div>
-                                        //         <div className="grade flex">
-                                        //             <span>3.2</span>
-                                        //             <div className="img">
-                                        //                 <img src={images['grade3.png']} alt="별점" />
-                                        //             </div>
-                                        //             리뷰 19건
-                                        //         </div>
-                                        //     </li>
-                                        // )
                                         : (
                                             // 배열도 없고 객체도 없을 경우
                                             <li>검색된 항목이 없습니다.</li>
@@ -992,7 +1166,15 @@ const Pharmacy = () => {
                                 <div class="scroll">
                                     <p>약국상세<span><img src={images['close16.png']} alt="" onClick={handleCloseDetail} /></span></p>
                                     <div class="data">
-                                        <p>{selectedPharm.dutyName}<a href="#"><img src={images['star25_off.png']} alt="" /></a></p>
+                                        <p>{selectedPharm.dutyName}
+                                            <a href="#" onClick={() => toggleFavorite(selectedPharm)}>
+                                                <img
+                                                    // showlikeone 상태에 따라 즐겨찾기 별 이미지 변경
+                                                    src={showlikeone === 1 ? images['star25_on.png'] : images['star25_off.png']}
+                                                    alt=""
+                                                />
+                                            </a>
+                                        </p>
                                         <div class="open"><p className={checkBusinessStatus(selectedPharm[`dutyTime${currentDay}s`], selectedPharm[`dutyTime${currentDay}c`]) === '영업중' ? 'green' : 'red'}>
                                             {checkBusinessStatus(selectedPharm[`dutyTime${currentDay}s`], selectedPharm[`dutyTime${currentDay}c`])}
                                         </p>
@@ -1007,14 +1189,16 @@ const Pharmacy = () => {
                                             <tr>
                                                 <th><img src={images['detail_icon_tel.png']} alt="" /></th>
                                                 <td>{selectedPharm.dutyTel1}</td>
+                                                <td>
+                                                    <div className="find" onClick={handleRP}>
+                                                        <p>길찾기</p>
+                                                    </div>
+                                                </td>
                                             </tr>
 
                                         </table>
                                     </div>
-                                    <div className="find" onClick={handleRP}>
-                                    {/* <div className="find" onClick={() => getRP(selectedPharm)}> */}
-                                        <p>길찾기</p>
-                                    </div>
+
                                     <div className="detail-tab flex">
                                         <p className={`tab1 ${activeTab === 'tab1' ? 'on' : ''}`} onClick={() => handleTabClick('tab1')}>정보</p>
                                         <p className={`tab2 ${activeTab === 'tab2' ? 'on' : ''}`} onClick={() => handleTabClick('tab2')}>리뷰</p>
