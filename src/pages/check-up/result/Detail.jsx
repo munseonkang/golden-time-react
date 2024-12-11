@@ -1,14 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { images } from '../../../utils/images';
 import { getCenterBasicInfo, getCenterHolidayInfo, getCenterTransInfo } from '../../../apis/api/nhisAPI';
 import LikeBtn from './LikeBtn';
 import { getBasicInfo, getHolidayInfo, getLikeId, getMemberLikeId, getTransInfo } from '../../../apis/services/goldentimeService';
+import { getCurrentDegree } from '../../../apis/services/geolocation';
+import { CheckUpContext } from '../CheckUp';
 
 const Detail = ({hmcNo, lat, lon, ykindnm, workInfo, }) => {
+    const {currentPositionRef} = useContext(CheckUpContext);
+    const {currentLat, currentLon} = currentPositionRef.current;
+
     const [basicInfo, setBasicInfo] = useState(null);
     const [holidayInfo, setHolidayInfo] = useState(null);
     const [transInfo, setTransInfo] = useState(null);
-
+    
     const likeIdRef = useRef(-1);
 
     function getTime(from, to) {
@@ -21,21 +26,29 @@ const Detail = ({hmcNo, lat, lon, ykindnm, workInfo, }) => {
     }
 
     function initTmap(){
-        var map = new window.Tmapv2.Map(`map_div${hmcNo}`, { // 지도가 생성될 div
+        var map = new window.Tmapv2.Map(`map_div${hmcNo}`, {
             center : new window.Tmapv2.LatLng(lat, lon),
-            width : "468px", // 지도의 넓이
-            height : "373px", // 지도의 높이
+            // center : new window.Tmapv2.LatLng((lat+currentLat)/2, (lon+currentLon)/2),
+            width : "468px",
+            height : "373px",
             zoom : 16,
-            draggable : false,
-            draggableSys  : false,
+            // draggable : false,
+            // draggableSys  : false,
             pinchZoom  : false,
-            scrollwheel  : false,
+            // scrollwheel  : false,
             zoomControl  : false,
             measureControl  : false,
         });
-        var marker = new window.Tmapv2.Marker({
-			position: new window.Tmapv2.LatLng(lat, lon), //Marker의 중심좌표 설정.
-			map: map //Marker가 표시될 Map 설정..
+        var centerMarker = new window.Tmapv2.Marker({
+			position: new window.Tmapv2.LatLng(lat, lon),
+            icon: images['marker_checkup.png'],
+			map: map
+		});
+
+        var currentMarker = new window.Tmapv2.Marker({
+			position: new window.Tmapv2.LatLng(currentLat, currentLon),
+            icon: images["marker_current.png"],
+			map: map
 		});
 	}
 
@@ -166,7 +179,7 @@ const Detail = ({hmcNo, lat, lon, ykindnm, workInfo, }) => {
                                 </div>
                             </div>
                             <div className="info-box">
-                                <strong className="b16mc">운영시간 안내 {(workInfo?.mcrtmGuidUrlExs==1)?(<a href={workInfo?.mcrtmGuidUrl} className="r14dp" target="_blank"> 진료시간 안내</a>):<></>}</strong>
+                                <strong className="b16mc">운영시간 안내 {(workInfo?.mcrtmGuidUrlExs==1)?(<a href={workInfo?.mcrtmGuidUrl} className="r14dp" target="_blank"> 자세히 보기</a>):<></>}</strong>
                                 <ul>
                                     <li>
                                         <span className="b16dg">검진시간{(workInfo?.wkdaySusmdtWkdEtc)?(<span className="r15dp">({workInfo?.wkdaySusmdtWkdEtc}) 휴진</span>):""}</span>
