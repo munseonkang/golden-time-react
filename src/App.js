@@ -17,6 +17,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import IdInquiry from './pages/member/help/IdInquiry';
 import PwInquiry from './pages/member/help/PwInquiry';
+import ScrollToTop from './utils/ScrollToTop';
 
 export const mainContext = createContext();
 function App() {
@@ -53,6 +54,7 @@ function App() {
         </Routes>
         <Footer />
       </mainContext.Provider>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }

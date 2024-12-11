@@ -6,6 +6,7 @@ import Reviews from "./Reviews";
 import { Title } from "../../../constants/constants";
 import Likes from "./like/Likes";
 import { useNavigate } from "react-router-dom";
+import ScrollToTop from "../../../utils/ScrollToTop";
 
 const MyPage = ()=>{
     const { DASHBOARD, MEMBERINFO, LIKES, REVIEWS } = Title;
@@ -68,6 +69,10 @@ const MyPage = ()=>{
         else changeContent(DASHBOARD);
     },[])
 
+    useEffect(() => {
+        window.scrollTo(0, 100);
+    }, [content]);
+
     return (
         <div id="mypage" className="inner">
             <h1 onClick={()=>{changeContent(DASHBOARD)}}>{DASHBOARD}</h1>
@@ -91,6 +96,7 @@ const MyPage = ()=>{
                 </aside>
                 { content }
             </section>
+            <ScrollToTop />
         </div>
     );
 }
