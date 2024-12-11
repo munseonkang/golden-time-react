@@ -69,65 +69,74 @@ const DashBoard = (props) => {
             <section>
                 <section>
                     <h3>최근 리뷰</h3>
-                    <span className="r14g">{
-                            (reviewList.length>0)?"최근 한 달간 작성하신 리뷰 목록입니다.":"최근 한 달간 작성하신 리뷰가 존재하지 않습니다."}</span>
-                    <ul>
-                        {
-                            reviewList?.map((review)=>{
-                                return (
-                                    <li key={review.reviewId}>
-                                        <article className="rbgc-h">
-                                            <div>
-                                                <div>
-                                                    <div className="b173a7">{review.duty.dutyName}</div>
-                                                    <div className="r15888">{review.duty.dutyDiv}</div>
-                                                </div>
-                                                <img src={images[`${setRatingImage(review.rating)}`]} alt=""/>
-                                            </div>
-                                            <textarea className="r16444" ref={addReviewTextRef} value={review.content} readOnly></textarea>
-                                            <span className="r15mc">{review.updatedAt}</span>
-                                        </article>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
+                    {(reviewList.length>0)?
+                        <>
+                            <span className="r14g">최근 한 달간 작성하신 리뷰 목록입니다.</span>
+                            <ul>
+                                {
+                                    reviewList?.map((review)=>{
+                                        return (
+                                            <li key={review.reviewId}>
+                                                <article className="rbgc-h">
+                                                    <div>
+                                                        <div>
+                                                            <div className="b173a7">{review.duty.dutyName}</div>
+                                                            <div className="r15888">{review.duty.dutyDiv}</div>
+                                                        </div>
+                                                        <img src={images[`${setRatingImage(review.rating)}`]} alt=""/>
+                                                    </div>
+                                                    <textarea className="r16444" ref={addReviewTextRef} value={review.content} readOnly></textarea>
+                                                    <span className="r15mc">{review.updatedAt}</span>
+                                                </article>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </>:<>
+                            <span className="r14g">최근 한 달간 작성하신 리뷰가 존재하지 않습니다.</span>
+                            <span className="b163a7 empty-list empty-box">리뷰🩷를 등록해보세요</span>
+                        </>
+                    }
                 </section>
                 <span></span>
                 <section>
                     <h3>최근 즐겨찾기</h3>
-                    <span className="r14g">{
-                            (likeList.length>0)?"마지막으로 등록하신 5건의 즐겨찾기 목록입니다.":"즐겨찾기로 등록하신 기관이 존재하지 않습니다."}</span>
-                    <ul>
-                        {
-                            likeList?.map((like)=>{
-                                return (
-                                    <li key={like.likeId}>
-                                        <div>
-                                            <img src={images[`${setLikeIcon(like.classification, 28)}`]} alt=""/>
-                                        </div>
-                                        <div>
-                                            <div>
-                                                <span className="r183a7">{like.duty.dutyName}</span>
-                                                <span className="r15888">{like.duty.dutyDiv}</span>
-                                            </div>
-                                            <span className="r15b">{like.duty.dutyTel}</span>
-                                        </div>
-                                        <button className={`b15w ${setLikeDetail(like.classification)}`} onClick={()=>{
-                                                dutyRef.current = like;
-                                                setIsDetailOpen(true);
-                                                }}>상세 보기</button>
-                                    </li>
-                                );
-                            })
-                        }
-                    </ul>
-                    {
-                        likeList.length>0 &&
-                        <button onClick={()=>{changeContent(Title.LIKES)}}>
-                            <img src={images['more17.png']} alt=""/>
-                            <span className="b173a7">더보기</span>
-                        </button>
+                    {(likeList.length>0)?
+                        <>
+                            <span className="r14g">마지막으로 등록하신 5건의 즐겨찾기 목록입니다.</span>
+                            <ul>
+                                {
+                                    likeList?.map((like)=>{
+                                        return (
+                                            <li key={like.likeId}>
+                                                <div>
+                                                    <img src={images[`${setLikeIcon(like.classification, 28)}`]} alt=""/>
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        <span className="r183a7">{like.duty.dutyName}</span>
+                                                        <span className="r15888">{like.duty.dutyDiv}</span>
+                                                    </div>
+                                                    <span className="r15b">{like.duty.dutyTel}</span>
+                                                </div>
+                                                <button className={`b15w ${setLikeDetail(like.classification)}`} onClick={()=>{
+                                                        dutyRef.current = like;
+                                                        setIsDetailOpen(true);
+                                                        }}>상세 보기</button>
+                                            </li>
+                                        );
+                                    })
+                                }
+                            </ul>
+                            <button onClick={()=>{changeContent(Title.LIKES)}}>
+                                <img src={images['more17.png']} alt=""/>
+                                <span className="b173a7">더보기</span>
+                            </button>
+                        </>:<>
+                            <span className="r14g">즐겨찾기로 등록하신 기관이 존재하지 않습니다.</span>
+                            <span className="b163a7 empty-list empty-box">즐겨찾기⭐를 등록해보세요</span>
+                        </>
                     }
                 </section>
             </section>

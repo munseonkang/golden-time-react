@@ -75,3 +75,22 @@ export async function getCenterDistance(lat, lon, callback) {
         navigator.geolocation.getCurrentPosition(success, error);
     }
 }
+
+export async function getCurrentDegree(ref) {
+    function success(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        
+        ref.current = {currentLat: lat, currentLon: lon};
+    }
+    
+    function error() {
+        alert("현재 위치를 검색할 수 없습니다.")
+    }
+    
+    if (!navigator.geolocation) {
+        alert("현재 브라우저는 위치 정보 제공을 지원하지 않습니다.")
+    } else {
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+}

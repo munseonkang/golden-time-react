@@ -136,7 +136,7 @@ const MemberInfo = (props) => {
 
     const removeImage = ()=>{
         uploadImageRef.current = null;
-        if(deleteImageRef.current!==null) deleteImageRef.current = initInfoRef.current.systemName;
+        if(!deleteImageRef.current) deleteImageRef.current = initInfoRef.current.systemName;
         setInputs({...inputs, systemName: ''})
     }
 
