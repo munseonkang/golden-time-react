@@ -568,7 +568,7 @@ input[id*="choice"]:checked+label>div p {
 #yakgook .list>div ul.sorting{justify-content: end;}
 #yakgook .list>div ul.sorting li{margin-left: 5px; font-size: 13px;}
 #yakgook .list>div ul.sorting li a{color:#555;}
-#yakgook .list>ul{height: calc(100vh - 214px); margin-top:5px; padding-right:5px;}
+#yakgook .list>ul{height: calc(100vh - 220px); margin-top:5px; padding-right:5px;}
 #yakgook .list>ul li{margin-bottom:10px; padding:10px; border-radius: 10px; background: #fff; font-size: 15px; position: relative;}
 #yakgook .list>ul li .name{margin-bottom:7px; font-size: 18px; color:#154757;}
 #yakgook .list>ul li .name span{font-size: 15px; color:#aaa;}
