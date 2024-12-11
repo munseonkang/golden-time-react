@@ -78,7 +78,7 @@ const Reviews = () => {
     const monthHandler = (e)=>{
         const monthValue = e.target.value;
         monthsRef.current.map((el)=>{
-            if(el.innerText===`${monthValue}개월` || (el.innerText==="오늘"&&monthValue==="0")) {
+            if(el.innerText===`${monthValue}개월` || (el.innerText==="오늘"&&monthValue==="-1")) {
                 el.classList.add("b153a7", "selected");
                 el.classList.remove("b156aa");
             } else {
@@ -195,6 +195,7 @@ const Reviews = () => {
                 </div>
                 <ul>
                     {
+                        (reviewList.items?.length>0)?
                         reviewList.items?.map((review)=>{
                             return (
                                 <li key={review.reviewId}>
@@ -227,11 +228,14 @@ const Reviews = () => {
                                     </article>
                                 </li>
                             )
-                        })
+                        }):
+                        <li>
+                            <span className="b16dg empty-list">{`${(condition.classification===""?"기관":condition.classification)} 리뷰를 작성해주세요.`}</span>
+                        </li>
                     }
                 </ul>
             </section>
-            {(reviewList && (<Pagination datas={reviewList} paging={(pageNo)=>{getMemberReviews({memberId: sessionStorage.getItem("loginMember"), month: Number(condition.month), classification: condition.classification, pageNo: pageNo, numOfRows:NUMOFROWS}, setReviewList)}}/>))}
+            {(reviewList.items?.length>0 && (<Pagination datas={reviewList} paging={(pageNo)=>{getMemberReviews({memberId: sessionStorage.getItem("loginMember"), month: Number(condition.month), classification: condition.classification, pageNo: pageNo, numOfRows:NUMOFROWS}, setReviewList)}}/>))}
             {isModalOpen && (
                 <div className="review-modal">
                     <div className="box">

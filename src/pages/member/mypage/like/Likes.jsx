@@ -4,6 +4,7 @@ import { images } from '../../../../utils/images';
 import { Classification } from '../../../../constants/constants';
 import Pagination from '../../../check-up/result/Pagination';
 import LikeBtn from '../../../check-up/result/LikeBtn';
+import { deleteLike } from '../../../../apis/api/goldentimeAPI';
 
 export const setLikeDetail = (cls)=>{
     switch(cls) {
@@ -44,9 +45,12 @@ const Likes = () => {
         }
     }
 
+    const pageNoRef = useRef(1);
+
     useEffect(()=>{
         getMemberLikes({memberId: sessionStorage.getItem("loginMember"),
             classification: classification, pageNo: 1, numOfRows:NUMOFROWS}, setLikeList);
+        pageNoRef.current = 1;
     },[classification])
 
     const classificationHandler = (e)=>{
@@ -61,6 +65,20 @@ const Likes = () => {
         })
 
         setClassification(e.target.value);
+    }
+
+    async function removeLike(likeId) {
+        try{
+            const memberId = sessionStorage.getItem("loginMember")
+            const response = await deleteLike(memberId, likeId);
+            if(response.data.data==="success") {
+                getMemberLikes({memberId: memberId,
+                    classification: classification, pageNo: pageNoRef.current, numOfRows:NUMOFROWS}, setLikeList)
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -83,12 +101,12 @@ const Likes = () => {
                         {PHARMACY}
                         <input className="hidden" type="radio" id="likes_pharmacy" name="likes_cls" value={PHARMACY} onChange={(e)=>{classificationHandler(e)}}/>
                     </label>
-                    {/* <label className="b156aa" htmlFor="likes_check_up" ref={addClassificationsRef}>
+                    <label className="b156aa" htmlFor="likes_check_up" ref={addClassificationsRef}>
                         {CENTER}
                         <input className="hidden" type="radio" id="likes_check_up" name="likes_cls" value={CENTER} onChange={(e)=>{classificationHandler(e)}}/>
-                    </label> */}
+                    </label>
+                    <span></span>
                 </div>
-                <span></span>
                 <table>
                     <thead>
                         <tr>
@@ -104,11 +122,12 @@ const Likes = () => {
                     <tbody>
                         <tr></tr>
                         {
+                            (likeList.items?.length>0)?
                             likeList?.items?.map((like)=>{
                                 return (
                                     <tr key={like.likeId}>
                                         <td>
-                                            <LikeBtn hmcNo={like.duty.dutyId} hmcNm={like.duty.dutyName} ykindnm={like.duty.dutyDiv} hmcTel={like.duty.dutyTel} likeId={like.likeId} classification={like.classification}/>
+                                            <img className="likeBtn" src={images['star20_on.png']} onClick={()=>{removeLike(like.likeId)}} />
                                         </td>
                                         <td className="r163a7">{like.duty.dutyName}</td>
                                         <td className="r163a7">
@@ -122,14 +141,21 @@ const Likes = () => {
                                     </tr>
                                 )
                             })
+                            :
+                            <tr>
+                                <td colSpan='5'>
+                                    <span className="b16dg empty-list">{`즐겨찾기로 등록하신 ${(classification===""?"기관":classification)}이 존재하지 않습니다.`}</span>
+                                </td>
+                            </tr>
                         }
                         <tr></tr>
                     </tbody>
                 </table>
             </section>
-            {(likeList && (<Pagination datas={likeList} paging={(pageNo)=>{
-                getMemberLikes({memberId: sessionStorage.getItem("loginMember"), classification: classification, pageNo: pageNo, numOfRows:8
-                }, setLikeList)}}/>))}
+            {(likeList.items?.length>0 && (<Pagination datas={likeList} paging={(pageNo)=>{
+                getMemberLikes({memberId: sessionStorage.getItem("loginMember"), classification: classification, pageNo: pageNo, numOfRows:8},setLikeList);
+                pageNoRef.current = pageNo;
+                }}/>))}
         </article>
     )
 }

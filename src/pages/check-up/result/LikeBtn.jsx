@@ -1,10 +1,13 @@
 import { useRef, useState } from "react";
 import { images } from "../../../utils/images";
 import { addLike, removeLike } from "../../../apis/services/goldentimeService";
+import { useNavigate } from "react-router-dom";
 
 const LikeBtn = ({hmcNo, hmcNm, ykindnm, hmcTel, likeId, classification})=>{
-    const [isRegist, setIsRegist] = useState(likeId!==-1);
+    const [isRegist, setIsRegist] = useState(likeId>0);
     const likeIdRef = useRef(likeId);
+    
+    const navigate = useNavigate();
 
     const changeHandler = ()=>{
         switch(isRegist) {
@@ -16,6 +19,7 @@ const LikeBtn = ({hmcNo, hmcNm, ykindnm, hmcTel, likeId, classification})=>{
     }
 
     const clickHandler = ()=>{
+        if(sessionStorage.getItem("loginMember")===null) navigate('/member/login', {replace: false});
         const memberId = sessionStorage.getItem("loginMember");
         const duty = {dutyId: hmcNo, dutyName: hmcNm, dutyDiv: ykindnm,dutyTel: hmcTel}
         const params = {

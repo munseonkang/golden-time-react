@@ -27,19 +27,26 @@ const Results = () => {
                 <tbody>
                     <tr></tr>
                     {
-                        (Array.isArray(results?.items.item))?
+                        (results?.items)?
+                        (Array.isArray(results?.items.item)?
                             results?.items.item.map((item)=>{
                                 return (
                                     <Result item={item} key={item.hmcNo}/>
                                 )
-                            }
+                            }):(
+                                <Result item={results?.items.item} key={results?.items.item.hmcNo}/>
+                            )
                         ):(
-                            <Result item={results?.items.item} key={results?.items.item.hmcNo}/>
+                            <tr>
+                                <td colSpan='6'>
+                                    <span className="b16dg empty-list">{`검색 결과가 존재하지 않습니다.`}</span>
+                                </td>
+                            </tr>
                         )
                     }
                 </tbody>
             </table>
-            {(results && (<Pagination datas={results} paging={(pageNo)=>{search({...searchTerms.current, pageNo: pageNo}, setResults)}} />))}
+            {(results?.items && (<Pagination datas={results} paging={(pageNo)=>{search({...searchTerms.current, pageNo: pageNo}, setResults)}} />))}
         </div>
     )
 }
