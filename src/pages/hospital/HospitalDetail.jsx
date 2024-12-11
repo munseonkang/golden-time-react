@@ -70,7 +70,9 @@ const HospitalDetail = ({
                                 onClick={(e) => {
                                     e.preventDefault();
                                     favoriteStar(selectedHospital, selectIndex);
-                                    setIsFavorite(prevState => !prevState);
+                                    if (loginMember) {
+                                        setIsFavorite(prevState => !prevState);
+                                    }
                                 }}
                             >
                                 <img
