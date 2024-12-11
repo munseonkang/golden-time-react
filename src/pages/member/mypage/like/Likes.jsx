@@ -5,6 +5,8 @@ import { Classification } from '../../../../constants/constants';
 import Pagination from '../../../check-up/result/Pagination';
 import LikeBtn from '../../../check-up/result/LikeBtn';
 import { deleteLike } from '../../../../apis/api/goldentimeAPI';
+import HospitalDetail from '../HospitalDetail';
+import CenterDetail from '../CenterDetail';
 
 export const setLikeDetail = (cls)=>{
     switch(cls) {
@@ -31,12 +33,25 @@ export const setLikeIcon = (cls, size)=>{
     }
 }
 
+export const detailHandler = (dutyRef, setIsDetailOpen)=>{
+    switch(dutyRef.current.classification) {
+        case "병원":
+        case "약국":
+            return (<HospitalDetail hpid={dutyRef.current.duty.dutyId} classification={dutyRef.current.classification} setIsDetailOpen={setIsDetailOpen}/>);
+        case "검진기관":
+            return (<CenterDetail hmcNo={dutyRef.current.duty.dutyId}  setIsDetailOpen={setIsDetailOpen}/>)
+    }
+}
+
 const Likes = () => {
     const NUMOFROWS = 8;
     const { TOTAL, HOSPITAL, PHARMACY, CENTER } = Classification;
 
     const [likeList, setLikeList] = useState({});
     const [classification, setClassification] = useState(TOTAL);
+    const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+    const dutyRef = useRef();
 
     const classificationsRef = useRef([]);
     const addClassificationsRef = (e)=>{
@@ -116,7 +131,7 @@ const Likes = () => {
                             <th className="b143a7">기관명</th>
                             <th className="b143a7">구분</th>
                             <th className="b143a7">전화번호</th>
-                            <th className="b143a7">위치 확인</th>
+                            <th className="b143a7">상세 확인</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,7 +142,10 @@ const Likes = () => {
                                 return (
                                     <tr key={like.likeId}>
                                         <td>
-                                            <img className="likeBtn" src={images['star20_on.png']} onClick={()=>{removeLike(like.likeId)}} />
+                                            <img className="likeBtn" src={images['star20_on.png']} onClick={()=>{
+                                                setIsDetailOpen(false);
+                                                removeLike(like.likeId);
+                                                }} />
                                         </td>
                                         <td className="r163a7">{like.duty.dutyName}</td>
                                         <td className="r163a7">
@@ -136,7 +154,10 @@ const Likes = () => {
                                         </td>
                                         <td className="r163a7">{like.duty.dutyTel}</td>
                                         <td>
-                                            <button className={`b14w ${setLikeDetail(like.classification)}`}>자세히 보기</button>
+                                            <button className={`b14w ${setLikeDetail(like.classification)}`} onClick={()=>{
+                                                dutyRef.current = like;
+                                                setIsDetailOpen(true);
+                                                }}>상세 보기</button>
                                         </td>
                                     </tr>
                                 )
@@ -156,6 +177,7 @@ const Likes = () => {
                 getMemberLikes({memberId: sessionStorage.getItem("loginMember"), classification: classification, pageNo: pageNo, numOfRows:8},setLikeList);
                 pageNoRef.current = pageNo;
                 }}/>))}
+            {isDetailOpen && detailHandler(dutyRef, setIsDetailOpen)}
         </article>
     )
 }
