@@ -4,7 +4,7 @@ import { getCenterBasicInfo, getCenterHolidayInfo, getCenterTransInfo } from '..
 import LikeBtn from './LikeBtn';
 import { getBasicInfo, getHolidayInfo, getLikeId, getMemberLikeId, getTransInfo } from '../../../apis/services/goldentimeService';
 
-const Detail = ({hmcNo, lat, lon, ykindnm, workInfo}) => {
+const Detail = ({hmcNo, lat, lon, ykindnm, workInfo, }) => {
     const [basicInfo, setBasicInfo] = useState(null);
     const [holidayInfo, setHolidayInfo] = useState(null);
     const [transInfo, setTransInfo] = useState(null);
@@ -107,13 +107,13 @@ const Detail = ({hmcNo, lat, lon, ykindnm, workInfo}) => {
                                     <span className="b16dg">검진실 전화번호</span>
                                     <span className="r16b">{basicInfo?.gjca01TelNo}</span>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <span className="b16dg">진료과목</span>
                                     <span className="r16b">내과, 결핵과</span>
-                                </li>
+                                </li> */}
                                 <li>
                                     <span className="b16dg">구분</span>
-                                    <span className="r16b">의원</span>
+                                    <span className="r16b">{ykindnm}</span>
                                 </li>
                             </ul>
                         </div>

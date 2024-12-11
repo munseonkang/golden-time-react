@@ -3,7 +3,7 @@ import { images } from '../../../utils/images';
 import { getMemberInfo, getMemberLikes, getMemberProfile, getMemberReviews } from '../../../apis/services/goldentimeService';
 import { setRatingImage } from './Reviews';
 import { Title } from '../../../constants/constants';
-import { setLikeDetail, setLikeIcon } from './like/Likes';
+import { detailHandler, setLikeDetail, setLikeIcon } from './like/Likes';
 import ProfileImage from './ProfileImage';
 
 const DashBoard = (props) => {
@@ -12,6 +12,10 @@ const DashBoard = (props) => {
     const [memberInfo, setMemberInfo] = useState({});
     const [likeList, setLikeList] = useState([]);
     const [reviewList, setReviewList] = useState([]);
+
+    // 상세 관련 상태 및 Ref
+    const [isDetailOpen, setIsDetailOpen] = useState(false);
+    const dutyRef = useRef();
 
     const reviewTextRef = useRef([]);
     const addReviewTextRef = (e)=>{
@@ -42,7 +46,7 @@ const DashBoard = (props) => {
                 <div>
                     <div>
                         <ProfileImage systemName={memberInfo.systemName} />
-                        <img src={images['edit_image25.png']} alt=""/>
+                        {/* <img src={images['edit_image25.png']} alt=""/> */}
                     </div>
                     <div>
                         <span className="r1285b">반갑습니다, 좋은 하루 되세요.</span>
@@ -109,7 +113,10 @@ const DashBoard = (props) => {
                                             </div>
                                             <span className="r15b">{like.duty.dutyTel}</span>
                                         </div>
-                                        <button className={`b15w ${setLikeDetail(like.classification)}`}>자세히 보기</button>
+                                        <button className={`b15w ${setLikeDetail(like.classification)}`} onClick={()=>{
+                                                dutyRef.current = like;
+                                                setIsDetailOpen(true);
+                                                }}>상세 보기</button>
                                     </li>
                                 );
                             })
@@ -124,6 +131,7 @@ const DashBoard = (props) => {
                     }
                 </section>
             </section>
+            {isDetailOpen && detailHandler(dutyRef, setIsDetailOpen)}
         </article>
     )
 }

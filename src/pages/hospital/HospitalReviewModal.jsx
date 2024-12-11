@@ -3,6 +3,7 @@ import { images } from '../../utils/images';
 import { getMemberProfile } from '../../apis/services/goldentimeService';
 import axios from 'axios';
 import { mainContext } from "../../App";
+import ProfileImage from "../member/mypage/ProfileImage";
 
 const HospitalReviewModal = ({ 
     isModalOpen, 
@@ -13,6 +14,7 @@ const HospitalReviewModal = ({
     const { loginMember } = useContext(mainContext); // 로그인 확인(아이디 or null)
     const [rating, setRating] = useState(3); // 별점
     const [memberInfo, setMemberInfo] = useState({});
+
     // 초기 상태를 상수로 선언
     const initialReviewForm = {
         content: "",
@@ -86,7 +88,7 @@ const HospitalReviewModal = ({
                         <div className="flex">
                             <div className="flex">
                                 <div className="img">
-                                    <img src={images['default_image.jpg']} alt=""/>
+                                    <ProfileImage systemName={memberInfo.systemName} />
                                 </div>
                                 <p>{memberInfo?.nickname}</p>
                             </div>
