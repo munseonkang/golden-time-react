@@ -87,6 +87,7 @@ const MyPage = ()=>{
                             <h2>{REVIEWS}</h2>
                         </li>
                     </ul>
+                    <span></span>
                 </aside>
                 { content }
             </section>
