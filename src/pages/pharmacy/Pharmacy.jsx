@@ -1190,8 +1190,8 @@ const Pharmacy = () => {
                                                 <th><img src={images['detail_icon_tel.png']} alt="" /></th>
                                                 <td>{selectedPharm.dutyTel1}</td>
                                                 <td>
-                                                    <div className="find" onClick={handleRP}>
-                                                        <p>길찾기</p>
+                                                    <div id="naviButton"  className="find" onClick={handleRP}>
+                                                        <img src={images['navi_icon.png']} alt=""/>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1333,8 +1333,8 @@ const Pharmacy = () => {
                     </div>
 
                     {/* 오른쪽 지도 */}
-                    <div className="map_div" id="map_div">
-
+                    <div className="map_div" id="map_div">    
+                        
                     </div>
                 </div>
 
