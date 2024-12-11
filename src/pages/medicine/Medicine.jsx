@@ -21,6 +21,7 @@ const Medicine = () => {
     useEffect(() => {
         console.log("filteredData", filteredData);
         setExpand(null); //아코디언 초기화
+        setCurrentPage(1); 
     }, [filteredData]);
 
     // 의약품 api
@@ -35,7 +36,7 @@ const Medicine = () => {
                         entp_name: company,
                         serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                         pageNo: 1,
-                        numOfRows: 50,
+                        numOfRows: 300,
                         type: "json",
                     },
                 }),
@@ -44,7 +45,7 @@ const Medicine = () => {
                     params: {
                         serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                         pageNo: 1,
-                        numOfRows: 50,
+                        numOfRows: 300,
                         type: "json"
                     },
                 }),
