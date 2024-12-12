@@ -234,7 +234,8 @@ const HospitalDetail = ({
                                                 <li key={index}>
                                                     <div className="flex">
                                                         <div className="img">
-                                                            <img src={images['default_image.jpg']} alt=""/>
+                                                            {/* <img src={images['default_image.jpg']} alt=""/> */}
+                                                            <img src={`/api/member/${review.memberId}/member-image`} alt=""/>
                                                         </div>
                                                         <div>
                                                             {review.memberId.slice(0, 4) + '*'.repeat(review.memberId.length - 4)}
