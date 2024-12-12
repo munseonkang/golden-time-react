@@ -106,10 +106,6 @@ const EmergencyDetail = ({ selectedEmergency, selectedSido, region, onHospitalDe
             <div className="emergency-detail">
                 <div className="emergency-title">
                     <div className="emergency-name b25mc">{selectedEmergency.dutyName}</div>
-                    <div className="find r17mc" 
-                        onClick={onFindRoute}>
-                        <p>길찾기</p>
-                    </div>
                 </div>
                 <div className="big-item">
                     <div className="title b20b">응급실</div>
