@@ -58,6 +58,7 @@ const Main = ()=>{
         )
     }, []);
 
+    // 응급실 api
     useEffect(() => {
         if(!sido) return;
         const getEmergency = async () => {
@@ -171,7 +172,7 @@ const Main = ()=>{
 
                                     ))
                                 ) : (
-                                    <p>현재 위치 기반 응급실 데이터를 불러오는 중입니다...</p>
+                                    <p className="Communicating-data">현재 위치 기반 응급실 데이터를 불러오는 중입니다...</p>
                                 )}
                             </ul>
                         </div>

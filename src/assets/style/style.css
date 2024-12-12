@@ -79,6 +79,7 @@ box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); border-radius: 0 20px 20px 0; backgrou
 #main .main li.block .bed ul li{width:160px; height:50px; padding:15px;  border-radius: 5px;}
 #main .main li.block .bed ul li div{float:right;}
 #main .main li.block .bed ul li div::before{content: ""; display: inline-block; width:15px; height:15px; margin-right:7px; border-radius: 50%; transform: translateY(2px);}
+#main .main .Communicating-data{color:#e8edef;}
 /* 응급실 상황별 색상 */
 #main .main li.block .bed ul li.green{background: #D8EBDA;}
 #main .main li.block .bed ul li.yello{background: #FFF5D4;}
