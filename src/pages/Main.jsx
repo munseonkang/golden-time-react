@@ -3,7 +3,7 @@ import { images } from '../utils/images';
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Main = ()=>{
+const Main = () => {
     const [sido, setSido] = useState("");
     const [emergency, setEmergency] = useState([]);
     const [currentPosition, setCurrentPosition] = useState(null);
@@ -15,7 +15,7 @@ const Main = ()=>{
         const R = 6371;
         const dLat = ((lat2 - lat1) * Math.PI) / 180;
         const dLon = ((lon2 - lon1) * Math.PI) / 180;
-        const a = 
+        const a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos((lat1 * Math.PI) / 180) *
             Math.cos((lat2 * Math.PI) / 180) *
@@ -30,14 +30,14 @@ const Main = ()=>{
         const parts = address.split(/[\(\),]/);
         return parts[0]?.trim() || "주소 정보 없음";
     };
-    
+
     // 현재 위치
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const { latitude, longitude } = position.coords;
                 setCurrentPosition({ latitude, longitude });
-    
+
                 try {
                     const response = await axios.get("https://apis.openapi.sk.com/tmap/geo/reversegeocoding", {
                         params: {
@@ -47,10 +47,10 @@ const Main = ()=>{
                             appKey: process.env.REACT_APP_TMAP_APP_KEY,
                         },
                     });
-    
+
                     const sido = response.data?.addressInfo.city_do || "";
                     setSido(sido);
-    
+
                 } catch (error) {
                     console.log("Reverse Geocoding 실패:", error);
                 }
@@ -60,21 +60,21 @@ const Main = ()=>{
 
     // 응급실 api
     useEffect(() => {
-        if(!sido) return;
+        if (!sido) return;
         const getEmergency = async () => {
             try {
                 const [response1, response2] = await axios.all([
                     // 응급실 실시간 가용병상정보 조회
-                    axios.get(`${API_BASE_URL}/getEmrrmRltmUsefulSckbdInfoInqire`, { 
+                    axios.get(`${API_BASE_URL}/getEmrrmRltmUsefulSckbdInfoInqire`, {
                         params: {
                             serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                             pageNo: 1,
                             numOfRows: 100,
                             STAGE1: sido,
-                        } 
+                        }
                     }),
                     // 기관 정보 
-                    axios.get(`${API_BASE_URL}/getEgytListInfoInqire`, { 
+                    axios.get(`${API_BASE_URL}/getEgytListInfoInqire`, {
                         params: {
                             serviceKey: process.env.REACT_APP_DATA_SERVICE_KEY,
                             pageNo: 1,
@@ -83,17 +83,17 @@ const Main = ()=>{
                         }
                     }),
                 ]);
-    
+
                 const realTime = response1.data?.response?.body?.items?.item;
                 const organList = response2.data?.response?.body?.items?.item;
-                
+
                 const realTimeArray = Array.isArray(realTime) ? realTime : realTime ? [realTime] : [];
                 const organListArray = Array.isArray(organList) ? organList : organList ? [organList] : [];
-    
+
                 // 데이터 병합
                 const realData = organListArray.map((organItem) => {
                     const realItem = realTimeArray.find((real) => real.hpid === organItem.hpid);
-                    return {...organItem, ...realItem};
+                    return { ...organItem, ...realItem };
                 });
 
                 // 필터링
@@ -112,16 +112,85 @@ const Main = ()=>{
 
                 // 거리순 정렬 후 최대 4개
                 const sortedData = enrichedData.sort((a, b) => a.distance - b.distance).slice(0, 4);
-    
+
                 setEmergency(sortedData);
 
             } catch (error) {
                 console.error("api 요청 실패한 이유: ", error);
             }
-    
+
         };
         getEmergency();
     }, [sido]);
+
+    const [youtube, setyoutube] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+    const [totalPages, setTotalPages] = useState(1); // 총 페이지 수 상태
+    const [pageSet, setPageSet] = useState(1); // 현재 페이지 세트 상태 (1부터 시작)
+
+    // Modal 상태
+    const [modalVisible, setModalVisible] = useState(false);  // 모달의 가시성
+    const [videoUrl, setVideoUrl] = useState('');  // 선택된 유튜브 영상의 URL
+
+    const fetchyoutube = async (page = 1) => {
+        try {
+            const response = await axios.get(`/api/youtube/video`, {
+                params: {
+                    page: page,
+                    size: 4,  // 한 페이지에 9개씩 가져오기
+                },
+            });
+
+            console.log('받은 값:', response.data);
+            setyoutube(response.data);
+            if (response.data.length > 0) {
+                setTotalPages(response.data[0].totalPages);  // youtube[0].totalPages
+            }
+        } catch (error) {
+            console.error('Error fetching YouTube data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchyoutube(currentPage);
+    }, [currentPage]);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const handlePrevSet = () => {
+        if (pageSet > 1) {
+            setPageSet(pageSet - 1);
+            setCurrentPage((pageSet - 2) * 10 + 1);
+        }
+    };
+
+    const handleNextSet = () => {
+        const maxSet = Math.ceil(totalPages / 10);
+        if (pageSet < maxSet) {
+            setPageSet(pageSet + 1);
+            setCurrentPage(pageSet * 10 + 1);
+        }
+    };
+
+    const handleVideoClick = (youtubeId) => {
+        setVideoUrl(`https://www.youtube.com/embed/${youtubeId}`); // 유튜브 ID로 URL 설정
+        setModalVisible(true); // 모달 열기
+    };
+
+    const handleCloseModal = () => {
+        setModalVisible(false); // 모달 닫기
+        setVideoUrl(''); // 영상 URL 초기화
+    };
+
+    // 페이지 세트 계산
+    const startPage = (pageSet - 1) * 10 + 1;
+    const endPage = Math.min(pageSet * 10, totalPages);
+
+    // 이전 페이지와 다음 페이지 활성 및 비활성
+    const isPrevDisabled = pageSet === 1;
+    const isNextDisabled = pageSet === Math.ceil(totalPages / 10);
 
     return (
         <div id="main">
@@ -130,45 +199,45 @@ const Main = ()=>{
                 <div className="main">
                     <div className="inner">
                         <p className="text">
-                            위급한 순간,<br className="mobile" /> 가까운 응급실 정보를<br/>
+                            위급한 순간,<br className="mobile" /> 가까운 응급실 정보를<br />
                             실시간으로 제공합니다.
                         </p>
                         <div>
                             <ul className="flex">
                                 {emergency.length > 0 ? (
                                     emergency.map((item, index) => (
-                                    <li className="block" key={index}>
-                                        <p>{item.dutyName || "병원 이름 없음"}</p>
-                                        <div className="info flex">
-                                            <div>
-                                                <p>현재 위치에서 <b>{item.distance.toFixed(2)}km</b></p>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th><img src={images['main_icon_place.png']} alt=""/></th>
-                                                            <td>{extractMainAddress(item.dutyAddr)}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th><img src={images['main_icon_tel.png']} alt=""/></th>
-                                                            <td>{item.dutyTel3 || "번호 정보 없음"}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <li className="block" key={index}>
+                                            <p>{item.dutyName || "병원 이름 없음"}</p>
+                                            <div className="info flex">
+                                                <div>
+                                                    <p>현재 위치에서 <b>{item.distance.toFixed(2)}km</b></p>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th><img src={images['main_icon_place.png']} alt="" /></th>
+                                                                <td>{extractMainAddress(item.dutyAddr)}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><img src={images['main_icon_tel.png']} alt="" /></th>
+                                                                <td>{item.dutyTel3 || "번호 정보 없음"}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p>{index + 1}</p>
                                             </div>
-                                            <p>{index + 1}</p>
-                                        </div>
-                                        <div className="bed">
-                                            <p>(가용 병상 수 / 기준 병상 수)</p>
-                                            <ul className="flex color">
-                                                <li className="red">
-                                                    일반 <div><span>{item.hvec || "-"}</span> / {item.hvs01 || "-"}</div>
-                                                </li>
-                                                <li className="yello">
-                                                    소아 <div><span>{item.hv28 || "-"}</span> / {item.hvs02 || "-"}</div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                            <div className="bed">
+                                                <p>(가용 병상 수 / 기준 병상 수)</p>
+                                                <ul className="flex color">
+                                                    <li className="red">
+                                                        일반 <div><span>{item.hvec || "-"}</span> / {item.hvs01 || "-"}</div>
+                                                    </li>
+                                                    <li className="yello">
+                                                        소아 <div><span>{item.hv28 || "-"}</span> / {item.hvs02 || "-"}</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
 
                                     ))
                                 ) : (
@@ -183,17 +252,17 @@ const Main = ()=>{
                 <div className="con1">
                     <div className="inner">
                         <div className="flex">
-                            <img src={images['main_con1_1.png']} alt=""/>
+                            <img src={images['main_con1_1.png']} alt="" />
                             <div>
-                                    어디서 찾아야 할지 모르시겠나요?
+                                어디서 찾아야 할지 모르시겠나요?
                                 <p><span>병원명/약국명/의약품명</span>을 찾아보세요.</p>
                             </div>
                         </div>
                         <div>
                             <form name="searchForm" id="searchForm" action="/plan/list">
-                                <input type="search" id="keyword" name="keyword" placeholder="예 ) 대학교병원, 내과, 골든타임약국, 타이레놀 "/>
+                                <input type="search" id="keyword" name="keyword" placeholder="예 ) 대학교병원, 내과, 골든타임약국, 타이레놀 " />
                                 <Link to="#" id="search-btn" className="btn">
-                                    <img src={images['search29_w.png']} alt=""/>
+                                    <img src={images['search29_w.png']} alt="" />
                                 </Link>
                             </form>
                         </div>
@@ -205,7 +274,7 @@ const Main = ()=>{
                     <ul className="flex inner">
                         <li>
                             <Link to="/emergency">
-                                <div><img src={images['main_con2_button1.png']} alt=""/></div>
+                                <div><img src={images['main_con2_button1.png']} alt="" /></div>
                                 <p>실시간응급실</p>
                             </Link>
                         </li>
@@ -252,13 +321,36 @@ const Main = ()=>{
                 <div className="con3">
                     <div className="inner">
                         <div className="main-title">
-                            <img src={images['main_title_point.png']} alt=""/>
+                            <img src={images['main_title_point.png']} alt="" />
                             <h2>상황별 대처 방법</h2>
                             <h3>다양한 응급상황 대처방법을 미리 확인해주세요.</h3>
                         </div>
-                        
-                        <ul className="slider flex">
-                            <li>
+
+                        <div className="slider flex">
+                            
+                            
+                            
+                            {youtube && Array.isArray(youtube) && youtube.map((video, index) => (
+                                <div key={index} className="video-box">
+                                    <div className="video-overflow">
+                                        <div className="video">
+                                            {/* YouTube 썸네일 이미지 URL에 youtubeId 삽입 */}
+                                            <img
+                                                src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
+                                                alt={video.title}
+                                                onClick={() => handleVideoClick(video.youtubeId)} // 클릭 시 영상 열기
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="video-title">
+                                        <p>{video.title}</p>
+                                    </div>
+                                    <div className="ref">
+                                        <p>{video.reference}</p>
+                                    </div>
+                                </div>
+                            ))}
+                            {/* <li>
                                 <Link to="#">
                                     <img src={images['temp1.jpg']} alt=""/>
                                     <h4>질병관리청 아프지마TV</h4>
@@ -285,8 +377,25 @@ const Main = ()=>{
                                     <h4>질병관리청 아프지마TV</h4>
                                     <p>[심폐소생술] 올바른 심폐소생술과 제세동기 사용법</p>
                                 </Link>
-                            </li>
-                        </ul>
+                            </li> */}
+                        </div>
+                        {/* 모달 */}
+                        {modalVisible && (
+                        <div className="modal" onClick={handleCloseModal}>
+                            {/* <div className="img1">
+                                <img src={images['tube_prev.png']} />
+                            </div> */}
+                            <div className="modalbox" onClick={(e) => e.stopPropagation()}>
+
+                                <iframe width="1024" height="580" src={videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+                            </div>
+                            {/* <div className="img2">
+                                <img src={images['tube_next.png']} />
+                            </div> */}
+                        </div>
+                )}
 
                         {/* <div className="slide_btn">
                             <a className="prev-btn"><img src={images['main_con3_prev.png']} alt="이전버튼"/></a>
@@ -300,7 +409,7 @@ const Main = ()=>{
                 <div className="con4">
                     <div className="inner">
                         <div className="main-title">
-                            <img src={images['main_title_point.png']} alt=""/>
+                            <img src={images['main_title_point.png']} alt="" />
                             <h2>위치 및 정보 검색</h2>
                             <h3>다양한 의료기관의 정보를 만나보세요.</h3>
                         </div>
@@ -310,7 +419,7 @@ const Main = ()=>{
                                     <div className="text">
                                         <span>병원 조회 </span>HOSPITAL
                                         <p>
-                                            병원의 주소, 진료시간, 진료과목 등<br/>
+                                            병원의 주소, 진료시간, 진료과목 등<br />
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
@@ -321,7 +430,7 @@ const Main = ()=>{
                                     <div className="text">
                                         <span>약국 조회 </span>PHARMACY
                                         <p>
-                                            약국의 주소, 운영시간 등<br/>
+                                            약국의 주소, 운영시간 등<br />
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
@@ -332,7 +441,7 @@ const Main = ()=>{
                                     <div className="text">
                                         <span>건강검진기관</span>
                                         <p>
-                                            건강검진기관의 검진과목 등<br/>
+                                            건강검진기관의 검진과목 등<br />
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
@@ -343,7 +452,7 @@ const Main = ()=>{
                                     <div className="text">
                                         <span>의약품 정보</span>
                                         <p>
-                                            의약품의 생김새, 성분 등<br/>
+                                            의약품의 생김새, 성분 등<br />
                                             다양한 정보를 확인할 수 있습니다.
                                         </p>
                                     </div>
@@ -352,7 +461,7 @@ const Main = ()=>{
                         </div>
                     </div>
                 </div>
-            </section>          
+            </section>
         </div>
     );
 }
